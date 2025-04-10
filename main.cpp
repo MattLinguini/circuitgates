@@ -1,11 +1,11 @@
-#include "mainwindow.h"
+#include "src/view/circuitgame_view.h"
 
 #include <QApplication>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MainWindow w;
+    CircuitGameView w;
     w.show();
     return a.exec();
 }

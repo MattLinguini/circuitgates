@@ -46,7 +46,7 @@
        <enum>QLayout::SizeConstraint::SetMinimumSize</enum>
       </property>
       <item alignment="Qt::AlignmentFlag::AlignRight">
-       <widget class="QLabel" name="label">
+       <widget class="QLabel" name="LevelLabel">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
           <horstretch>0</horstretch>

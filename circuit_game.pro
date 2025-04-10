@@ -9,14 +9,22 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    src/model/circuitgame_model.cpp \
+    src/view/circuitgame_view.cpp \
     main.cpp \
-    mainwindow.cpp
+    src/model/inputoutput.cpp \
+    src/model/logicgate.cpp \
+    src/model/wire.cpp
 
 HEADERS += \
-    mainwindow.h
+    src/model/circuitgame_model.h \
+    src/view/circuitgame_view.h \
+    src/model/inputoutput.h \
+    src/model/logicgate.h \
+    src/model/wire.h
 
 FORMS += \
-    mainwindow.ui
+    circuitgame_view.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
