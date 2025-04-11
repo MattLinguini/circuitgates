@@ -53,3 +53,9 @@ void LogicGate::verifyGate() {
     }
     sendState();
 }
+
+void LogicGate::sendState() {
+    for(GameObject* object : destinations) {
+        object->setState(state);
+    }
+}
