@@ -1,6 +1,7 @@
-#include "src/model/circuitgame_model.h"
+#include "src/model/circuit_game_model.h"
 #include <QJsonDocument>
 #include <QFile>
+#include <QByteArray>
 
 CircuitGame_Model::CircuitGame_Model() {}
 

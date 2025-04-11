@@ -1,5 +1,5 @@
-#ifndef CIRCUITGAME_VIEW_H
-#define CIRCUITGAME_VIEW_H
+#ifndef CIRCUIT_GAME_VIEW_H
+#define CIRCUIT_GAME_VIEW_H
 
 #include <QMainWindow>
 
@@ -20,4 +20,4 @@ public:
 private:
     Ui::MainWindow *ui;
 };
-#endif // CIRCUITGAME_VIEW_H
+#endif // CIRCUIT_GAME_VIEW_H
