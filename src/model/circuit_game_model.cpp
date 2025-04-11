@@ -14,3 +14,16 @@ void CircuitGame_Model::saveLevel() {
     file.write(data);
     file.close();
 }
+
+void CircuitGame_Model::loadLevel() {
+    QFile file(":test.txt");
+    if (file.open(QIODevice::ReadOnly)) {
+        QByteArray data = file.readAll();
+        file.close();
+
+        QJsonDocument doc = QJsonDocument::fromJson(data);
+        QJsonObject levelJson = doc.object();
+
+        currentLevel = Level(levelJson);
+    }
+}
