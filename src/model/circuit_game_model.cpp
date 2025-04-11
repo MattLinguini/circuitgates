@@ -1,3 +1,3 @@
-#include "src/model/circuitgame_model.h"
+#include "src/model/circuit_game_model.h"
 
 CircuitGame_Model::CircuitGame_Model() {}

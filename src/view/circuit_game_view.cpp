@@ -1,5 +1,5 @@
-#include "src/view/circuitgame_view.h"
-#include "ui_circuitgame_view.h"
+#include "src/view/circuit_game_view.h"
+#include "ui_circuit_game_view.h"
 
 CircuitGameView::CircuitGameView(QWidget *parent)
     : QMainWindow(parent)
