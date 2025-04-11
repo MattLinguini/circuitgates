@@ -14,7 +14,8 @@ SOURCES += \
     src/model/logic_gate.cpp \
     main.cpp \
     src/model/wire.cpp \
-    src/view/circuit_game_view.cpp
+    src/view/circuit_game_view.cpp \
+    src/view/gamescene.cpp
 
 HEADERS += \
     src/model/circuit_game_model.h \
@@ -22,7 +23,8 @@ HEADERS += \
     src/model/input_output.h \
     src/model/logic_gate.h \
     src/model/wire.h \
-    src/view/circuit_game_view.h
+    src/view/circuit_game_view.h \
+    src/view/gamescene.h
 
 FORMS += \
     circuit_game_view.ui

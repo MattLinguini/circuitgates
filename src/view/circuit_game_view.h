@@ -2,6 +2,9 @@
 #define CIRCUIT_GAME_VIEW_H
 
 #include <QMainWindow>
+#include <QShowEvent>
+#include <QResizeEvent>
+#include <QWidget>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -16,6 +19,8 @@ class CircuitGameView : public QMainWindow
 public:
     CircuitGameView(QWidget *parent = nullptr);
     ~CircuitGameView();
+    void resizeEvent(QResizeEvent* event);
+    void showEvent(QShowEvent* event);
 
 private:
     Ui::MainWindow *ui;
