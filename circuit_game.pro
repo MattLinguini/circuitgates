@@ -10,6 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
     src/model/circuitgame_model.cpp \
+    src/model/level.cpp \
     src/view/circuitgame_view.cpp \
     main.cpp \
     src/model/inputoutput.cpp \
@@ -18,6 +19,7 @@ SOURCES += \
 
 HEADERS += \
     src/model/circuitgame_model.h \
+    src/model/level.h \
     src/view/circuitgame_view.h \
     src/model/inputoutput.h \
     src/model/logicgate.h \
