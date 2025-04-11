@@ -51,4 +51,5 @@ void LogicGate::verifyGate() {
             }
             break;
     }
+    sendState();
 }
