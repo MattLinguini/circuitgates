@@ -1,11 +1,24 @@
 #include "gamescene.h"
 #include <QPainter>
 #include <QPen>
+#include <QMap>
+#include "gameobjects.h"
 
-GameScene::GameScene(QObject* parent)
-    : QGraphicsScene(parent)
-{
+GameScene::GameScene(QObject* parent) : QGraphicsScene(parent) {
     setBackgroundBrush(Qt::white);
+}
+
+
+void GameScene::addGateItem(LogicGateItem* gate) {
+    if (!gate)
+        return;
+
+    // Convert grid coordinates to scene position (top-left of the cell)
+    QPointF scenePos = gridToScenePos(QPoint(gate->x, gate->y));
+    gate->setPos(scenePos);
+
+    // Add it to the scene
+    addItem(gate);
 }
 
 void GameScene::setGridSize(int gSize, int cSize) {
@@ -44,5 +57,14 @@ void GameScene::resizeToFit(QSizeF viewSize) {
 
     cellSize = std::min(availableWidth / gridSize, availableHeight / gridSize);
     setSceneRect(0, 0, gridSize * cellSize, gridSize * cellSize);
+
+    for (auto* item : items()) {
+        if (LogicGateItem* gate = qgraphicsitem_cast<LogicGateItem*>(item)) {
+            gate->updateImage(gate->getType(), cellSize);
+            QPointF scenePos = gridToScenePos(QPoint(gate->x, gate->y));
+            gate->setPos(scenePos);
+        }
+    }
+
     update();
 }

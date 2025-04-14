@@ -4,6 +4,8 @@
 #include <QGraphicsScene>
 #include <QPoint>
 #include <QSize>
+#include <QMap>
+#include "gameobjects.h"
 
 class GameScene : public QGraphicsScene {
     Q_OBJECT
@@ -13,6 +15,7 @@ public:
 
     void setGridSize(int gSize, int cSize = 64);
     QPointF gridToScenePos(QPoint gridPos) const;
+    void addGateItem(LogicGateItem* gate);
 
     void resizeToFit(QSizeF viewSize);
 

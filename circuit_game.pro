@@ -16,6 +16,7 @@ SOURCES += \
     src/model/wire.cpp \
     src/model/level.cpp \
     src/view/circuit_game_view.cpp \
+    src/view/gameobjects.cpp \
     src/view/gamescene.cpp
 
 HEADERS += \
@@ -26,6 +27,7 @@ HEADERS += \
     src/model/wire.h \
     src/model/level.h \
     src/view/circuit_game_view.h \
+    src/view/gameobjects.h \
     src/view/gamescene.h
 
 FORMS += \
@@ -35,3 +37,6 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    resources.qrc
