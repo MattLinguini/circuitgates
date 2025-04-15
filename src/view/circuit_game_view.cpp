@@ -7,11 +7,11 @@ CircuitGameView::CircuitGameView(QWidget *parent) : QMainWindow(parent), ui(new 
     ui->setupUi(this);
 
     GameScene* scene = new GameScene(this);
-    LogicGateItem* item = new LogicGateItem(2, 3, LogicGateItem::AND);
-    LogicGateItem* item1 = new LogicGateItem(2, 4, LogicGateItem::OR);
-    LogicGateItem* item2 = new LogicGateItem(2, 5, LogicGateItem::XOR);
-    LogicGateItem* item3 = new LogicGateItem(2, 6, LogicGateItem::NOT);
-    scene->setGridSize(10);
+    LogicGateItem* item = new LogicGateItem(0, 0, LogicGateItem::AND);
+    LogicGateItem* item1 = new LogicGateItem(1, 1, LogicGateItem::OR);
+    LogicGateItem* item2 = new LogicGateItem(2, 2, LogicGateItem::XOR);
+    LogicGateItem* item3 = new LogicGateItem(3, 3, LogicGateItem::NOT);
+    scene->setGridSize(5);
     scene->addGateItem(item);
     scene->addGateItem(item1);
     scene->addGateItem(item2);

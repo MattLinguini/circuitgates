@@ -63,6 +63,10 @@ void GameScene::resizeToFit(QSizeF viewSize) {
             gate->updateImage(gate->getType(), cellSize);
             QPointF scenePos = gridToScenePos(QPoint(gate->x, gate->y));
             gate->setPos(scenePos);
+
+            QRectF bounds = gate->boundingRect();
+            qreal scaleFactor = qMin(cellSize / bounds.width(), cellSize / bounds.height());
+            gate->setScale(scaleFactor);
         }
     }
 

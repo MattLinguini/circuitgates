@@ -1,8 +1,8 @@
 <RCC>
     <qresource prefix="/gates">
-        <file>resources/and_gate.png</file>
-        <file>resources/not_gate.png</file>
-        <file>resources/or_gate.png</file>
-        <file>resources/xor_gate.png</file>
+        <file>resources/and_gate.svg</file>
+        <file>resources/not_gate.svg</file>
+        <file>resources/or_gate.svg</file>
+        <file>resources/xor_gate.svg</file>
     </qresource>
 </RCC>

@@ -1,14 +1,15 @@
 #ifndef GAMEOBJECTS_H
 #define GAMEOBJECTS_H
 
-#include <QGraphicsPixmapItem>
+#include <QtSvg>
+#include <QGraphicsSvgItem>
 #include <QGraphicsPathItem>
 
-class LogicGateItem : public QGraphicsPixmapItem {
+class LogicGateItem : public QGraphicsSvgItem {
     public:
         enum GateType { AND, OR, NOT, XOR };
 
-        LogicGateItem(int x, int y, GateType gateType, QGraphicsItem* parent = nullptr);
+        LogicGateItem(int x, int y, GateType gateType, QGraphicsSvgItem* parent = nullptr);
         void updateImage(GateType gateType, int size);
         GateType getType() const;
 
@@ -17,8 +18,10 @@ class LogicGateItem : public QGraphicsPixmapItem {
     private:
         void setType(GateType gateType);
         void setPowered(bool powered);
+        void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
 
         GateType gateType;
+        QColor gateColor;
 };
 
 class WireItem : public QGraphicsPathItem {
