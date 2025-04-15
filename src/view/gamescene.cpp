@@ -51,22 +51,28 @@ void GameScene::resizeToFit(QSizeF viewSize) {
         return;
 
     const int padding = 10;
-
     int availableWidth = viewSize.width() - padding;
     int availableHeight = viewSize.height() - padding;
-
     cellSize = std::min(availableWidth / gridSize, availableHeight / gridSize);
     setSceneRect(0, 0, gridSize * cellSize, gridSize * cellSize);
 
     for (auto* item : items()) {
         if (LogicGateItem* gate = qgraphicsitem_cast<LogicGateItem*>(item)) {
             gate->updateImage(gate->getType(), cellSize);
-            QPointF scenePos = gridToScenePos(QPoint(gate->x, gate->y));
-            gate->setPos(scenePos);
+
+            QPointF topLeftPos = gridToScenePos(QPoint(gate->x, gate->y));
+            QPointF centerPos = topLeftPos + QPointF(cellSize / 2.0, cellSize / 2.0);
+
+            gate->setTransformOriginPoint(gate->boundingRect().center());
 
             QRectF bounds = gate->boundingRect();
             qreal scaleFactor = qMin(cellSize / bounds.width(), cellSize / bounds.height());
             gate->setScale(scaleFactor);
+            gate->setRotation(90);
+
+            QPointF gateSceneCenter = gate->mapToScene(gate->transformOriginPoint());
+            QPointF offset = centerPos - gateSceneCenter;
+            gate->moveBy(offset.x(), offset.y());
         }
     }
 
