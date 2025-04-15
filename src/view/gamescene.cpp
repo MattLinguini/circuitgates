@@ -21,6 +21,18 @@ void GameScene::addGateItem(LogicGateItem* gate) {
     addItem(gate);
 }
 
+void GameScene::addIOItem(InputOutputItem* io) {
+    if (!io)
+        return;
+
+    // Convert grid coordinates to scene position (top-left of the cell)
+    QPointF scenePos = gridToScenePos(QPoint(io->x, io->y));
+    io->setPos(scenePos);
+
+    // Add it to the scene
+    addItem(io);
+}
+
 void GameScene::setGridSize(int gSize, int cSize) {
     gridSize = gSize;
     cellSize = cSize;
@@ -58,7 +70,7 @@ void GameScene::resizeToFit(QSizeF viewSize) {
 
     for (auto* item : items()) {
         if (LogicGateItem* gate = qgraphicsitem_cast<LogicGateItem*>(item)) {
-            gate->updateImage(gate->getType(), cellSize);
+            gate->updateImage(gate->getType());
 
             QPointF topLeftPos = gridToScenePos(QPoint(gate->x, gate->y));
             QPointF centerPos = topLeftPos + QPointF(cellSize / 2.0, cellSize / 2.0);
@@ -73,6 +85,20 @@ void GameScene::resizeToFit(QSizeF viewSize) {
             QPointF gateSceneCenter = gate->mapToScene(gate->transformOriginPoint());
             QPointF offset = centerPos - gateSceneCenter;
             gate->moveBy(offset.x(), offset.y());
+        }
+        else if (InputOutputItem* io = qgraphicsitem_cast<InputOutputItem*>(item)) {
+            QPointF topLeftPos = gridToScenePos(QPoint(io->x, io->y));
+            QPointF centerPos = topLeftPos + QPointF(cellSize / 2.0, cellSize / 2.0);
+
+            io->setTransformOriginPoint(io->boundingRect().center());
+
+            QRectF bounds = io->boundingRect();
+            qreal scaleFactor = qMin(cellSize / bounds.width(), cellSize / bounds.height());
+            io->setScale(scaleFactor / 1.5);
+
+            QPointF ioSceneCenter = io->mapToScene(io->transformOriginPoint());
+            QPointF offset = centerPos - ioSceneCenter;
+            io->moveBy(offset.x(), offset.y());
         }
     }
 

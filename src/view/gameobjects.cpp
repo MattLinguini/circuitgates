@@ -1,6 +1,7 @@
 #include "gameobjects.h"
+#include <QtSvg>
 
-LogicGateItem::LogicGateItem(int x, int y, GateType gateType, QGraphicsSvgItem* parent) : QGraphicsSvgItem(parent), gateType(gateType), x(x), y(y) {
+LogicGateItem::LogicGateItem(int x, int y, GateType gateType, QGraphicsSvgItem* parent) : QGraphicsSvgItem(parent), x(x), y(y), gateType(gateType) {
     setType(gateType);
 }
 
@@ -9,10 +10,10 @@ LogicGateItem::GateType LogicGateItem::getType() const {
 }
 
 void LogicGateItem::setType(GateType gateType) {
-    updateImage(gateType, 64);
+    updateImage(gateType);
 }
 
-void LogicGateItem::updateImage(GateType gateType, int size) {
+void LogicGateItem::updateImage(GateType gateType) {
     QString svgPath;
     switch (gateType) {
         case AND: svgPath = ":/gates/resources/and_gate.svg"; break;
@@ -37,5 +38,32 @@ void LogicGateItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* opt
     if (gateColor.isValid()) {
         painter->setCompositionMode(QPainter::CompositionMode_SourceIn);
         painter->fillRect(boundingRect(), gateColor);
+    }
+}
+
+InputOutputItem::InputOutputItem(int x, int y, IOType ioType, QGraphicsRectItem* parent) : QGraphicsRectItem(parent), x(x), y(y), ioType(ioType) {
+    setRect(0, 0, 40, 40);  // or cellSize-based
+    setBrush(Qt::white);
+
+    label = new QGraphicsTextItem(this);
+    label->setDefaultTextColor(Qt::black);
+    label->setFont(QFont("Arial", 16, QFont::Bold));
+    label->setPos(10, 5);  // approximate centering
+
+    if (ioType == OUTPUT) {
+        setState(true);
+    } else {
+        setState(false);
+    }
+}
+
+void InputOutputItem::setState(bool state) {
+    if (state) {
+        label->setPlainText("1");
+        setPen(QPen(Qt::green, 4));
+    }
+    else {
+        label->setPlainText("0");
+        setPen(QPen(Qt::black, 4));
     }
 }

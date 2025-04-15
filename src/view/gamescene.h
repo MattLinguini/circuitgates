@@ -16,6 +16,7 @@ public:
     void setGridSize(int gSize, int cSize = 64);
     QPointF gridToScenePos(QPoint gridPos) const;
     void addGateItem(LogicGateItem* gate);
+    void addIOItem(InputOutputItem* io);
 
     void resizeToFit(QSizeF viewSize);
 
