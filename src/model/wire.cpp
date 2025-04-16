@@ -1,6 +1,13 @@
 #include "wire.h"
 
-Wire::Wire() {}
+Wire::Wire(int x, int y, int endX, int endY, int objectID) {
+    this->x = x;
+    this->y = y;
+    this->endX = endX;
+    this->endY = endY;
+    this->objectID = objectID;
+    destinations = std::vector<GameObject*>();
+}
 
 void Wire::setState(bool state, int senderID) {
     this->state = state;
@@ -9,7 +16,8 @@ void Wire::setState(bool state, int senderID) {
 
 void Wire::sendState() {
     for(GameObject* object : destinations) {
-        object->setState(state, this->senderID);
+        object->setState(state, this->objectID);
+        emit object->stateChanged(this->objectID, this->state);
     }
 }
 

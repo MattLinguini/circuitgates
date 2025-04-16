@@ -12,11 +12,11 @@
 class LogicGate : public GameObject
 {
 public:
-    ///@brief Constructor.
-    LogicGate();
-
     ///@brief Gate types.
-    enum class GateType {OR, AND, NOT, XOR};
+    enum class GateType {OR, AND, NOT, XOR, DEFAULT};
+
+    ///@brief Constructor.
+    LogicGate(int x, int y, int objectID, GateType type);
 
     ///@brief Sets the state of the logic gate object.
     void setState(bool state, int senderID = 0) override;
@@ -26,6 +26,9 @@ public:
 
     ///@brief Sends the current state to it's destinations.
     void sendState();
+
+    ///@brief Updates the gate type.
+    void updateType(GateType type);
 
 private:
     ///@brief Type of the gate.

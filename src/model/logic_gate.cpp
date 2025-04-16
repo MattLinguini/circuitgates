@@ -1,8 +1,21 @@
 #include "logic_gate.h"
 
-LogicGate::LogicGate() {}
+LogicGate::LogicGate(int x, int y, int objectID, GateType type) {
+    this->x = x;
+    this->y = y;
+    this->objectID = objectID;
+    this->type = type;
+    this->destinations = std::vector<GameObject*>();
+}
 
 void LogicGate::setState(bool state, int senderID) {
+    if (leftID == 0) {
+        leftID = senderID;
+    } else if (rightID == 0) {
+        rightID = senderID;
+    }
+
+
     if (senderID == leftID) {
         leftState = state;
         verifyGate();
@@ -11,12 +24,6 @@ void LogicGate::setState(bool state, int senderID) {
         rightState = state;
         verifyGate();
         return;
-    }
-
-    if (leftID == 0) {
-        leftID = senderID;
-    } else if (rightID == 0) {
-        rightID = senderID;
     }
 }
 
@@ -50,6 +57,8 @@ void LogicGate::verifyGate() {
                 state = 0;
             }
             break;
+        case GateType::DEFAULT:
+            break;
     }
     sendState();
 }
@@ -57,5 +66,10 @@ void LogicGate::verifyGate() {
 void LogicGate::sendState() {
     for(GameObject* object : destinations) {
         object->setState(state);
+        emit object->stateChanged(this->objectID, this->state);
     }
+}
+
+void LogicGate::updateType(GateType type) {
+    this->type = type;
 }
