@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <property name="sizePolicy">
     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -93,6 +96,9 @@ background-color:white;</string>
           <height>16777215</height>
          </size>
         </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
         <property name="html">
          <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
@@ -126,7 +132,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">background-color:white;</string>
+         <string notr="true"/>
         </property>
         <property name="widgetResizable">
          <bool>true</bool>
@@ -137,139 +143,81 @@ li.checked::marker { content: &quot;\2612&quot;; }
            <x>0</x>
            <y>0</y>
            <width>248</width>
-           <height>280</height>
+           <height>312</height>
           </rect>
          </property>
-         <widget class="QPushButton" name="level_1">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>10</y>
-            <width>231</width>
-            <height>25</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Level One</string>
-          </property>
-         </widget>
-         <widget class="QPushButton" name="level_2">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>40</y>
-            <width>231</width>
-            <height>25</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Level Two</string>
-          </property>
-         </widget>
-         <widget class="QPushButton" name="level_3">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>70</y>
-            <width>231</width>
-            <height>25</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Level Three</string>
-          </property>
-         </widget>
-         <widget class="QPushButton" name="level_4">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>100</y>
-            <width>231</width>
-            <height>25</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Level Four</string>
-          </property>
-         </widget>
-         <widget class="QPushButton" name="level_5">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>130</y>
-            <width>231</width>
-            <height>25</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Level Five</string>
-          </property>
-         </widget>
-         <widget class="QPushButton" name="level_6">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>160</y>
-            <width>231</width>
-            <height>25</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Level Six</string>
-          </property>
-         </widget>
-         <widget class="QPushButton" name="level_7">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>190</y>
-            <width>231</width>
-            <height>25</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Level Seven</string>
-          </property>
-         </widget>
-         <widget class="QPushButton" name="level_8">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>220</y>
-            <width>231</width>
-            <height>25</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Level Eight</string>
-          </property>
-         </widget>
-         <widget class="QPushButton" name="level_9">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>250</y>
-            <width>231</width>
-            <height>25</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Level Nine</string>
-          </property>
-         </widget>
-         <widget class="QPushButton" name="level_10">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>280</y>
-            <width>231</width>
-            <height>25</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Level Nine</string>
-          </property>
-         </widget>
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <item>
+           <widget class="QPushButton" name="level_1">
+            <property name="text">
+             <string>Level One</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="level_2">
+            <property name="text">
+             <string>Level Two</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="level_3">
+            <property name="text">
+             <string>Level Three</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="level_4">
+            <property name="text">
+             <string>Level Four</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="level_5">
+            <property name="text">
+             <string>Level Five</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="level_6">
+            <property name="text">
+             <string>Level Six</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="level_7">
+            <property name="text">
+             <string>Level Seven</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="level_8">
+            <property name="text">
+             <string>Level Eight</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="level_9">
+            <property name="text">
+             <string>Level Nine</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="level_10">
+            <property name="text">
+             <string>Level Ten</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </widget>
       </item>
