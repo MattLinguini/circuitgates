@@ -30,6 +30,9 @@ public:
     ///@brief Updates the gate type.
     void updateType(GateType type);
 
+    ///@brief Adds a destination to this objects destinations list.
+    void addDestination(GameObject* address) override;
+
 private:
     ///@brief Type of the gate.
     GateType type;

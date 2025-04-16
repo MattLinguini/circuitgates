@@ -73,3 +73,7 @@ void LogicGate::sendState() {
 void LogicGate::updateType(GateType type) {
     this->type = type;
 }
+
+void LogicGate::addDestination(GameObject* address) {
+    this->destinations.push_back(address);
+}

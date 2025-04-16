@@ -1,4 +1,5 @@
 #include "input_output.h"
+#include <QDebug>
 
 using std::vector;
 
@@ -22,4 +23,12 @@ void InputOutput::sendState() {
         object->setState(state);
         emit object->stateChanged(this->objectID, this->state);
     }
+}
+
+void  InputOutput::addDestination(GameObject* address) {
+    this->destinations.push_back(address);
+}
+
+void InputOutput::checkState() {
+    qDebug() << state;
 }

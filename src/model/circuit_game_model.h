@@ -3,10 +3,11 @@
 
 #include "level.h"
 
-class CircuitGame_Model
+class CircuitGameModel : public QObject
 {
+    Q_OBJECT
 public:
-    CircuitGame_Model();
+    CircuitGameModel(QObject *parent = nullptr);
 
     /// @brief Saves the level object held in the modeL.
     void saveLevel();
@@ -14,6 +15,8 @@ public:
     /// @brief Loads the level object and holds it in the model.
     void loadLevel();
 
+    //TEST METHOD
+    void createLevel();
 private:
     Level currentLevel;
 };

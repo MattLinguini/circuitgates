@@ -21,4 +21,7 @@ void Wire::sendState() {
     }
 }
 
+void Wire::addDestination(GameObject* address) {
+    this->destinations.push_back(address);
+}
 

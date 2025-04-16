@@ -4,6 +4,9 @@
 #include <QJsonObject>
 #include <vector>
 #include "game_object.h"
+#include "logic_gate.h"
+#include "input_output.h"
+#include "wire.h"
 #include <map>
 
 class Level

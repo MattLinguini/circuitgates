@@ -21,6 +21,12 @@ public:
     ///@brief Sets the state of the object.
     void setState(bool state, int senderID = 0) override;
 
+    ///@brief Adds a destination to this objects destinations list.
+    void addDestination(GameObject* address) override;
+
+    //TEST METHOD
+    void checkState();
+
 private:
     ///@brief Sets whether the object is clickable. (
     bool toggleable;

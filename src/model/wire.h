@@ -18,6 +18,9 @@ public:
 
     ///@brief The end Y for the wire.
     int endY;
+
+    ///@brief Adds a destination to this objects destinations list.
+    void addDestination(GameObject* address) override;
 };
 
 #endif // WIRE_H

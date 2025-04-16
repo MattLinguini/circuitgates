@@ -20,7 +20,11 @@ public:
     ///@brief Sets the state of the object.
     virtual void setState(bool state, int senderID = 0) = 0;
 
+    ///@brief Adds a destination to this objects destinations list.
+    virtual void addDestination(GameObject* address) = 0;
+
 signals:
+    ///@brief Signals to the view to update object state.
     void stateChanged(int objectID, bool state);
 
 protected:
