@@ -1,15 +1,17 @@
 #include "input_output.h"
 #include <QDebug>
+#include "level.h"
 
 using std::vector;
 
-InputOutput::InputOutput(int x, int y, int objectID, bool toggleable)
+InputOutput::InputOutput(int x, int y, int objectID, bool toggleable, Level* lvl)
 {
     this->x = x;
     this->y = y;
     this->objectID = objectID;
     this->toggleable = toggleable;
-    destinations = std::vector<GameObject*>();
+    this->parentLevel = lvl;
+    destinations = std::vector<int>();
 }
 
 void InputOutput::setState(bool state, int) {
@@ -19,14 +21,19 @@ void InputOutput::setState(bool state, int) {
 
 void InputOutput::sendState() {
     //TODO: May need destinations != nullptr check.
-    for (GameObject* object : destinations) {
-        object->setState(state);
-        emit object->stateChanged(this->objectID, this->state);
+    for (int i : destinations) {
+        GameObject* obj = dynamic_cast<GameObject*>(this->parentLevel->objectLookup(i));
+        if (obj) {
+            emit obj->stateChanged(this->objectID, this->state);
+            obj->setState(this->state, this->objectID);
+        } else {
+            qDebug() << "Warning: object ID" << i << "not found in Level!";
+        }
     }
 }
 
-void  InputOutput::addDestination(GameObject* address) {
-    this->destinations.push_back(address);
+void  InputOutput::addDestination(int objectID) {
+    this->destinations.push_back(objectID);
 }
 
 void InputOutput::checkState() {

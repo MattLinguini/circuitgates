@@ -5,7 +5,7 @@
 class Wire : public GameObject
 {
 public:
-    Wire(int x, int y, int endX, int endY, int objectID);
+    Wire(int x, int y, int endX, int endY, int objectID, Level* lvl);
 
     ///@brief Sets the wire's state.
     void setState(bool state, int senderID) override;
@@ -20,7 +20,10 @@ public:
     int endY;
 
     ///@brief Adds a destination to this objects destinations list.
-    void addDestination(GameObject* address) override;
+    void addDestination(int objectID) override;
+
+    //TEST METHOD
+    void checkState();
 };
 
 #endif // WIRE_H

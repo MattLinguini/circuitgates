@@ -3,11 +3,12 @@
 
 #include <QJsonObject>
 #include <vector>
-#include "game_object.h"
 #include "logic_gate.h"
 #include "input_output.h"
 #include "wire.h"
-#include <map>
+#include <QMap>
+
+#include "game_object.h"
 
 class Level
 {
@@ -25,11 +26,19 @@ public:
     /// @return A QJsonObject containing this level.
     QJsonObject toJson();
 
+  //  std::vector<GameObject*> gameObjs;
+
+    void addToGameObjs(GameObject *obj);
+
+    GameObject* objectLookup(int id);
+
+private:
+
     /// @brief Contains all the GameObjects within a level.
-    std::vector<GameObject*> gameObjs;
+    QMap<int, GameObject*> gameObjs;
 
     /// @brief Map containing the allowed budget for certain gates.
-    std::map<GateType, int> budget;
+    QMap<GateType, int> budget;
 
 };
 

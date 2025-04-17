@@ -13,7 +13,7 @@ class InputOutput : public GameObject
 {
 public:
     ///@brief Constructor.
-    InputOutput(int x, int y, int objectID, bool toggleable);
+    InputOutput(int x, int y, int objectID, bool toggleable, Level* lvl);
 
     ///@brief Sends the current state to it's destinations.
     void sendState();
@@ -22,7 +22,7 @@ public:
     void setState(bool state, int senderID = 0) override;
 
     ///@brief Adds a destination to this objects destinations list.
-    void addDestination(GameObject* address) override;
+    void addDestination(int objectID) override;
 
     //TEST METHOD
     void checkState();

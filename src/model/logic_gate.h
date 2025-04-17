@@ -16,7 +16,7 @@ public:
     enum class GateType {OR, AND, NOT, XOR, DEFAULT};
 
     ///@brief Constructor.
-    LogicGate(int x, int y, int objectID, GateType type);
+    LogicGate(int x, int y, int objectID, GateType type, Level* lvl);
 
     ///@brief Sets the state of the logic gate object.
     void setState(bool state, int senderID = 0) override;
@@ -31,17 +31,17 @@ public:
     void updateType(GateType type);
 
     ///@brief Adds a destination to this objects destinations list.
-    void addDestination(GameObject* address) override;
+    void addDestination(int objectID) override;
 
 private:
     ///@brief Type of the gate.
     GateType type;
 
     ///@brief ID of left wire.
-    int leftID;
+    int leftID = -1;
 
     ///@brief ID of right wire.
-    int rightID;
+    int rightID = -1;
 
     ///@brief State of left wire.
     bool leftState;
