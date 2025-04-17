@@ -7,8 +7,13 @@
 CircuitGameView::CircuitGameView(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow), model(new CircuitGameModel(this)) {
     ui->setupUi(this);
 
+    GameScene* scene = new GameScene(this);
+    scene->setGridSize(5);
+
     model->createLevel();
 
+
+    ui->graphicsView->setScene(scene);
 }
 
 CircuitGameView::~CircuitGameView() {
