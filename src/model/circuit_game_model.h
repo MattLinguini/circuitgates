@@ -15,7 +15,7 @@ public:
     /// @brief Loads the level object and holds it in the model.
     void loadLevel();
 
-    //TEST METHOD
+   ///@brief Builds a level
     void createLevel();
 private:
     Level currentLevel;

@@ -2,7 +2,6 @@
 #define LEVEL_H
 
 #include <QJsonObject>
-#include <vector>
 #include "logic_gate.h"
 #include "input_output.h"
 #include "wire.h"
@@ -25,8 +24,6 @@ public:
     /// @brief Generates a json representation of this object.
     /// @return A QJsonObject containing this level.
     QJsonObject toJson();
-
-  //  std::vector<GameObject*> gameObjs;
 
     void addToGameObjs(GameObject *obj);
 
