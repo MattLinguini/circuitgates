@@ -1,47 +1,28 @@
 #ifndef GAMEOBJECTS_H
 #define GAMEOBJECTS_H
 
-#include <QGraphicsSvgItem>
-#include <QGraphicsPathItem>
+#include "Box2D/Dynamics/b2Body.h"
 #include <QGraphicsRectItem>
 
-class LogicGateItem : public QGraphicsSvgItem {
+class GateSlotItem : public QGraphicsRectItem {
     public:
-        enum GateType { AND, OR, NOT, XOR };
+        /// @brief Constructor to create a Gate Slot
+        /// @param world Reference to the box2D world created in the GameScene
+        /// @param centerX X value (in meters) where the item should be created
+        /// @param centerY Y value (in meters) where the item should be created
+        /// @param width Width (in meters) of the item.
+        /// @param height Height (in meters) of the item.
+        GateSlotItem(b2World* world, float centerX, float centerY, float width, float height, float cellSize, float padding, QGraphicsItem* parent = nullptr);
 
-        LogicGateItem(int x, int y, GateType gateType, QGraphicsSvgItem* parent = nullptr);
-        void updateImage(GateType gateType);
-        GateType getType() const;
-        void setPowered(bool state);
-
-        int x;
-        int y;
-    private:
-        void setType(GateType gateType);
-        void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
-
-        GateType gateType;
-        QColor gateColor;
-};
-
-class WireItem : public QGraphicsPathItem {
-    public:
-        WireItem();
+        /// @brief Returns the box2d body of the Gate Slot.
+        b2Body* getBody() const;
 
     private:
-};
-
-class InputOutputItem : public QGraphicsRectItem {
-    public:
-        enum IOType { INPUT, OUTPUT };
-        InputOutputItem(int x, int y, IOType type, QGraphicsRectItem* parent = nullptr);
-        void setState(bool on);
-
-        int x;
-        int y;
-    private:
-        IOType ioType;
-        QGraphicsTextItem* label;
+        QVariant itemChange(GraphicsItemChange change, const QVariant& value) override;
+        void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;
+        b2Body* body;
+        float padding;
+        float cellSize;
 };
 
 #endif // GAMEOBJECTS_H
