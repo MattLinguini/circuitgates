@@ -63,8 +63,9 @@ SOURCES += \
     src/model/level.cpp \
     src/view/box2ddebug.cpp \
     src/view/circuit_game_view.cpp \
-    src/view/gameobjects.cpp \
     src/view/gamescene.cpp \
+    src/view/gateslotitem.cpp \
+    src/view/logicgateitem.cpp
 
 HEADERS += \
     Box2D/Box2D.h \
@@ -122,8 +123,9 @@ HEADERS += \
     src/model/level.h \
     src/view/box2ddebug.h \
     src/view/circuit_game_view.h \
-    src/view/gameobjects.h \
-    src/view/gamescene.h
+    src/view/gamescene.h \
+    src/view/gateslotitem.h \
+    src/view/logicgateitem.h
 
 FORMS += \
     circuit_game_view.ui

@@ -17,6 +17,7 @@ class GameScene : public QGraphicsScene {
 public:
     GameScene(QObject* parent = nullptr);
     void addGateSlot(int x, int y);
+    void addLogicGate(int x, int y);
 
 private slots:
     void physicsLoop();
@@ -24,6 +25,7 @@ private slots:
 private:
     void drawBackground(QPainter* painter, const QRectF& rect) override;
     void drawForeground(QPainter* painter, const QRectF&) override;
+    void createWorldBounds();
 
     b2World world;
     Box2DDebugDraw debugDraw;

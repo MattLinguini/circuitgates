@@ -10,8 +10,10 @@ CircuitGameView::CircuitGameView(QWidget *parent) : QMainWindow(parent), ui(new 
     GameScene* scene = new GameScene(this);
 
     scene->addGateSlot(1, 1);
+    scene->addGateSlot(4, 2);
+    scene->addLogicGate(5, 1);
 
-    model->createLevel();
+    // model->createLevel();
     ui->graphicsView->setScene(scene);
 }
 
