@@ -13,7 +13,7 @@ LogicGate::LogicGate(int x, int y, int objectID, GateType type, Level* lvl) {
 void LogicGate::setState(bool state, int senderID) {
     if (leftID == -1) {
         leftID = senderID;
-    } else if (rightID == -1) {
+    } else if (rightID == -1 && senderID != leftID) {
         rightID = senderID;
     }
 
@@ -82,4 +82,9 @@ void LogicGate::updateType(GateType type) {
 
 void LogicGate::addDestination(int objectID) {
     this->destinations.push_back(objectID);
+}
+
+
+void LogicGate::checkState() {
+    qDebug() << state;
 }

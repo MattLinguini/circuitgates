@@ -33,6 +33,8 @@ public:
     ///@brief Adds a destination to this objects destinations list.
     void addDestination(int objectID) override;
 
+    void checkState();
+
 private:
     ///@brief Type of the gate.
     GateType type;
@@ -44,10 +46,10 @@ private:
     int rightID = -1;
 
     ///@brief State of left wire.
-    bool leftState;
+    bool leftState = 0;
 
     ///@brief State of right wire.
-    bool rightState;
+    bool rightState = 0;
 };
 
 #endif // LOGIC_GATE_H
