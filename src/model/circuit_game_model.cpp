@@ -5,29 +5,6 @@
 
 CircuitGameModel::CircuitGameModel(QObject *parent) : QObject(parent) {}
 
-void CircuitGameModel::saveLevel() {
-    QJsonDocument jsonDoc(currentLevel.toJson());
-    QFile file(":test.txt");
-    QByteArray data = jsonDoc.toJson();
-
-    file.open(QIODevice::WriteOnly);
-    file.write(data);
-    file.close();
-}
-
-void CircuitGameModel::loadLevel() {
-    QFile file(":test.txt");
-    if (file.open(QIODevice::ReadOnly)) {
-        QByteArray data = file.readAll();
-        file.close();
-
-        QJsonDocument doc = QJsonDocument::fromJson(data);
-        QJsonObject levelJson = doc.object();
-
-        currentLevel = Level(levelJson);
-    }
-}
-
 void CircuitGameModel::createLevel() {
     Level lvl = Level();
 

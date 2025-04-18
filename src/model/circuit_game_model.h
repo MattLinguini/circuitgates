@@ -9,12 +9,6 @@ class CircuitGameModel : public QObject
 public:
     CircuitGameModel(QObject *parent = nullptr);
 
-    /// @brief Saves the level object held in the modeL.
-    void saveLevel();
-
-    /// @brief Loads the level object and holds it in the model.
-    void loadLevel();
-
     //TEST METHOD
     void createLevel();
 private:

@@ -18,14 +18,6 @@ public:
     ///@brief Gate types.
     enum class GateType {OR, AND, NOT, XOR, DEFAULT};
 
-    /// @brief Constructor for a level object using a QJsonObject as reference.
-    /// @param QJsonObject - the json structure to base this level off of.
-    Level(const QJsonObject& obj);
-
-    /// @brief Generates a json representation of this object.
-    /// @return A QJsonObject containing this level.
-    QJsonObject toJson();
-
   //  std::vector<GameObject*> gameObjs;
 
     void addToGameObjs(GameObject *obj);
