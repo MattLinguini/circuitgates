@@ -38,3 +38,7 @@ void  InputOutput::addDestination(int objectID) {
 void InputOutput::checkState() {
     qDebug() << state;
 }
+
+std::vector<int>* InputOutput::getDestinations() {
+    return &destinations;
+}

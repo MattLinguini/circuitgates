@@ -27,8 +27,11 @@ public:
     ///@brief Adds a destination to this objects destinations list.
     virtual void addDestination(int objectID) = 0;
 
+    ///@brief Gets a gameObject's destinations.
+    virtual std::vector<int>* getDestinations() = 0;
+
     ///@brief Describes the type of game object
-    enum class GameObjectType {GATE, WIRE, IO};
+    enum class GameObjectType {GATE, IO};
 
     ///@brief Object ID.
     int objectID;
@@ -44,14 +47,13 @@ public:
     ///@brief Object's y coordinate.
     int y;
 
+    bool inView = 0;
+
 signals:
     ///@brief Signals to the view to update object state.
     void stateChanged(int objectID, bool state);
 
 protected:
-
-
-
     ///@brief Reference to the level that this object is stored in.
     Level* parentLevel;
 

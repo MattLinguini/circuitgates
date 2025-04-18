@@ -33,6 +33,9 @@ public:
     ///@brief Adds a destination to this objects destinations list.
     void addDestination(int objectID) override;
 
+    ///@brief Gets a gameObject's destinations.
+    std::vector<int>* getDestinations() override;
+
     void checkState();
 
     ///@brief Returns the gates type.

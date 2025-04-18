@@ -4,7 +4,6 @@
 #include <QJsonObject>
 #include "logic_gate.h"
 #include "input_output.h"
-#include "wire.h"
 #include <QMap>
 
 #include "game_object.h"
@@ -28,8 +27,6 @@ public:
 
     LogicGate* addGate(int x, int y, GateType type);
 
-    Wire* addWire(int x, int y, int endX, int endY);
-
     /// @brief Allows you to modify the level budget.
     void setGateBudget(GateType type, int num);
 
@@ -52,8 +49,6 @@ private:
 
     /// @brief Tracks the next GameObject ID.
     int nextID = 1;
-
-
 
 };
 

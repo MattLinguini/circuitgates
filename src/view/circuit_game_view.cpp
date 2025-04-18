@@ -36,17 +36,83 @@ void CircuitGameView::receiveLevelPointer(Level* lvl) {
 void CircuitGameView::drawLevel() {
     GameScene* scene = new GameScene(this);
 
-    for (auto* gameObj : modelGameObjs->values()) {
-        if (gameObj->objType == GameObject::GameObjectType::IO) {
-            //ADD IO TO SCENE
-        } else if (gameObj->objType == GameObject::GameObjectType::GATE) {
-            if (static_cast<LogicGate*>(gameObj)->getGateType() == GateType::DEFAULT) {
-                scene->addGateSlot(gameObj->x, gameObj->y);
-            }
-        } else if (gameObj->objType == GameObject::GameObjectType::WIRE) {
-            //ADD WIRES TO SCENE
-        }
+    //for (every gameObj) {
+    //  if (notInView yet) {
+    //      add it
+    //  }
+    //   for each dest {
+    //      if (not in view yet) {
+    //          add it }
+    //  add wire between them
 
+    // GateSlotItem* source;
+    // GateSlotItem* dest;
+    // GameObject* tempObj;
+    // for(auto* gameObj : modelGameObjs->values()) {
+    //     if(!gameObj->inView) {
+    //         if (gameObj->objType == GameObject::GameObjectType::IO) {
+    //             //ADD IO TO SCENE
+    //         } else if (gameObj->objType == GameObject::GameObjectType::GATE) {
+    //             if (static_cast<LogicGate*>(gameObj)->getGateType() == GateType::DEFAULT) {
+    //                 source = scene->addGateSlot(gameObj->x, gameObj->y);
+    //             }
+    //         }
+    //     }
+    //     for (int destination : *gameObj->getDestinations()) {
+    //         tempObj = modelGameObjs->value(destination);
+    //         if(!tempObj->inView) {
+    //             if (tempObj->objType == GameObject::GameObjectType::IO) {
+    //                 //ADD IO TO SCENE
+    //             } else if (tempObj->objType == GameObject::GameObjectType::GATE) {
+    //                 if (static_cast<LogicGate*>(gameObj)->getGateType() == GateType::DEFAULT) {
+    //                     dest = scene->addGateSlot(tempObj->x, tempObj->y);
+    //                 }
+    //             }
+    //         }
+    //         scene->addWireItem(source, dest);
+    //     }
+    // }
+
+    GateSlotItem* source = nullptr;
+    GateSlotItem* dest = nullptr;
+
+    for (GameObject* gameObj : modelGameObjs->values()) {
+        if (!gameObj->inView) {
+            if (gameObj->objType == GameObject::GameObjectType::IO) {
+                // ADD IO TO SCENE
+                // scene->addIOItem(gameObj->x, gameObj->y);
+                gameObj->inView = true;
+            }
+            else if (gameObj->objType == GameObject::GameObjectType::GATE) {
+                LogicGate* gate = static_cast<LogicGate*>(gameObj);
+                if (gate->getGateType() == GateType::DEFAULT) {
+                    source = scene->addGateSlot(gate->x, gate->y);
+                    gate->inView = true;
+                    for (int destination : *gate->getDestinations()) {
+                        GameObject* destObj = modelGameObjs->value(destination);
+                        if (!destObj->inView) {
+                            if (destObj->objType == GameObject::GameObjectType::IO) {
+                                // ADD IO TO SCENE
+                                // scene->addIOItem(destObj->x, destObj->y);
+                            }
+                            else if (destObj->objType == GameObject::GameObjectType::GATE) {
+                                LogicGate* destGate = static_cast<LogicGate*>(destObj);
+                                if (destGate->getGateType() == GateType::DEFAULT) {
+                                    dest = scene->addGateSlot(destGate->x, destGate->y);
+                                }
+                            }
+                            destObj->inView = true;
+                        }
+
+                        // Only add wire if both ends exist
+                        if (source && dest) {
+                            scene->addWireItem(source, dest);
+                            dest = nullptr; // reset for next loop
+                        }
+                    }
+                }
+            }
+        }
     }
 
 

@@ -59,7 +59,6 @@ SOURCES += \
     src/model/input_output.cpp \
     src/model/logic_gate.cpp \
     main.cpp \
-    src/model/wire.cpp \
     src/model/level.cpp \
     src/view/box2ddebug.cpp \
     src/view/circuit_game_view.cpp \
@@ -120,7 +119,6 @@ HEADERS += \
     src/model/game_object.h \
     src/model/input_output.h \
     src/model/logic_gate.h \
-    src/model/wire.h \
     src/model/level.h \
     src/view/box2ddebug.h \
     src/view/circuit_game_view.h \

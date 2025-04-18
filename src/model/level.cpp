@@ -41,14 +41,6 @@ LogicGate* Level::addGate(int x, int y, GateType type) {
     return gate;
 }
 
-Wire* Level::addWire(int x, int y, int endX, int endY) {
-    Wire* wire = new Wire(x, y, endX, endY, nextID, this);
-    wire->objType = GameObject::GameObjectType::WIRE;
-    gameObjs.insert(nextID, wire);
-    nextID ++;
-    return wire;
-}
-
 void Level::setGateBudget(GateType type, int num) {
     this->budget.insert(type, num);
 }

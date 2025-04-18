@@ -89,6 +89,9 @@ GateType LogicGate::getGateType() {
     return type;
 }
 
+std::vector<int>* LogicGate::getDestinations() {
+    return &destinations;
+}
 
 void LogicGate::checkState() {
     qDebug() << state;
