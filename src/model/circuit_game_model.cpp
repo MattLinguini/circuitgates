@@ -36,7 +36,7 @@ void CircuitGameModel::loadLvl1() {
     Wire* w1 = currentLevel.addWire(2, 0, 3, 2);
     Wire* w2 = currentLevel.addWire(4, 0, 3, 2);
 
-    LogicGate* g1 = currentLevel.addGate(3,2,GateType::OR);
+    LogicGate* g1 = currentLevel.addGate(3,2,GateType::DEFAULT);
 
     Wire* w3 = currentLevel.addWire(3,2,3,4);
 
@@ -55,7 +55,8 @@ void CircuitGameModel::loadLvl1() {
     io1->setState(0,0);
     io2->setState(0,0);
 
-    io3->checkState();
+    //Sends a pointer of the created level to the view
+    emit sendLevelPointer(&currentLevel);
 }
 
 void CircuitGameModel::loadLvl2() {
@@ -71,7 +72,7 @@ void CircuitGameModel::loadLvl2() {
     Wire* w1 = currentLevel.addWire(2, 0, 3, 2);
     Wire* w2 = currentLevel.addWire(4, 0, 3, 2);
 
-    LogicGate* g1 = currentLevel.addGate(3,2,GateType::AND);
+    LogicGate* g1 = currentLevel.addGate(3,2,GateType::DEFAULT);
 
     Wire* w3 = currentLevel.addWire(3,2,3,4);
 
@@ -90,7 +91,8 @@ void CircuitGameModel::loadLvl2() {
     in1->setState(0,0);
     in2->setState(0,0);
 
-    out1->checkState();
+    //Sends a pointer of the created level to the view
+    emit sendLevelPointer(&currentLevel);
 }
 
 void CircuitGameModel::loadLvl3() {
@@ -111,9 +113,9 @@ void CircuitGameModel::loadLvl3() {
     Wire* w3 = currentLevel.addWire(4, 0, 2, 2);
 
     //TOGGLEABLE GATE -> EXPECTED: AND
-    LogicGate* g1 = currentLevel.addGate(2, 2, GateType::AND);
+    LogicGate* g1 = currentLevel.addGate(2, 2, GateType::DEFAULT);
     //TOGGLEABLE GATE -> EXPECTED: OR
-    LogicGate* g2 = currentLevel.addGate(4, 2, GateType::OR);
+    LogicGate* g2 = currentLevel.addGate(4, 2, GateType::DEFAULT);
 
     //From gate1 to output1
     Wire* w4 = currentLevel.addWire(2, 2, 2, 4);
@@ -143,7 +145,8 @@ void CircuitGameModel::loadLvl3() {
 
     in1->setState(0,0);
     in2->setState(0,0);
-    out1->checkState();
-    out2->checkState();
+
+    //Sends a pointer of the created level to the view
+    emit sendLevelPointer(&currentLevel);
 }
 

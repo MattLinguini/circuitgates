@@ -35,6 +35,9 @@ public:
 
     void checkState();
 
+    ///@brief Returns the gates type.
+    GateType getGateType();
+
 private:
     ///@brief Type of the gate.
     GateType type;

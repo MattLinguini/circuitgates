@@ -27,6 +27,7 @@ void Level::cleanLevel() {
 
 InputOutput* Level::addIO(int x, int y, bool toggleable) {
     InputOutput* IO = new InputOutput(x, y, nextID, toggleable, this);
+    IO->objType = GameObject::GameObjectType::IO;
     gameObjs.insert(nextID, IO);
     nextID++;
     return IO;
@@ -34,6 +35,7 @@ InputOutput* Level::addIO(int x, int y, bool toggleable) {
 
 LogicGate* Level::addGate(int x, int y, GateType type) {
     LogicGate* gate = new LogicGate(x, y, nextID, type, this);
+    gate->objType = GameObject::GameObjectType::GATE;
     gameObjs.insert(nextID, gate);
     nextID++;
     return gate;
@@ -41,6 +43,7 @@ LogicGate* Level::addGate(int x, int y, GateType type) {
 
 Wire* Level::addWire(int x, int y, int endX, int endY) {
     Wire* wire = new Wire(x, y, endX, endY, nextID, this);
+    wire->objType = GameObject::GameObjectType::WIRE;
     gameObjs.insert(nextID, wire);
     nextID ++;
     return wire;
@@ -49,6 +52,15 @@ Wire* Level::addWire(int x, int y, int endX, int endY) {
 void Level::setGateBudget(GateType type, int num) {
     this->budget.insert(type, num);
 }
+
+QMap<int, GameObject*>* Level::getGameObjs() {
+    return &gameObjs;
+}
+
+QMap<GateType, int>* Level::getBudget() {
+    return &budget;
+}
+
 
 Level::~Level() {
     qDeleteAll(gameObjs);

@@ -33,6 +33,10 @@ public:
     /// @brief Allows you to modify the level budget.
     void setGateBudget(GateType type, int num);
 
+    QMap<int, GameObject*>* getGameObjs();
+
+    QMap<GateType, int>* getBudget();
+
     ~Level();
 
 private:

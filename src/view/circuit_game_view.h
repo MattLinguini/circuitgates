@@ -24,8 +24,15 @@ public:
 private:
     Ui::MainWindow *ui;
     CircuitGameModel *model;
+    QMap<int, GameObject*>* modelGameObjs;
+    QMap<GateType, int>* budget;
+
+    void drawLevel();
 
 signals:
     void createLevel(int levelId);
+
+public slots:
+    void receiveLevelPointer(Level* lvl);
 };
 #endif // CIRCUIT_GAME_VIEW_H

@@ -27,17 +27,16 @@ public:
     ///@brief Adds a destination to this objects destinations list.
     virtual void addDestination(int objectID) = 0;
 
+    ///@brief Describes the type of game object
+    enum class GameObjectType {GATE, WIRE, IO};
+
     ///@brief Object ID.
     int objectID;
 
     ///@brief On or off.
     bool state = 0;
 
-signals:
-    ///@brief Signals to the view to update object state.
-    void stateChanged(int objectID, bool state);
-
-protected:
+    GameObjectType objType;
 
     ///@brief Object's x coordinate.
     int x;
@@ -45,11 +44,20 @@ protected:
     ///@brief Object's y coordinate.
     int y;
 
+signals:
+    ///@brief Signals to the view to update object state.
+    void stateChanged(int objectID, bool state);
+
+protected:
+
+
+
     ///@brief Reference to the level that this object is stored in.
     Level* parentLevel;
 
     ///@brief Where this game object points to.
     std::vector<int> destinations;
+
 };
 
 #endif // GAME_OBJECT_H

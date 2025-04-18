@@ -9,6 +9,9 @@ class CircuitGameModel : public QObject
 public:
     CircuitGameModel(QObject *parent = nullptr);
 
+signals:
+    void sendLevelPointer(Level* lvl);
+
 private:
     Level currentLevel;
 

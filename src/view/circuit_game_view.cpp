@@ -7,15 +7,6 @@
 CircuitGameView::CircuitGameView(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow), model(new CircuitGameModel(this)) {
     ui->setupUi(this);
 
-    GameScene* scene = new GameScene(this);
-
-    GateSlotItem* slot1 = scene->addGateSlot(1, 1);
-    GateSlotItem* slot2 = scene->addGateSlot(4, 3);
-    scene->addLogicGate(5, 1);
-    scene->addWireItem(slot1, slot2);
-
-    // model->createLevel();
-    ui->graphicsView->setScene(scene);
 
     // CONNECTIONS
 
@@ -31,6 +22,43 @@ CircuitGameView::CircuitGameView(QWidget *parent) : QMainWindow(parent), ui(new 
     connect(ui->level_8, &QPushButton::clicked, this, [this]() {emit CircuitGameView::createLevel(8);});
     connect(ui->level_9, &QPushButton::clicked, this, [this]() {emit CircuitGameView::createLevel(9);});
     connect(ui->level_10, &QPushButton::clicked, this, [this]() {emit CircuitGameView::createLevel(10);});
+
+    connect(model, &CircuitGameModel::sendLevelPointer, this, &CircuitGameView::receiveLevelPointer);
+}
+
+void CircuitGameView::receiveLevelPointer(Level* lvl) {
+    modelGameObjs = lvl->getGameObjs();
+    budget = lvl->getBudget();
+
+    drawLevel();
+}
+
+void CircuitGameView::drawLevel() {
+    GameScene* scene = new GameScene(this);
+
+    for (auto* gameObj : modelGameObjs->values()) {
+        if (gameObj->objType == GameObject::GameObjectType::IO) {
+            //ADD IO TO SCENE
+        } else if (gameObj->objType == GameObject::GameObjectType::GATE) {
+            if (static_cast<LogicGate*>(gameObj)->getGateType() == GateType::DEFAULT) {
+                scene->addGateSlot(gameObj->x, gameObj->y);
+            }
+        } else if (gameObj->objType == GameObject::GameObjectType::WIRE) {
+            //ADD WIRE
+        }
+
+    }
+
+
+
+
+    // GateSlotItem* slot1 = scene->addGateSlot(1, 1);
+    // GateSlotItem* slot2 = scene->addGateSlot(4, 3);
+    // scene->addLogicGate(5, 1);
+    // scene->addWireItem(slot1, slot2);
+
+    // model->createLevel();
+    ui->graphicsView->setScene(scene);
 }
 
 CircuitGameView::~CircuitGameView() {

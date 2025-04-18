@@ -84,6 +84,11 @@ void LogicGate::addDestination(int objectID) {
     this->destinations.push_back(objectID);
 }
 
+///@brief Returns the gates type.
+GateType LogicGate::getGateType() {
+    return type;
+}
+
 
 void LogicGate::checkState() {
     qDebug() << state;
