@@ -9,10 +9,11 @@ class CircuitGameModel : public QObject
 public:
     CircuitGameModel(QObject *parent = nullptr);
 
-    //TEST METHOD
-    void createLevel();
 private:
     Level currentLevel;
+
+public slots:
+    void createLevel(int levelId);
 };
 
 #endif // CIRCUIT_GAME_MODEL_H

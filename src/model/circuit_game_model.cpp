@@ -5,7 +5,7 @@
 
 CircuitGameModel::CircuitGameModel(QObject *parent) : QObject(parent) {}
 
-void CircuitGameModel::createLevel() {
+void CircuitGameModel::createLevel(int levelId) {
     Level lvl = Level();
 
     InputOutput in1 = InputOutput(0,0, 1, 0, &lvl);
