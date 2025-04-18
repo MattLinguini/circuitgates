@@ -8,22 +8,48 @@
 #define GAME_OBJECT_H
 
 #include <vector>
+#include <QObject>
+//TODO: REMOVE
+#include <QDebug>
 
-class GameObject
+class Level;
+
+class GameObject : public QObject
 {
+    Q_OBJECT
 public:
+    explicit GameObject(QObject* parent = nullptr, Level* lvl = nullptr) : QObject(parent), parentLevel(lvl) {}
+    virtual ~GameObject() = default;
+
     ///@brief Sets the state of the object.
     virtual void setState(bool state, int senderID = 0) = 0;
 
-protected:
-    ///@brief On or off.
-    bool state;
+    ///@brief Adds a destination to this objects destinations list.
+    virtual void addDestination(int objectID) = 0;
 
     ///@brief Object ID.
-    int senderID;
+    int objectID;
+
+    ///@brief On or off.
+    bool state = 0;
+
+signals:
+    ///@brief Signals to the view to update object state.
+    void stateChanged(int objectID, bool state);
+
+protected:
+
+    ///@brief Object's x coordinate.
+    int x;
+
+    ///@brief Object's y coordinate.
+    int y;
+
+    ///@brief Reference to the level that this object is stored in.
+    Level* parentLevel;
 
     ///@brief Where this game object points to.
-    std::vector<GameObject*> destinations;
+    std::vector<int> destinations;
 };
 
 #endif // GAME_OBJECT_H

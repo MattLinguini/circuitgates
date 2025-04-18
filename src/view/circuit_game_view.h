@@ -5,6 +5,7 @@
 #include <QShowEvent>
 #include <QResizeEvent>
 #include <QWidget>
+#include "src/model/circuit_game_model.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -24,5 +25,6 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    CircuitGameModel *model;
 };
 #endif // CIRCUIT_GAME_VIEW_H
