@@ -1,5 +1,5 @@
-#include "src/view/circuit_game_view.h"
-#include "ui_circuit_game_view.h"
+#include "circuit_game_view.h"       // <-- your class declaration
+#include "ui_circuit_game_view.h"    // <-- must come AFTER your class declaration
 #include "src/model/circuit_game_model.h"
 #include "gamescene.h"
 #include "gameobjects.h"

@@ -143,11 +143,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
            <x>0</x>
            <y>0</y>
            <width>248</width>
-<<<<<<< HEAD
            <height>312</height>
-=======
            <height>289</height>
->>>>>>> b06ba360ebc1b9a6270bcc301985211a61b1924c
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_2">
