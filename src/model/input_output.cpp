@@ -20,7 +20,6 @@ void InputOutput::setState(bool state, int) {
 }
 
 void InputOutput::sendState() {
-    //TODO: May need destinations != nullptr check.
     for (int i : destinations) {
         GameObject* obj = dynamic_cast<GameObject*>(this->parentLevel->objectLookup(i));
         if (obj) {

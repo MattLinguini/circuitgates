@@ -51,7 +51,7 @@ void LogicGate::verifyGate() {
                 state = 1;
             }
             break;
-        case GateType::XOR: // TODO: Might have incosistent timing that leads to bugs.
+        case GateType::XOR:
             if (leftState != rightState) {
                 state = 1;
             } else {

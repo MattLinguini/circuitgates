@@ -2,7 +2,6 @@
 #define LEVEL_H
 
 #include <QJsonObject>
-#include <vector>
 #include "logic_gate.h"
 #include "input_output.h"
 #include "wire.h"
@@ -10,27 +9,29 @@
 
 #include "game_object.h"
 
+using GateType = LogicGate::GateType;
+
 class Level
 {
 public:
     Level();
 
     ///@brief Gate types.
-    enum class GateType {OR, AND, NOT, XOR, DEFAULT};
+    //enum class GateType {OR, AND, NOT, XOR, DEFAULT};
 
-    /// @brief Constructor for a level object using a QJsonObject as reference.
-    /// @param QJsonObject - the json structure to base this level off of.
-    Level(const QJsonObject& obj);
-
-    /// @brief Generates a json representation of this object.
-    /// @return A QJsonObject containing this level.
-    QJsonObject toJson();
-
-  //  std::vector<GameObject*> gameObjs;
-
-    void addToGameObjs(GameObject *obj);
 
     GameObject* objectLookup(int id);
+
+    ///@brief Cleans out gameObjs and budget for a new level.
+    void cleanLevel();
+
+    InputOutput* addIO(int x, int y, bool toggleable);
+
+    LogicGate* addGate(int x, int y, GateType type);
+
+    Wire* addWire(int x, int y, int endX, int endY);
+
+    ~Level();
 
 private:
 
@@ -39,6 +40,14 @@ private:
 
     /// @brief Map containing the allowed budget for certain gates.
     QMap<GateType, int> budget;
+
+    /// @brief Adds a GameObject to the level's map.
+    void addToGameObjs(GameObject *obj);
+
+    /// @brief Tracks the next GameObject ID.
+    int nextID = 1;
+
+
 
 };
 

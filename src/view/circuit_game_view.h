@@ -24,5 +24,8 @@ public:
 private:
     Ui::MainWindow *ui;
     CircuitGameModel *model;
+
+signals:
+    void createLevel(int levelId);
 };
 #endif // CIRCUIT_GAME_VIEW_H
