@@ -3,50 +3,47 @@
 #include <QFile>
 #include <QByteArray>
 
-CircuitGameModel::CircuitGameModel(QObject *parent) : QObject(parent) {}
+CircuitGameModel::CircuitGameModel(QObject *parent) : QObject(parent), currentLevel() {}
 
 void CircuitGameModel::createLevel(int levelId) {
-    Level lvl = Level();
+    //Clears out currentLevel's memory for a new level to take place.
+    currentLevel.cleanLevel();
 
-    InputOutput in1 = InputOutput(0,0, 1, 0, &lvl);
-    InputOutput in2 = InputOutput(0,0, 2, 0, &lvl);
-    Wire w1 = Wire(0,0,1,2,3, &lvl);
-    Wire w2 = Wire(0,0,4,1,4, &lvl);
-    LogicGate orGate = LogicGate(0,0,5,LogicGate::GateType::AND, &lvl);
-    InputOutput out = InputOutput(0,0,6,0, &lvl);
+    switch (levelId) {
+    case 1:
+        loadLvl1();
+        break;
 
-    lvl.addToGameObjs(&in1);
-    lvl.addToGameObjs(&in2);
-    lvl.addToGameObjs(&w1);
-    lvl.addToGameObjs(&w2);
-    lvl.addToGameObjs(&orGate);
-    lvl.addToGameObjs(&out);
+    }
+}
 
-    in1.addDestination(w1.objectID);
-    in2.addDestination(w2.objectID);
-    w1.addDestination(orGate.objectID);
-    w2.addDestination(orGate.objectID);
-    orGate.addDestination(out.objectID);
+void CircuitGameModel::loadLvl1() {
+    InputOutput* io1 = currentLevel.addIO(2, 0, 0);
+    InputOutput* io2 = currentLevel.addIO(4, 0, 0);
 
-    //out.checkState();
+    Wire* w1 = currentLevel.addWire(2, 0, 3, 2);
+    Wire* w2 = currentLevel.addWire(4, 0, 3, 2);
 
-    in1.setState(1,0);
-    in2.setState(0,0);
-    in1.checkState();
-    w1.checkState();
-    out.checkState();
+    LogicGate* g1 = currentLevel.addGate(3,2,GateType::OR);
 
-   in2.setState(1,0);
-    in2.checkState();
-    w2.checkState();
-   out.checkState();
+    Wire* w3 = currentLevel.addWire(3,2,3,4);
 
-    in1.setState(0,0);
-    out.checkState();
+    InputOutput* io3 = currentLevel.addIO(3, 4, 0);
 
-    in1.setState(1,0);
-    out.checkState();
+    io1->addDestination(w1->objectID);
+    io2->addDestination(w2->objectID);
 
+    w1->addDestination(g1->objectID);
+    w2->addDestination(g1->objectID);
+
+    g1->addDestination(w3->objectID);
+
+    w3->addDestination(io3->objectID);
+
+    io1->setState(0,0);
+    io2->setState(0,0);
+
+    io3->checkState();
 
 }
 

@@ -12,6 +12,8 @@ public:
 private:
     Level currentLevel;
 
+    void loadLvl1();
+
 public slots:
     void createLevel(int levelId);
 };
