@@ -1,69 +1,66 @@
 #include "gameobjects.h"
-#include <QtSvg>
+#include "Box2D/Dynamics/b2World.h"
+#include "src/view/gamescene.h"
 
-LogicGateItem::LogicGateItem(int x, int y, GateType gateType, QGraphicsSvgItem* parent) : QGraphicsSvgItem(parent), x(x), y(y), gateType(gateType) {
-    setType(gateType);
+GateSlotItem::GateSlotItem(b2World* world, float centerX_meters, float centerY_meters, float width_meters, float height_meters, float cellSize, float padding, QGraphicsItem* parent) : QGraphicsRectItem(parent), body(nullptr), padding(padding), cellSize(cellSize) {
+    setFlag(QGraphicsItem::ItemIsMovable, true);
+    setFlag(QGraphicsItem::ItemSendsScenePositionChanges, true);
+
+    b2BodyDef bodyDef;
+    bodyDef.type = b2_kinematicBody;
+    bodyDef.position.Set(centerX_meters, centerY_meters);
+    body = world->CreateBody(&bodyDef);
+
+    b2PolygonShape shape;
+    shape.SetAsBox(width_meters/2, height_meters/2);
+
+    b2FixtureDef fixDef;
+    fixDef.shape = &shape;
+    fixDef.density = 1.0f;
+    fixDef.friction = 0.3f;
+    body->CreateFixture(&fixDef);
+
+    setRect(-width_meters/2 * SCALE, -height_meters/2 * SCALE, width_meters * SCALE, height_meters * SCALE);
+    setBrush(Qt::yellow);
+
+    setPos(centerX_meters * SCALE, -centerY_meters * SCALE);
 }
 
-LogicGateItem::GateType LogicGateItem::getType() const {
-    return gateType;
+b2Body* GateSlotItem::getBody() const {
+    return body;
 }
 
-void LogicGateItem::setType(GateType gateType) {
-    updateImage(gateType);
-}
-
-void LogicGateItem::updateImage(GateType gateType) {
-    QString svgPath;
-    switch (gateType) {
-        case AND: svgPath = ":/gates/resources/and_gate.svg"; break;
-        case OR: svgPath = ":/gates/resources/or_gate.svg"; break;
-        case NOT: svgPath = ":/gates/resources/not_gate.svg"; break;
-        case XOR: svgPath = ":/gates/resources/xor_gate.svg"; break;
+QVariant GateSlotItem::itemChange(GraphicsItemChange change, const QVariant& value) {
+    if (change == QGraphicsItem::ItemPositionHasChanged && body) {
+        QPointF pos = value.toPointF();
+        body->SetTransform(
+            b2Vec2(pos.x() / SCALE, -pos.y() / SCALE),
+            body->GetAngle()
+            );
     }
-        setSharedRenderer(new QSvgRenderer(svgPath));
+    return QGraphicsRectItem::itemChange(change, value);
 }
 
-void LogicGateItem::setPowered(bool state) {
-    if (state) {
-        gateColor = Qt::green;
-    }
-    else {
-        gateColor = Qt::black;
-    }
-}
+// Eventually this will go in the logic gate object itself
+void GateSlotItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event) {
+    QGraphicsRectItem::mouseReleaseEvent(event);
 
-void LogicGateItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) {
-    QGraphicsSvgItem::paint(painter, option, widget);
-    if (gateColor.isValid()) {
-        painter->setCompositionMode(QPainter::CompositionMode_SourceIn);
-        painter->fillRect(boundingRect(), gateColor);
-    }
-}
+    float x = pos().x();
+    float y = pos().y();
 
-InputOutputItem::InputOutputItem(int x, int y, IOType ioType, QGraphicsRectItem* parent) : QGraphicsRectItem(parent), x(x), y(y), ioType(ioType) {
-    setRect(0, 0, 40, 40);  // or cellSize-based
-    setBrush(Qt::white);
+    // Offset by half a cell to center rounding properly
+    float snappedCol = std::round((x - padding - cellSize/2) / cellSize);
+    float snappedRow = std::round((y - padding - cellSize/2) / cellSize);
 
-    label = new QGraphicsTextItem(this);
-    label->setDefaultTextColor(Qt::black);
-    label->setFont(QFont("Arial", 16, QFont::Bold));
-    label->setPos(10, 5);  // approximate centering
+    float snappedX = padding + snappedCol * cellSize + cellSize/2;
+    float snappedY = padding + snappedRow * cellSize + cellSize/2;
 
-    if (ioType == OUTPUT) {
-        setState(true);
-    } else {
-        setState(false);
-    }
-}
+    setPos(snappedX, snappedY);
 
-void InputOutputItem::setState(bool state) {
-    if (state) {
-        label->setPlainText("1");
-        setPen(QPen(Qt::green, 4));
-    }
-    else {
-        label->setPlainText("0");
-        setPen(QPen(Qt::black, 4));
+    if (body) {
+        body->SetTransform(
+            b2Vec2(snappedX / SCALE, -snappedY / SCALE),
+            body->GetAngle()
+            );
     }
 }

@@ -20,8 +20,6 @@ class CircuitGameView : public QMainWindow
 public:
     CircuitGameView(QWidget *parent = nullptr);
     ~CircuitGameView();
-    void resizeEvent(QResizeEvent* event);
-    void showEvent(QShowEvent* event);
 
 private:
     Ui::MainWindow *ui;

@@ -1,106 +1,80 @@
 #include "gamescene.h"
-#include <QPainter>
-#include <QPen>
-#include <QMap>
 #include "gameobjects.h"
+#include "Box2D/Common/b2Draw.h"
+#include "Box2D/Dynamics/b2Fixture.h"
+#include "Box2D/Dynamics/b2World.h"
+#include "qgraphicsitem.h"
 
-GameScene::GameScene(QObject* parent) : QGraphicsScene(parent) {
-    setBackgroundBrush(Qt::white);
+GameScene::GameScene(QObject* parent) : QGraphicsScene(parent), world(b2Vec2(0.0f, -9.8f)), cellSize(64), gridSize(7) {
+    // How much padding around the grid (in pixels)
+    const int padding = 10;
+
+    // Calculate total scene size
+    int sceneWidth  = gridSize * cellSize + 2 * padding;
+    int sceneHeight = gridSize * cellSize + 2 * padding;
+
+    setSceneRect(0, 0, sceneWidth, sceneHeight);
+
+    // set up debug draw
+    debugDraw.SetFlags(b2Draw::e_shapeBit);
+    world.SetDebugDraw(&debugDraw);
+
+    // start the simulation timer (60 Hz)
+    timer.setInterval(16);
+    connect(&timer, &QTimer::timeout, this, &GameScene::physicsLoop);
+    timer.start();
 }
 
+void GameScene::physicsLoop() {
+    float timeStep = 1.0f / 60.0f;
+    int velIters = 8;
+    int posIters = 3;
 
-void GameScene::addGateItem(LogicGateItem* gate) {
-    if (!gate)
-        return;
+    world.Step(timeStep, velIters, posIters);
 
-    // Convert grid coordinates to scene position (top-left of the cell)
-    QPointF scenePos = gridToScenePos(QPoint(gate->x, gate->y));
-    gate->setPos(scenePos);
+    for (auto it = bodyItemMap.begin(); it != bodyItemMap.end(); ++it) {
+        b2Body* body = it.key();
+        QGraphicsItem* item = it.value();
 
-    // Add it to the scene
-    addItem(gate);
-}
+        b2Vec2 pos = body->GetPosition();
+        float  ang = body->GetAngle();
 
-void GameScene::addIOItem(InputOutputItem* io) {
-    if (!io)
-        return;
+        item->setPos(pos.x * SCALE, -pos.y * SCALE);
+        item->setRotation(ang * 180.0f / b2_pi);
+    }
 
-    // Convert grid coordinates to scene position (top-left of the cell)
-    QPointF scenePos = gridToScenePos(QPoint(io->x, io->y));
-    io->setPos(scenePos);
-
-    // Add it to the scene
-    addItem(io);
-}
-
-void GameScene::setGridSize(int gSize, int cSize) {
-    gridSize = gSize;
-    cellSize = cSize;
-    setSceneRect(0, 0, gridSize * cellSize, gridSize * cellSize);
     update();
 }
 
-QPointF GameScene::gridToScenePos(QPoint gridPos) const {
-    return QPointF(gridPos.x() * cellSize, gridPos.y() * cellSize);
+void GameScene::addGateSlot(int x, int y) {
+    float size  = static_cast<float>(cellSize) / SCALE;
+    float scenePosX = (padding + x * cellSize + cellSize / 2) / SCALE;
+    float scenePosY = -(padding + y * cellSize + cellSize / 2) / SCALE;
+
+    GateSlotItem* item = new GateSlotItem(&world, scenePosX, scenePosY, size, size, cellSize, padding);
+    addItem(item);
+    bodyItemMap.insert(item->getBody(), item);
 }
 
 void GameScene::drawBackground(QPainter* painter, const QRectF& rect) {
-    QPen pen(Qt::lightGray);
-    pen.setWidth(1);
-    painter->setPen(pen);
+    Q_UNUSED(rect);
 
-    for (int x = 0; x <= gridSize; ++x) {
-        painter->drawLine(x * cellSize, 0, x * cellSize, gridSize * cellSize);
+    painter->setPen(QPen(Qt::lightGray, 0));
+
+    // Draw vertical grid lines
+    for (int i = 0; i <= gridSize; ++i) {
+        int x = padding + i * cellSize;
+        painter->drawLine(x, padding, x, padding + gridSize * cellSize);
     }
 
-    for (int y = 0; y <= gridSize; ++y) {
-        painter->drawLine(0, y * cellSize, gridSize * cellSize, y * cellSize);
+    // Draw horizontal grid lines
+    for (int j = 0; j <= gridSize; ++j) {
+        int y = padding + j * cellSize;
+        painter->drawLine(padding, y, padding + gridSize * cellSize, y);
     }
 }
 
-void GameScene::resizeToFit(QSizeF viewSize) {
-    if (gridSize == 0)
-        return;
-
-    const int padding = 10;
-    int availableWidth = viewSize.width() - padding;
-    int availableHeight = viewSize.height() - padding;
-    cellSize = std::min(availableWidth / gridSize, availableHeight / gridSize);
-    setSceneRect(0, 0, gridSize * cellSize, gridSize * cellSize);
-
-    for (auto* item : items()) {
-        if (LogicGateItem* gate = qgraphicsitem_cast<LogicGateItem*>(item)) {
-            gate->updateImage(gate->getType());
-
-            QPointF topLeftPos = gridToScenePos(QPoint(gate->x, gate->y));
-            QPointF centerPos = topLeftPos + QPointF(cellSize / 2.0, cellSize / 2.0);
-
-            gate->setTransformOriginPoint(gate->boundingRect().center());
-
-            QRectF bounds = gate->boundingRect();
-            qreal scaleFactor = qMin(cellSize / bounds.width(), cellSize / bounds.height());
-            gate->setScale(scaleFactor);
-            gate->setRotation(90);
-
-            QPointF gateSceneCenter = gate->mapToScene(gate->transformOriginPoint());
-            QPointF offset = centerPos - gateSceneCenter;
-            gate->moveBy(offset.x(), offset.y());
-        }
-        else if (InputOutputItem* io = qgraphicsitem_cast<InputOutputItem*>(item)) {
-            QPointF topLeftPos = gridToScenePos(QPoint(io->x, io->y));
-            QPointF centerPos = topLeftPos + QPointF(cellSize / 2.0, cellSize / 2.0);
-
-            io->setTransformOriginPoint(io->boundingRect().center());
-
-            QRectF bounds = io->boundingRect();
-            qreal scaleFactor = qMin(cellSize / bounds.width(), cellSize / bounds.height());
-            io->setScale(scaleFactor / 1.5);
-
-            QPointF ioSceneCenter = io->mapToScene(io->transformOriginPoint());
-            QPointF offset = centerPos - ioSceneCenter;
-            io->moveBy(offset.x(), offset.y());
-        }
-    }
-
-    update();
+void GameScene::drawForeground(QPainter* painter, const QRectF&) {
+    debugDraw.setPainter(painter);
+    world.DrawDebugData();
 }
