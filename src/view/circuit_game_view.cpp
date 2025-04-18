@@ -1,6 +1,6 @@
-#include "circuit_game_view.h"       // <-- your class declaration
+#include "circuit_game_view.h"
 #include "qgraphicsitem.h"
-#include "ui_circuit_game_view.h"    // <-- must come AFTER your class declaration
+#include "ui_circuit_game_view.h"
 #include "src/model/circuit_game_model.h"
 #include "gamescene.h"
 
