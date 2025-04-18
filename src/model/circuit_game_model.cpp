@@ -12,7 +12,7 @@ void CircuitGameModel::createLevel(int levelId) {
     InputOutput in2 = InputOutput(0,0, 2, 0, &lvl);
     Wire w1 = Wire(0,0,1,2,3, &lvl);
     Wire w2 = Wire(0,0,4,1,4, &lvl);
-    LogicGate orGate = LogicGate(0,0,5,LogicGate::GateType::OR, &lvl);
+    LogicGate orGate = LogicGate(0,0,5,LogicGate::GateType::AND, &lvl);
     InputOutput out = InputOutput(0,0,6,0, &lvl);
 
     lvl.addToGameObjs(&in1);
@@ -31,6 +31,7 @@ void CircuitGameModel::createLevel(int levelId) {
     //out.checkState();
 
     in1.setState(1,0);
+    in2.setState(0,0);
     in1.checkState();
     w1.checkState();
     out.checkState();
@@ -43,7 +44,7 @@ void CircuitGameModel::createLevel(int levelId) {
     in1.setState(0,0);
     out.checkState();
 
-    in2.setState(0,0);
+    in1.setState(1,0);
     out.checkState();
 
 

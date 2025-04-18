@@ -2,7 +2,6 @@
 #define LEVEL_H
 
 #include <QJsonObject>
-#include <vector>
 #include "logic_gate.h"
 #include "input_output.h"
 #include "wire.h"
@@ -17,8 +16,6 @@ public:
 
     ///@brief Gate types.
     enum class GateType {OR, AND, NOT, XOR, DEFAULT};
-
-  //  std::vector<GameObject*> gameObjs;
 
     void addToGameObjs(GameObject *obj);
 
