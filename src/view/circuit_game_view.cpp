@@ -44,7 +44,7 @@ void CircuitGameView::drawLevel() {
                 scene->addGateSlot(gameObj->x, gameObj->y);
             }
         } else if (gameObj->objType == GameObject::GameObjectType::WIRE) {
-            //ADD WIRE
+            //ADD WIRES TO SCENE
         }
 
     }

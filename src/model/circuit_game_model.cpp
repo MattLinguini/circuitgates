@@ -19,6 +19,9 @@ void CircuitGameModel::createLevel(int levelId) {
     case 3:
         loadLvl3();
         break;
+    case 4:
+        loadLvl4();
+        break;
     }
 }
 
@@ -150,3 +153,42 @@ void CircuitGameModel::loadLvl3() {
     emit sendLevelPointer(&currentLevel);
 }
 
+void CircuitGameModel::loadLvl4() {
+    //Set the level's budget
+    currentLevel.setGateBudget(GateType::AND, 2);
+    currentLevel.setGateBudget(GateType::OR, 0);
+    currentLevel.setGateBudget(GateType::XOR, 0);
+    currentLevel.setGateBudget(GateType::NOT, 0);
+
+    InputOutput* in1 = currentLevel.addIO(1, 0, 1);
+    InputOutput* in2 = currentLevel.addIO(3, 0, 1);
+    InputOutput* in3 = currentLevel.addIO(5, 0, 1);
+
+    Wire* w1 = currentLevel.addWire(1, 0, 3, 4);
+    Wire* w2 = currentLevel.addWire(3, 0, 4, 2);
+    Wire* w3 = currentLevel.addWire(5, 0, 4, 2);
+
+    LogicGate* g1 = currentLevel.addGate(4, 2, GateType::DEFAULT);
+    LogicGate* g2 = currentLevel.addGate(3, 4, GateType::DEFAULT);
+
+    Wire* w4 = currentLevel.addWire(4, 2, 3, 4);
+
+    InputOutput* out1 = currentLevel.addIO(3, 6, 0);
+
+    Wire* w5 = currentLevel.addWire(3, 4, 3, 6);
+
+    in1->addDestination(w1->objectID);
+    in2->addDestination(w2->objectID);
+    in3->addDestination(w3->objectID);
+
+    w1->addDestination(g2->objectID);
+    w2->addDestination(g1->objectID);
+    w3->addDestination(g1->objectID);
+
+    g1->addDestination(w4->objectID);
+    g2->addDestination(w5->objectID);
+
+    w5->addDestination(out1->objectID);
+
+    emit sendLevelPointer(&currentLevel);
+}
