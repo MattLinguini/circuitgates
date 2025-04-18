@@ -65,7 +65,8 @@ SOURCES += \
     src/view/circuit_game_view.cpp \
     src/view/gamescene.cpp \
     src/view/gateslotitem.cpp \
-    src/view/logicgateitem.cpp
+    src/view/logicgateitem.cpp \
+    src/view/wireitem.cpp
 
 HEADERS += \
     Box2D/Box2D.h \
@@ -125,7 +126,8 @@ HEADERS += \
     src/view/circuit_game_view.h \
     src/view/gamescene.h \
     src/view/gateslotitem.h \
-    src/view/logicgateitem.h
+    src/view/logicgateitem.h \
+    src/view/wireitem.h
 
 FORMS += \
     circuit_game_view.ui
