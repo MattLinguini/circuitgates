@@ -23,6 +23,13 @@ void CircuitGameModel::createLevel(int levelId) {
 }
 
 void CircuitGameModel::loadLvl1() {
+    //Set the level's budget
+    currentLevel.setGateBudget(GateType::AND, 0);
+    currentLevel.setGateBudget(GateType::OR, 1);
+    currentLevel.setGateBudget(GateType::XOR, 0);
+    currentLevel.setGateBudget(GateType::NOT, 0);
+
+
     InputOutput* io1 = currentLevel.addIO(2, 0, 1);
     InputOutput* io2 = currentLevel.addIO(4, 0, 1);
 
@@ -52,6 +59,12 @@ void CircuitGameModel::loadLvl1() {
 }
 
 void CircuitGameModel::loadLvl2() {
+    //Set the level's budget
+    currentLevel.setGateBudget(GateType::AND, 1);
+    currentLevel.setGateBudget(GateType::OR, 0);
+    currentLevel.setGateBudget(GateType::XOR, 0);
+    currentLevel.setGateBudget(GateType::NOT, 0);
+
     InputOutput* in1 = currentLevel.addIO(2, 0, 1);
     InputOutput* in2 = currentLevel.addIO(4, 0, 1);
 
@@ -81,6 +94,12 @@ void CircuitGameModel::loadLvl2() {
 }
 
 void CircuitGameModel::loadLvl3() {
+    //Set the level's budget
+    currentLevel.setGateBudget(GateType::AND, 2);
+    currentLevel.setGateBudget(GateType::OR, 1);
+    currentLevel.setGateBudget(GateType::XOR, 0);
+    currentLevel.setGateBudget(GateType::NOT, 0);
+
     InputOutput* in1 = currentLevel.addIO(2, 0, 1);
     InputOutput* in2 = currentLevel.addIO(4, 0, 1);
 

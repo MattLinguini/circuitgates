@@ -46,6 +46,10 @@ Wire* Level::addWire(int x, int y, int endX, int endY) {
     return wire;
 }
 
+void Level::setGateBudget(GateType type, int num) {
+    this->budget.insert(type, num);
+}
+
 Level::~Level() {
     qDeleteAll(gameObjs);
     gameObjs.clear();

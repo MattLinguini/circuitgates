@@ -19,7 +19,6 @@ public:
     ///@brief Gate types.
     //enum class GateType {OR, AND, NOT, XOR, DEFAULT};
 
-
     GameObject* objectLookup(int id);
 
     ///@brief Cleans out gameObjs and budget for a new level.
@@ -30,6 +29,9 @@ public:
     LogicGate* addGate(int x, int y, GateType type);
 
     Wire* addWire(int x, int y, int endX, int endY);
+
+    /// @brief Allows you to modify the level budget.
+    void setGateBudget(GateType type, int num);
 
     ~Level();
 
