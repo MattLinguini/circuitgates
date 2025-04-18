@@ -14,6 +14,10 @@ private:
 
     void loadLvl1();
 
+    void loadLvl2();
+
+    void loadLvl3();
+
 public slots:
     void createLevel(int levelId);
 };
