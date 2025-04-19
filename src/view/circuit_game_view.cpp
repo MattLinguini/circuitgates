@@ -23,7 +23,9 @@ CircuitGameView::CircuitGameView(QWidget *parent) : QMainWindow(parent), ui(new 
     connect(ui->level_9, &QPushButton::clicked, this, [this]() {emit CircuitGameView::createLevel(9);});
     connect(ui->level_10, &QPushButton::clicked, this, [this]() {emit CircuitGameView::createLevel(10);});
 
+    /// @brief Creates connections to transfer level data to the view.
     connect(model, &CircuitGameModel::sendLevelPointer, this, &CircuitGameView::receiveLevelPointer);
+    connect(model, &CircuitGameModel::sendLevelDescription, this, &CircuitGameView::recieveLevelDescription);
 }
 
 void CircuitGameView::receiveLevelPointer(Level* lvl) {
@@ -31,6 +33,11 @@ void CircuitGameView::receiveLevelPointer(Level* lvl) {
     budget = lvl->getBudget();
 
     drawLevel();
+}
+
+void CircuitGameView::recieveLevelDescription(QString levelName, QString levelDescription) {
+    ui->LevelLabel->setText(levelName);
+    ui->LevelDescription->setText(levelDescription);
 }
 
 void CircuitGameView::drawLevel() {

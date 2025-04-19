@@ -7,10 +7,18 @@ class CircuitGameModel : public QObject
 {
     Q_OBJECT
 public:
+    /// @brief Constructor for a CircuitGameModel.
+    /// @param parent: The parent object.
     CircuitGameModel(QObject *parent = nullptr);
 
 signals:
+    /// @brief Signal to send the level to the view.
+    /// @param lvl: the level pointer to send.
     void sendLevelPointer(Level* lvl);
+    /// @brief Signal to send the level flavor text to the view.
+    /// @param levelName: The title of the level.
+    /// @param levelDesc: The description of the level.
+    void sendLevelDescription(QString levelName, QString levelDescription);
 
 private:
     /// @brief The current level object held in the model.
@@ -37,6 +45,8 @@ private:
     void loadLvl10();
 
 public slots:
+    /// @brief Slot to  select a level to generate.
+    /// @param levelId: The id of the level to generate.
     void createLevel(int levelId);
 };
 
