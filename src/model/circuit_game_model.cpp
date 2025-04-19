@@ -22,6 +22,24 @@ void CircuitGameModel::createLevel(int levelId) {
     case 4:
         loadLvl4();
         break;
+    case 5:
+        loadLvl5();
+        break;
+    case 6:
+        loadLvl6();
+        break;
+    case 7:
+        loadLvl7();
+        break;
+    case 8:
+        loadLvl8();
+        break;
+    case 9:
+        loadLvl9();
+        break;
+    case 10:
+        loadLvl10();
+        break;
     }
 }
 
@@ -135,5 +153,195 @@ void CircuitGameModel::loadLvl4() {
     g1->addDestination(g2->objectID);
     g2->addDestination(out1->objectID);
 
+    emit sendLevelPointer(&currentLevel);
+}
+
+void CircuitGameModel::loadLvl5() {}
+
+void CircuitGameModel::loadLvl6() {
+    //Set the level's budget
+    currentLevel.setGateBudget(GateType::AND, 1);
+    currentLevel.setGateBudget(GateType::OR, 0);
+    currentLevel.setGateBudget(GateType::XOR, 0);
+    currentLevel.setGateBudget(GateType::NOT, 1);
+
+    InputOutput* in1 = currentLevel.addIO(2, 0, 1);
+    InputOutput* in2 = currentLevel.addIO(4, 0, 1);
+
+    //TOGGLEABLE GATE -> EXPECTED: AND
+    LogicGate* g1 = currentLevel.addGate(2, 2, GateType::DEFAULT);
+    //TOGGLEABLE GATE -> EXPECTED: NOT
+    LogicGate* g2 = currentLevel.addGate(4, 2, GateType::DEFAULT);
+
+    InputOutput* out1 = currentLevel.addIO(2, 4, 0);
+    InputOutput* out2 = currentLevel.addIO(4, 4, 1);
+
+    //Inputs to wires
+    in1->addDestination(g1->objectID);
+    in1->addDestination(g2->objectID);
+    in2->addDestination(g2->objectID);
+
+    //Gates to wires
+    g1->addDestination(out1->objectID);
+    g2->addDestination(out2->objectID);
+
+    in1->setState(0,0);
+    in2->setState(1,0);
+
+    //Sends a pointer of the created level to the view
+    emit sendLevelPointer(&currentLevel);
+}
+
+void CircuitGameModel::loadLvl7() {
+    //Set the level's budget
+    currentLevel.setGateBudget(GateType::AND, 0);
+    currentLevel.setGateBudget(GateType::OR, 1);
+    currentLevel.setGateBudget(GateType::XOR, 1);
+    currentLevel.setGateBudget(GateType::NOT, 0);
+
+    InputOutput* in1 = currentLevel.addIO(1, 0, 1);
+    InputOutput* in2 = currentLevel.addIO(3, 0, 1);
+    InputOutput* in3 = currentLevel.addIO(5, 0, 0);
+
+    //TOGGLEABLE GATE -> EXPECTED: XOR
+    LogicGate* g1 = currentLevel.addGate(2, 2, GateType::DEFAULT);
+    //TOGGLEABLE GATE -> EXPECTED: OR
+    LogicGate* g2 = currentLevel.addGate(4, 2, GateType::DEFAULT);
+
+    InputOutput* out1 = currentLevel.addIO(2, 4, 0);
+    InputOutput* out2 = currentLevel.addIO(4, 4, 1);
+
+    //Inputs to wires
+    in1->addDestination(g1->objectID);
+    in2->addDestination(g1->objectID);
+    in2->addDestination(g2->objectID);
+    in3->addDestination(g2->objectID);
+
+    //Gates to wires
+    g1->addDestination(out1->objectID);
+    g2->addDestination(out2->objectID);
+
+    in1->setState(1,0);
+    in2->setState(1,0);
+    in3->setState(0,0);
+
+    //Sends a pointer of the created level to the view
+    emit sendLevelPointer(&currentLevel);
+}
+
+void CircuitGameModel::loadLvl8() {
+    //Set the level's budget
+    currentLevel.setGateBudget(GateType::AND, 1);
+    currentLevel.setGateBudget(GateType::OR, 0);
+    currentLevel.setGateBudget(GateType::XOR, 1);
+    currentLevel.setGateBudget(GateType::NOT, 1);
+
+    InputOutput* in1 = currentLevel.addIO(1, 0, 0);
+    InputOutput* in2 = currentLevel.addIO(3, 0, 1);
+    InputOutput* in3 = currentLevel.addIO(5, 0, 0);
+
+    //TOGGLEABLE GATE -> EXPECTED: XOR
+    LogicGate* g1 = currentLevel.addGate(2, 2, GateType::DEFAULT);
+    //TOGGLEABLE GATE -> EXPECTED: AND
+    LogicGate* g2 = currentLevel.addGate(4, 2, GateType::DEFAULT);
+    //TOGGLEABLE GATE -> EXPECTED: NOT
+    LogicGate* g3 = currentLevel.addGate(4, 4, GateType::DEFAULT);
+
+    InputOutput* out1 = currentLevel.addIO(2, 4, 0);
+    InputOutput* out2 = currentLevel.addIO(4, 6, 1);
+
+    //Inputs to wires
+    in1->addDestination(g1->objectID);
+    in2->addDestination(g2->objectID);
+    in2->addDestination(g2->objectID);
+    in3->addDestination(g3->objectID);
+
+    //Gates to wires
+    g1->addDestination(out1->objectID);
+    g2->addDestination(g3->objectID);
+    g3->addDestination(out2->objectID);
+
+    in1->setState(0,0);
+    in2->setState(1,0);
+    in3->setState(0,0);
+
+    //Sends a pointer of the created level to the view
+    emit sendLevelPointer(&currentLevel);
+}
+
+void CircuitGameModel::loadLvl9() {
+    //Set the level's budget
+    currentLevel.setGateBudget(GateType::AND, 1);
+    currentLevel.setGateBudget(GateType::OR, 0);
+    currentLevel.setGateBudget(GateType::XOR, 1);
+    currentLevel.setGateBudget(GateType::NOT, 1);
+
+    InputOutput* in1 = currentLevel.addIO(1, 0, 1);
+    InputOutput* in2 = currentLevel.addIO(3, 0, 1);
+    InputOutput* in3 = currentLevel.addIO(5, 0, 1);
+
+    //TOGGLEABLE GATE -> EXPECTED: NOT
+    LogicGate* g1 = currentLevel.addGate(4, 1, GateType::DEFAULT);
+    //TOGGLEABLE GATE -> EXPECTED: XOR
+    LogicGate* g2 = currentLevel.addGate(3, 3, GateType::DEFAULT);
+    //TOGGLEABLE GATE -> EXPECTED: AND
+    LogicGate* g3 = currentLevel.addGate(2, 5, GateType::DEFAULT);
+
+    InputOutput* out1 = currentLevel.addIO(2, 7, 0);
+
+    //Inputs to wires
+    in1->addDestination(g3->objectID);
+    in2->addDestination(g2->objectID);
+    in3->addDestination(g1->objectID);
+
+    //Gates to wires
+    g1->addDestination(g2->objectID);
+    g2->addDestination(g3->objectID);
+    g3->addDestination(out1->objectID);
+
+    in1->setState(1,0);
+    in2->setState(0,0);
+    in3->setState(0,0);
+
+    //Sends a pointer of the created level to the view
+    emit sendLevelPointer(&currentLevel);
+}
+
+void CircuitGameModel::loadLvl10() {
+    //Set the level's budget
+    currentLevel.setGateBudget(GateType::AND, 0);
+    currentLevel.setGateBudget(GateType::OR, 1);
+    currentLevel.setGateBudget(GateType::XOR, 2);
+    currentLevel.setGateBudget(GateType::NOT, 0);
+
+    InputOutput* in1 = currentLevel.addIO(1, 0, 1);
+    InputOutput* in2 = currentLevel.addIO(3, 0, 1);
+    InputOutput* in3 = currentLevel.addIO(5, 0, 1);
+
+    //TOGGLEABLE GATE -> EXPECTED: XOR
+    LogicGate* g1 = currentLevel.addGate(2, 2, GateType::DEFAULT);
+    //TOGGLEABLE GATE -> EXPECTED: OR
+    LogicGate* g2 = currentLevel.addGate(4, 2, GateType::DEFAULT);
+    //TOGGLEABLE GATE -> EXPECTED: XOR
+    LogicGate* g3 = currentLevel.addGate(3, 4, GateType::DEFAULT);
+
+    InputOutput* out1 = currentLevel.addIO(3, 6, 0);
+
+    //Inputs to wires
+    in1->addDestination(g1->objectID);
+    in2->addDestination(g1->objectID);
+    in2->addDestination(g2->objectID);
+    in3->addDestination(g2->objectID);
+
+    //Gates to wires
+    g1->addDestination(g3->objectID);
+    g2->addDestination(g3->objectID);
+    g3->addDestination(out1->objectID);
+
+    in1->setState(0,0);
+    in2->setState(1,0);
+    in3->setState(1,0);
+
+    //Sends a pointer of the created level to the view
     emit sendLevelPointer(&currentLevel);
 }
