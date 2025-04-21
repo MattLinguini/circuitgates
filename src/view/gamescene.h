@@ -33,12 +33,12 @@ class GameScene : public QGraphicsScene {
         /// @brief Creates a input/output at the specific x and y coordinates on the grid.
         /// @param x X coordinate of the gate slot.
         /// @param y Y coordinate of the gate slot.
-        void addIOItem(int x, int y);
+        IOItem* addIOItem(int x, int y);
 
         /// @brief Creates a gate slot at the specific x and y coordinates on the grid.
         /// @param startSlot The gate slot the wire will be starting from.
         /// @param endSlot The gate slot the wire will end at.
-        void addWireItem(GateSlotItem* startSlot, GateSlotItem* endSlot);
+        void addWireItem(GameItem* startSlot, GameItem* endSlot);
 
     private slots:
         /// @brief Steps through each physics movement.

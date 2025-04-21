@@ -70,7 +70,7 @@ void CircuitGameModel::loadLvl1() {
 
     //Updates the level name and description in the view.
     QString levelName = "Level 1";
-    QString levelDescription = "Some flavor text or tutorial text or something for level 1.";
+    QString levelDescription = "Some flavor text or tutorial text or something for level 1  .";
     emit sendLevelDescription(levelName, levelDescription);
 }
 

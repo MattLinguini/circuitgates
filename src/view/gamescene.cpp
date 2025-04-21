@@ -77,13 +77,13 @@ void GameScene::addLogicGate(int x, int y) {
     gates.append(gate);
 }
 
-void GameScene::addWireItem(GateSlotItem* startSlot, GateSlotItem* endSlot) {
+void GameScene::addWireItem(GameItem* startSlot, GameItem* endSlot) {
     WireItem* wire = new WireItem(&world, startSlot, endSlot, 25);
     addItem(wire);
     wires.append(wire);
 }
 
-void GameScene::addIOItem(int x, int y) {
+IOItem* GameScene::addIOItem(int x, int y) {
     // Calculates the size and postion of the slot (in meters)
     float sizeMeters  = static_cast<float>(cellSize) / SCALE;
     float sceneXMeters = (padding + (x * cellSize) + (cellSize / 2)) / SCALE;
@@ -92,6 +92,8 @@ void GameScene::addIOItem(int x, int y) {
     IOItem* io = new IOItem(&world, sceneXMeters, sceneYMeters, sizeMeters, sizeMeters, padding, cellSize);
     addItem(io);
     ioitems.append(io);
+
+    return io;
 }
 
 void GameScene::drawBackground(QPainter* painter, const QRectF& rect) {

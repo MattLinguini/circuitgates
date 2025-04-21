@@ -6,6 +6,10 @@
 #include <QResizeEvent>
 #include <QWidget>
 #include "src/model/circuit_game_model.h"
+#include <vector>
+
+class GameItem;
+class GameScene;
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -27,6 +31,7 @@ private:
     QMap<int, GameObject*>* modelGameObjs;
     QMap<GateType, int>* budget;
 
+    void addChildren(GameItem* source, GameObject* sourceObject, GameScene* scene);
     void drawLevel();
 
 signals:

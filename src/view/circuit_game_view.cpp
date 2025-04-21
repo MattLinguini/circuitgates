@@ -42,53 +42,17 @@ void CircuitGameView::recieveLevelDescription(QString levelName, QString levelDe
 
 void CircuitGameView::drawLevel() {
     GameScene* scene = new GameScene(this);
-
-    //for (every gameObj) {
-    //  if (notInView yet) {
-    //      add it
-    //  }
-    //   for each dest {
-    //      if (not in view yet) {
-    //          add it }
-    //  add wire between them
-
-    GateSlotItem* source = nullptr;
-    GateSlotItem* dest = nullptr;
+    GameItem* source = nullptr;
 
     for (GameObject* gameObj : modelGameObjs->values()) {
-        if (!gameObj->inView) {
-            if (gameObj->objType == GameObject::GameObjectType::IO) {
-                // ADD IO TO SCENE
-                scene->addIOItem(gameObj->x, gameObj->y);
-                gameObj->inView = true;
-            }
-            else if (gameObj->objType == GameObject::GameObjectType::GATE) {
-                LogicGate* gate = static_cast<LogicGate*>(gameObj);
-                source = scene->addGateSlot(gate->x, gate->y);
-                gate->inView = true;
-                for (int destination : *gate->getDestinations()) {
-                    GameObject* destObj = modelGameObjs->value(destination);
-                    if (!destObj->inView) {
-                        if (destObj->objType == GameObject::GameObjectType::IO) {
-                            // ADD IO TO SCENE
-                            // scene->addIOItem(destObj->x, destObj->y);
-                        }
-                        else if (destObj->objType == GameObject::GameObjectType::GATE) {
-                            LogicGate* destGate = static_cast<LogicGate*>(destObj);
-                            if (destGate->getGateType() == GateType::DEFAULT) {
-                                dest = scene->addGateSlot(destGate->x, destGate->y);
-                            }
-                        }
-                        destObj->inView = true;
-                    }
-
-                    // Only add wire if both ends exist
-                    if (source && dest) {
-                        scene->addWireItem(source, dest);
-                        dest = nullptr; // reset for next loop
-                    }
-                }
-            }
+        if (gameObj->objType == GameObject::GameObjectType::IO) {
+            source = scene->addIOItem(gameObj->x, gameObj->y);
+            gameObj->inView = true;
+            addChildren(source, gameObj, scene);
+        } else if (gameObj->objType == GameObject::GameObjectType::GATE) {
+            source = scene->addGateSlot(gameObj->x, gameObj->y);
+            gameObj->inView = true;
+            addChildren(source, gameObj, scene);
         }
     }
 
@@ -100,13 +64,27 @@ void CircuitGameView::drawLevel() {
         }
     }
 
-    // GateSlotItem* slot1 = scene->addGateSlot(1, 1);
-    // GateSlotItem* slot2 = scene->addGateSlot(4, 3);
-    // scene->addLogicGate(5, 1);
-    // scene->addWireItem(slot1, slot2);
-
-    // model->createLevel();
     ui->graphicsView->setScene(scene);
+}
+
+void CircuitGameView::addChildren(GameItem* source, GameObject* sourceObject, GameScene* scene) {
+    GameItem* dest;
+    GameObject* destObj;
+
+    for (int i: *sourceObject->getDestinations()) {
+        destObj = modelGameObjs->value(i);
+        if(!destObj->inView && destObj->objType == GameObject::GameObjectType::IO) {
+            dest = scene->addIOItem(destObj->x, destObj->y);
+            destObj->inView = true;
+            scene->addWireItem(source, dest);
+            addChildren(dest, destObj, scene);
+        } else if (!destObj->inView && destObj->objType == GameObject::GameObjectType::GATE) {
+            dest = scene->addGateSlot(destObj->x, destObj->y);
+            destObj->inView = true;
+            scene->addWireItem(source, dest);
+            addChildren(dest, destObj, scene);
+        }
+    }
 }
 
 CircuitGameView::~CircuitGameView() {
