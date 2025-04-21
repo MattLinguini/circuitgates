@@ -177,6 +177,41 @@ void CircuitGameModel::loadLvl4() {
 }
 
 void CircuitGameModel::loadLvl5() {
+    //Set the level's budget
+    currentLevel.setGateBudget(GateType::AND, 2);
+    currentLevel.setGateBudget(GateType::OR, 0);
+    currentLevel.setGateBudget(GateType::XOR, 1);
+    currentLevel.setGateBudget(GateType::NOT, 0);
+
+    InputOutput* in1 = currentLevel.addIO(0, 0, 1);
+    InputOutput* in2 = currentLevel.addIO(2, 0, 1);
+    InputOutput* in3 = currentLevel.addIO(4, 0 ,1);
+    InputOutput* in4 = currentLevel.addIO(6, 0, 1);
+
+    //TOGGLEABLE GATE -> EXPECTED: AND
+    LogicGate* g1 = currentLevel.addGate(1, 2, GateType::DEFAULT);
+    //TOGGLEABLE GATE -> EXPECTED: XOR
+    LogicGate* g2 = currentLevel.addGate(5, 2, GateType::DEFAULT);
+
+    in1->addDestination(g1->objectID);
+    in2->addDestination(g1->objectID);
+    in3->addDestination(g2->objectID);
+    in4->addDestination(g2->objectID);
+
+    //TOGGLEABLE GATE -> EXPECTED: AND
+    LogicGate* g3 = currentLevel.addGate(3, 4, GateType::DEFAULT);
+
+    in2->addDestination(g3->objectID);
+    g2->addDestination(g3->objectID);
+
+    InputOutput* out1 = currentLevel.addIO(1,6,0);
+    InputOutput* out2 = currentLevel.addIO(5, 6, 0);
+
+    g1->addDestination(out1->objectID);
+    g3->addDestination(out2->objectID);
+
+    emit sendLevelPointer(&currentLevel);
+
 
     //Updates the level name and description in the view.
     QString levelName = "Level 5";
