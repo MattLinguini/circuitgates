@@ -41,7 +41,7 @@ private:
 
     b2Body* body;
     b2World* world;
-    float snapDistancePixels;
+         float snapDistancePixels;
     float padding;
     float cellSize;
 };

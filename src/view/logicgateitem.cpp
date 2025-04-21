@@ -102,6 +102,7 @@ void LogicGateItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 
             // Freeze the body after it has snapped
             body->SetType(b2_staticBody);
+            //EMIT TO MODEL
         }
     } else {
         if (body) {

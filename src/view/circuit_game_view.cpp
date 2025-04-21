@@ -42,7 +42,6 @@ void CircuitGameView::recieveLevelDescription(QString levelName, QString levelDe
 
 void CircuitGameView::drawLevel() {
     if (scene) delete scene;
-
     scene = new GameScene(this);
 
     for (GameObject* gameObj : modelGameObjs->values()) {
@@ -70,26 +69,6 @@ void CircuitGameView::drawLevel() {
     }
 
     ui->graphicsView->setScene(scene);
-}
-
-void CircuitGameView::addChildren(GameItem* source, GameObject* sourceObject, GameScene* scene) {
-    GameItem* dest;
-    GameObject* destObj;
-
-    for (int i: *sourceObject->getDestinations()) {
-        destObj = modelGameObjs->value(i);
-        if(!destObj->inView && destObj->objType == GameObject::GameObjectType::IO) {
-            dest = scene->addIOItem(destObj->x, destObj->y);
-            destObj->inView = true;
-            scene->addWireItem(source, dest);
-         //   addChildren(dest, destObj, scene);
-        } else if (!destObj->inView && destObj->objType == GameObject::GameObjectType::GATE) {
-            dest = scene->addGateSlot(destObj->x, destObj->y);
-            destObj->inView = true;
-            scene->addWireItem(source, dest);
-        //    addChildren(dest, destObj, scene);
-        }
-    }
 }
 
 CircuitGameView::~CircuitGameView() {
