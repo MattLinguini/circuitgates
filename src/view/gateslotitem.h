@@ -4,6 +4,8 @@
 #include "Box2D/Dynamics/b2Body.h"
 #include "gameitem.h"
 #include <QGraphicsRectItem>
+#include "src/model/logic_gate.h"
+
 
 class GateSlotItem : public GameItem {
     public:
@@ -13,10 +15,14 @@ class GateSlotItem : public GameItem {
         /// @param centerY Y value (in meters) where the item should be created
         /// @param width Width (in meters) of the item.
         /// @param height Height (in meters) of the item.
-        GateSlotItem(b2World* world, float centerX, float centerY, float width, float height, float cellSize, float padding, QGraphicsItem* parent = nullptr);
+        GateSlotItem(b2World* world, float centerX, float centerY, float width, float height, float cellSize, float padding, int id, QGraphicsItem* parent = nullptr);
 
         /// @brief Returns the specific body for the gate slot.
         b2Body* getBody() const override;
+
+        LogicGate::GateType gateType;
+
+        int getID() const override;
 
     private:
         /// @brief Called automatically when item properties (like position) change.
@@ -28,6 +34,7 @@ class GateSlotItem : public GameItem {
         float padding;
         float cellSize;
         b2Body* body;
+        int id = -1;
 };
 
 #endif // GAMEOBJECTS_H
