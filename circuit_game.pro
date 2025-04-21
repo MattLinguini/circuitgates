@@ -64,6 +64,7 @@ SOURCES += \
     src/view/circuit_game_view.cpp \
     src/view/gamescene.cpp \
     src/view/gateslotitem.cpp \
+    src/view/ioitem.cpp \
     src/view/logicgateitem.cpp \
     src/view/wireitem.cpp
 
@@ -124,6 +125,7 @@ HEADERS += \
     src/view/circuit_game_view.h \
     src/view/gamescene.h \
     src/view/gateslotitem.h \
+    src/view/ioitem.h \
     src/view/logicgateitem.h \
     src/view/wireitem.h
 

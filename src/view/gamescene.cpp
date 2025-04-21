@@ -4,6 +4,7 @@
 #include "Box2D/Dynamics/b2Fixture.h"
 #include "Box2D/Dynamics/b2World.h"
 #include "qgraphicsitem.h"
+#include "src/view/ioitem.h"
 #include "src/view/logicgateitem.h"
 #include "src/view/wireitem.h"
 
@@ -80,6 +81,17 @@ void GameScene::addWireItem(GateSlotItem* startSlot, GateSlotItem* endSlot) {
     WireItem* wire = new WireItem(&world, startSlot, endSlot, 25);
     addItem(wire);
     wires.append(wire);
+}
+
+void GameScene::addIOItem(int x, int y) {
+    // Calculates the size and postion of the slot (in meters)
+    float sizeMeters  = static_cast<float>(cellSize) / SCALE;
+    float sceneXMeters = (padding + (x * cellSize) + (cellSize / 2)) / SCALE;
+    float sceneYMeters = -(padding + (y * cellSize) + (cellSize / 2)) / SCALE;
+
+    IOItem* io = new IOItem(&world, sceneXMeters, sceneYMeters, sizeMeters, sizeMeters, padding, cellSize);
+    addItem(io);
+    ioitems.append(io);
 }
 
 void GameScene::drawBackground(QPainter* painter, const QRectF& rect) {

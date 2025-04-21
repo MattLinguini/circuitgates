@@ -59,7 +59,7 @@ void CircuitGameView::drawLevel() {
         if (!gameObj->inView) {
             if (gameObj->objType == GameObject::GameObjectType::IO) {
                 // ADD IO TO SCENE
-                // scene->addIOItem(gameObj->x, gameObj->y);
+                scene->addIOItem(gameObj->x, gameObj->y);
                 gameObj->inView = true;
             }
             else if (gameObj->objType == GameObject::GameObjectType::GATE) {

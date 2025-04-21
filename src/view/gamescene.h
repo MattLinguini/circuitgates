@@ -5,6 +5,7 @@
 #include "box2ddebug.h"
 #include "gateslotitem.h"
 #include "logicgateitem.h"
+#include "src/view/ioitem.h"
 #include "wireitem.h"
 #include <QGraphicsScene>
 #include <QHash>
@@ -29,6 +30,11 @@ class GameScene : public QGraphicsScene {
         /// @param y Y coordinate of the gate slot.
         void addLogicGate(int x, int y);
 
+        /// @brief Creates a input/output at the specific x and y coordinates on the grid.
+        /// @param x X coordinate of the gate slot.
+        /// @param y Y coordinate of the gate slot.
+        void addIOItem(int x, int y);
+
         /// @brief Creates a gate slot at the specific x and y coordinates on the grid.
         /// @param startSlot The gate slot the wire will be starting from.
         /// @param endSlot The gate slot the wire will end at.
@@ -51,6 +57,7 @@ class GameScene : public QGraphicsScene {
         b2World world;
         Box2DDebugDraw debugDraw;
         QTimer timer;
+        QVector<IOItem*> ioitems;
         QVector<WireItem*> wires;
         QVector<LogicGateItem*> gates;
         QVector<GateSlotItem*> gateSlots;
