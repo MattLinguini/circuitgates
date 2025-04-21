@@ -4,8 +4,7 @@
 #include "Box2D/Dynamics/b2Body.h"
 #include "gateslotitem.h"
 
-class LogicGateItem : public QGraphicsRectItem
-{
+class LogicGateItem : public GameItem {
 public:
     /// @brief Constructor to create a gate slot with a static box2d body and Qt Rectangle.
     /// @param world    Reference to the box2D world created in the GameScene
@@ -18,7 +17,7 @@ public:
     LogicGateItem(b2World* world, float centerX, float centerY, float width, float height, float padding, float cellSize, QGraphicsItem* parent = nullptr);
 
     /// @brief Returns the body of the specific LogicGate.
-    b2Body* getBody() const;
+    b2Body* getBody() const override;
 
     /// @brief Updates the LogicGateItem's position and rotation to match the box2d body.
     void updateGate();

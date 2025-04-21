@@ -2,9 +2,10 @@
 #define GAMEOBJECTS_H
 
 #include "Box2D/Dynamics/b2Body.h"
+#include "gameitem.h"
 #include <QGraphicsRectItem>
 
-class GateSlotItem : public QGraphicsRectItem {
+class GateSlotItem : public GameItem {
     public:
         /// @brief Constructor to create a gate slot with a static box2d body and Qt Rectangle.
         /// @param world Reference to the box2D world created in the GameScene
@@ -15,7 +16,7 @@ class GateSlotItem : public QGraphicsRectItem {
         GateSlotItem(b2World* world, float centerX, float centerY, float width, float height, float cellSize, float padding, QGraphicsItem* parent = nullptr);
 
         /// @brief Returns the specific body for the gate slot.
-        b2Body* getBody() const;
+        b2Body* getBody() const override;
 
     private:
         /// @brief Called automatically when item properties (like position) change.

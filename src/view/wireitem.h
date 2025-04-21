@@ -2,6 +2,7 @@
 #define WIREITEM_H
 
 #include "gateslotitem.h"
+#include "src/view/ioitem.h"
 #include <QGraphicsItem>
 #include <Box2D/Box2D.h>
 #include <QVector>
@@ -12,17 +13,21 @@ public:
     /// @param world Reference to the box2d world.
     /// @param startSlot GateSlot that the wire will start from.
     /// @param endSlot GateSlot that the wire will end from.
-    WireItem(b2World* world, GateSlotItem* startSlot, GateSlotItem* endSlot, int segmentCount = 10);
+    WireItem(b2World* world, GameItem* startSlot, GameItem* endSlot, int segmentCount = 10);
+
 
     /// @brief Updates the visual of the wirepath.
     void updateWirePath();
+
+    void createWires();
 
 private:
     b2World* world;
     QVector<b2Body*> segments;
     QVector<b2Joint*> joints;
-    GateSlotItem* startSlot;
-    GateSlotItem* endSlot;
+    GameItem* startSlot;
+    GameItem* endSlot;
+    int segmentCount;
 };
 
 #endif // WIREITEM_H
