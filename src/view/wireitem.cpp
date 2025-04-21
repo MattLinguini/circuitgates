@@ -37,7 +37,7 @@ WireItem::WireItem(b2World* world, GameItem* startSlot, GameItem* endSlot, int s
         // Set the physics properties of the rectangle.
         b2FixtureDef fixDef;
         fixDef.shape = &shape;
-        fixDef.density = 1.0f;
+        fixDef.density = 10.0f;
         fixDef.friction = 0.2f;
         segment->CreateFixture(&fixDef);
 
@@ -50,8 +50,8 @@ WireItem::WireItem(b2World* world, GameItem* startSlot, GameItem* endSlot, int s
             jointDef.Initialize(segments[i-1], segment, segments[i-1]->GetWorldCenter(), segment->GetWorldCenter());
             jointDef.collideConnected = false;
             jointDef.length = segmentLength;
-            jointDef.frequencyHz = 4.0f;
-            jointDef.dampingRatio = 0.7f;
+            jointDef.frequencyHz = 8.0f;
+            jointDef.dampingRatio = 0.0f;
             joints.append(world->CreateJoint(&jointDef));
         }
     }

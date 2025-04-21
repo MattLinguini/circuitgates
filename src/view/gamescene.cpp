@@ -78,7 +78,7 @@ void GameScene::addLogicGate(int x, int y) {
 }
 
 void GameScene::addWireItem(GameItem* startSlot, GameItem* endSlot) {
-    WireItem* wire = new WireItem(&world, startSlot, endSlot, 25);
+    WireItem* wire = new WireItem(&world, startSlot, endSlot, 10);
     addItem(wire);
     wires.append(wire);
 }
