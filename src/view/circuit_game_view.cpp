@@ -41,7 +41,9 @@ void CircuitGameView::recieveLevelDescription(QString levelName, QString levelDe
 }
 
 void CircuitGameView::drawLevel() {
-    GameScene* scene = new GameScene(this);
+    if (scene) delete scene;
+
+    scene = new GameScene(this);
 
     for (GameObject* gameObj : modelGameObjs->values()) {
         if (gameObj->objType == GameObject::GameObjectType::IO) {

@@ -30,9 +30,11 @@ private:
     CircuitGameModel *model;
     QMap<int, GameObject*>* modelGameObjs;
     QMap<GateType, int>* budget;
+    GameScene* scene = nullptr;
 
     void addChildren(GameItem* source, GameObject* sourceObject, GameScene* scene);
     void drawLevel();
+
 
 signals:
     void createLevel(int levelId);
