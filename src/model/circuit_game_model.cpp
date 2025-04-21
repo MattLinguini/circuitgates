@@ -359,11 +359,11 @@ void CircuitGameModel::loadLvl9() {
     //TOGGLEABLE GATE -> EXPECTED: NOT
     LogicGate* g1 = currentLevel.addGate(4, 1, GateType::DEFAULT);
     //TOGGLEABLE GATE -> EXPECTED: XOR
-    LogicGate* g2 = currentLevel.addGate(3, 3, GateType::DEFAULT);
+    LogicGate* g2 = currentLevel.addGate(2, 2, GateType::DEFAULT);
     //TOGGLEABLE GATE -> EXPECTED: AND
-    LogicGate* g3 = currentLevel.addGate(2, 5, GateType::DEFAULT);
+    LogicGate* g3 = currentLevel.addGate(3, 4, GateType::DEFAULT);
 
-    InputOutput* out1 = currentLevel.addIO(2, 7, 0);
+    InputOutput* out1 = currentLevel.addIO(2, 6, 0);
 
     //Inputs to wires
     in1->addDestination(g3->objectID);

@@ -42,17 +42,20 @@ void CircuitGameView::recieveLevelDescription(QString levelName, QString levelDe
 
 void CircuitGameView::drawLevel() {
     GameScene* scene = new GameScene(this);
-    GameItem* source = nullptr;
 
     for (GameObject* gameObj : modelGameObjs->values()) {
         if (gameObj->objType == GameObject::GameObjectType::IO) {
-            source = scene->addIOItem(gameObj->x, gameObj->y);
+            gameObj->asItem = scene->addIOItem(gameObj->x, gameObj->y);
             gameObj->inView = true;
-            addChildren(source, gameObj, scene);
         } else if (gameObj->objType == GameObject::GameObjectType::GATE) {
-            source = scene->addGateSlot(gameObj->x, gameObj->y);
+            gameObj->asItem = scene->addGateSlot(gameObj->x, gameObj->y);
             gameObj->inView = true;
-            addChildren(source, gameObj, scene);
+        }
+    }
+
+    for (GameObject* gameObj : modelGameObjs->values()) {
+        for (int i : *gameObj->getDestinations()) {
+            scene->addWireItem(gameObj->asItem, modelGameObjs->value(i)->asItem);
         }
     }
 
@@ -77,12 +80,12 @@ void CircuitGameView::addChildren(GameItem* source, GameObject* sourceObject, Ga
             dest = scene->addIOItem(destObj->x, destObj->y);
             destObj->inView = true;
             scene->addWireItem(source, dest);
-            addChildren(dest, destObj, scene);
+         //   addChildren(dest, destObj, scene);
         } else if (!destObj->inView && destObj->objType == GameObject::GameObjectType::GATE) {
             dest = scene->addGateSlot(destObj->x, destObj->y);
             destObj->inView = true;
             scene->addWireItem(source, dest);
-            addChildren(dest, destObj, scene);
+        //    addChildren(dest, destObj, scene);
         }
     }
 }

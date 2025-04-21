@@ -13,6 +13,7 @@
 #include <QDebug>
 
 class Level;
+class GameItem;
 
 class GameObject : public QObject
 {
@@ -48,6 +49,8 @@ public:
     int y;
 
     bool inView = 0;
+
+    GameItem* asItem;
 
 signals:
     ///@brief Signals to the view to update object state.
