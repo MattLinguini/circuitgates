@@ -13,7 +13,10 @@ WireItem::WireItem(b2World* world, GameItem* startSlot, GameItem* endSlot, int s
     b2Vec2 direction = end - start;
     direction.Normalize();
     float totalLength = QLineF(startPos, endPos).length() / SCALE;
-    float segmentLength = totalLength / segmentCount;
+
+    float shortenedLength = totalLength * 0.1f;
+    float segmentLength = shortenedLength / segmentCount;
+
     float segmentWidth = 0.1f;
     float segmentHeight = segmentLength;
 
@@ -132,9 +135,9 @@ void WireItem::createWires() {
             b2DistanceJointDef jointDef;
             jointDef.Initialize(segments[i-1], segment, segments[i-1]->GetWorldCenter(), segment->GetWorldCenter());
             jointDef.collideConnected = false;
-            jointDef.length = segmentLength;
-            jointDef.frequencyHz = 4.0f;
-            jointDef.dampingRatio = 0.7f;
+            jointDef.length = segmentLength * 0.95f;
+            jointDef.frequencyHz = 8.0f;
+            jointDef.dampingRatio = 0.9f;
             joints.append(world->CreateJoint(&jointDef));
         }
     }
