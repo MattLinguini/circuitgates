@@ -32,6 +32,7 @@ private:
     QWidget *homePage;
     QWidget *levelPage;
     QWidget *gamePage;
+    QWidget *tutorialPage;
     QGraphicsView *gameView;
     CircuitGameModel *model;
     QMap<int, GameObject*>* modelGameObjs;
@@ -43,6 +44,7 @@ private:
 
     void displayMenu();
     void displayLevels();
+    void displayTutorial();
     void resetGameProgress();
 
 signals:
