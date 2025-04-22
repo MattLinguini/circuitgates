@@ -47,3 +47,11 @@ void GateSlotItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event) {
 int GateSlotItem::getID() const {
     return id;
 }
+
+bool GateSlotItem::isOccupied() const {
+    return occupied;
+}
+
+void GateSlotItem::setOccupied(bool occ) {
+    occupied = occ;
+}
