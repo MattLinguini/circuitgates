@@ -191,7 +191,6 @@ void CircuitGameView::drawLevel() {
         }
 
     gameView->setScene(scene);
-    //ui->graphicsView->setScene(scene);
     ui->stackedWidget->setCurrentWidget(gamePage);
 }
 
