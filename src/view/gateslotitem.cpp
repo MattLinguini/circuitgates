@@ -60,11 +60,11 @@ void GateSlotItem::setOccupied(bool occ) {
 }
 
 void GateSlotItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) {
-    QGraphicsRectItem::paint(painter, option, widget); // optional: keeps the gray box
+    QGraphicsRectItem::paint(painter, option, widget);
 
     if (!icon.isNull()) {
         QRectF bounds = boundingRect();
-        painter->drawPixmap(bounds.toRect(), icon); // Stretch icon to fit the slot bounds
+        painter->drawPixmap(bounds.toRect(), icon);
     }
 }
 

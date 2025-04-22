@@ -33,9 +33,7 @@ public:
     CircuitGameView* view = nullptr;
 
     /// @brief Holds the icon that will be loaded.
-    QPixmap texture;
-
-
+    QPixmap icon;
 
 private:
     /// @brief Returns the closest GateSlot to the LogicGateItem's position.

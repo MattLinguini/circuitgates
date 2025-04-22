@@ -45,24 +45,18 @@ LogicGateItem::LogicGateItem(LogicGate::GateType gateType, b2World* world, float
     // Load the gate icon corresponding to the GateType.
     switch (gateType) {
         case LogicGate::GateType::AND:
-            texture.load(":/gates/resources/and_gate.png");
-            qDebug("AND!!!");
+            icon.load(":/gates/resources/and_gate.png");
             break;
         case LogicGate::GateType::OR:
-            texture.load(":/gates/resources/or_gate.png");
-            qDebug("OR!!!");
+            icon.load(":/gates/resources/or_gate.png");
             break;
         case LogicGate::GateType::NOT:
-            texture.load(":/gates/resources/not_gate.png");
-            qDebug("NOT!!!");
+            icon.load(":/gates/resources/not_gate.png");
             break;
         case LogicGate::GateType::XOR:
-            texture.load(":/gates/resources/xor_gate.png");
-            qDebug("XOR!!!");
+            icon.load(":/gates/resources/xor_gate.png");
             break;
         case LogicGate::GateType::DEFAULT:
-            texture.load(":/gates/resources/default_gate.png");
-            qDebug("DEFAULT!!!");
             break;
     }
 }
@@ -203,10 +197,11 @@ int LogicGateItem::getID() const {
 }
 
 void LogicGateItem::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*) {
-    if (!texture.isNull()) {
-        painter->drawPixmap(boundingRect().toRect(), texture);
-    } else {
-        painter->setBrush(Qt::gray);
-        painter->drawRect(boundingRect());
+    painter->setOpacity(1.0);
+    painter->setBrush(Qt::white);
+    painter->drawRect(boundingRect());
+
+    if (!icon.isNull()) {
+        painter->drawPixmap(boundingRect().toRect(), icon);
     }
 }
