@@ -24,6 +24,12 @@ class GateSlotItem : public GameItem {
 
         int getID() const override;
 
+        /// @brief Checks if the slot is occupied by a gate.
+        bool isOccupied() const { return occupied; }
+
+        /// @brief Sets the slot to occupied.
+        void setOccupied(bool occ) { occupied = occ; }
+
     private:
         /// @brief Called automatically when item properties (like position) change.
         QVariant itemChange(GraphicsItemChange change, const QVariant& value) override;
@@ -35,6 +41,9 @@ class GateSlotItem : public GameItem {
         float cellSize;
         b2Body* body;
         int id = -1;
+
+        /// @brief Flag to ensure only one gate per slot.
+        bool occupied = false;
 };
 
 #endif // GAMEOBJECTS_H
