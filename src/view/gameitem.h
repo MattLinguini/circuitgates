@@ -6,14 +6,9 @@
 
 class GameItem : public virtual QGraphicsRectItem  {
     public:
-        GameItem();
-
         virtual b2Body* getBody() const = 0;
 
         virtual int getID() const = 0;
-
-    private:
-        b2Body* body;
 
 };
 

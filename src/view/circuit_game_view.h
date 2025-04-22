@@ -2,57 +2,101 @@
 #define CIRCUIT_GAME_VIEW_H
 
 #include <QMainWindow>
-#include <QShowEvent>
-#include <QResizeEvent>
-#include <QWidget>
+#include <QMap>
 #include <QGraphicsView>
-#include "src/model/circuit_game_model.h"
-#include <vector>
+#include <QWidget>
+#include "gamescene.h"
+#include "src/model/level.h"
 
-class GameItem;
-class GameScene;
+class CircuitGameModel;
 
 QT_BEGIN_NAMESPACE
-namespace Ui {
-class MainWindow;
-}
+    namespace Ui {
+        class MainWindow;
+    }
 QT_END_NAMESPACE
 
-class CircuitGameView : public QMainWindow
-{
+/// @class CircuitGameView
+/// @brief Main GUI class for the Circuit Game application.
+/// Handles the switching of pages, displays game levels, and manages interaction
+/// between the UI and the model.
+class CircuitGameView : public QMainWindow {
     Q_OBJECT
+    public:
+        /// @brief Constructs the CircuitGameView window.
+        CircuitGameView(QWidget *parent = nullptr);
 
-public:
-    CircuitGameView(QWidget *parent = nullptr);
-    ~CircuitGameView();
-    void sendViewToModel(int id, LogicGate::GateType gateType);
+        /// @brief Destroys the CircuitGameView and cleans up UI.
+        ~CircuitGameView();
 
-private:
-    Ui::MainWindow *ui;
-    QWidget *homePage;
-    QWidget *levelPage;
-    QWidget *gamePage;
-    QWidget *tutorialPage;
-    QGraphicsView *gameView;
-    CircuitGameModel *model;
-    QMap<int, GameObject*>* modelGameObjs;
-    QMap<GateType, int>* budget;
-    GameScene* scene = nullptr;
+        /// @brief Sends a gate update to the model.
+        /// @param id The unique ID of the object being updated.
+        /// @param gateType The gate type being placed or updated.
+        void sendViewToModel(int id, LogicGate::GateType gateType);
 
-    void addChildren(GameItem* source, GameObject* sourceObject, GameScene* scene);
-    void drawLevel();
+    signals:
+        /// @brief Signal to request creation of a new level.
+        /// @param levelId The ID of the level to load.
+        void createLevel(int levelId);
 
-    void displayMenu();
-    void displayLevels();
-    void displayTutorial();
-    void resetGameProgress();
+        /// @brief Signal to update the model with a selected gate.
+        /// @param id The ID of the slot where the gate is placed.
+        /// @param gateType The logic gate type placed.
+        void updateModel(int id, LogicGate::GateType gateType);
 
-signals:
-    void createLevel(int levelId);
-    void updateModel(int id, LogicGate::GateType gateType);
+    public slots:
+        /// @brief Receives a pointer to the level object from the model.
+        /// @param lvl The loaded level.
+        void receiveLevelPointer(Level* lvl);
 
-public slots:
-    void receiveLevelPointer(Level* lvl);
-    void recieveLevelDescription(QString levelName, QString levelDescription);
+        /// @brief Receives level name and description from the model.
+        /// @param levelName The name of the level.
+        /// @param levelDescription The description of the level.
+        void recieveLevelDescription(QString levelName, QString levelDescription);
+
+    private:
+        /// @brief Draws the current level's objects into the scene.
+        void drawLevel();
+
+        /// @brief Displays the main menu.
+        void displayMenu();
+
+        /// brief Displays the level selection page.
+        void displayLevels();
+
+        /// @brief Displays the tutorial page.
+        void displayTutorial();
+
+        /// @brief Resets game state and user progress.
+        void resetGameProgress();
+
+        /// @brief Creates the UI for the home page.
+        void setupHomePage();
+
+        /// @brief Creates the UI for the level select page.
+        void setupLevelSelectPage();
+
+        /// @brief Creates the UI for the game page.
+        void setupGamePage();
+
+        /// @brief Creates the UI for the tutorial page.
+        void setupTutorialPage();
+
+        /// @brief Handles the creation of all the connections.
+        void createConnections();
+
+        // UI components
+        Ui::MainWindow *ui;
+        QWidget *homePage;
+        QWidget *levelPage;
+        QWidget *gamePage;
+        QWidget *tutorialPage;
+        QGraphicsView *gameView;
+
+        // Model and game state
+        CircuitGameModel *model;
+        QMap<int, GameObject*>* modelGameObjs;
+        QMap<GateType, int>* budget;
+        GameScene* scene = nullptr;
 };
 #endif // CIRCUIT_GAME_VIEW_H
