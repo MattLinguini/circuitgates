@@ -44,6 +44,9 @@ void CircuitGameView::drawLevel() {
     if (scene) delete scene;
 
     scene = new GameScene(this);
+    scene->addGateSlot(8, 1);
+    scene->addGateSlot(8, 3);
+    scene->addGateSlot(8, 5);
 
     for (GameObject* gameObj : modelGameObjs->values()) {
         if (gameObj->objType == GameObject::GameObjectType::IO) {
@@ -65,7 +68,7 @@ void CircuitGameView::drawLevel() {
         int amount = budget->value(type);
         for (int i = 0; i < amount; i ++) {
             //NEEDS EXTRA PARAM FOR GATETYPE
-            scene->addLogicGate(5,5);
+            scene->addLogicGate(8,1);
         }
     }
 

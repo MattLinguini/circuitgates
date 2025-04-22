@@ -14,7 +14,7 @@ LogicGateItem::LogicGateItem(b2World* world, float centerX_meters, float centerY
 
     // Setup invisible Box2D static body
     b2BodyDef bodyDef;
-    bodyDef.type = b2_dynamicBody;
+    bodyDef.type = b2_staticBody;
     bodyDef.position.Set(centerX_meters, centerY_meters);
     body = world->CreateBody(&bodyDef);
 

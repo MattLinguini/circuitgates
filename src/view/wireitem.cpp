@@ -6,7 +6,7 @@ static constexpr float SCALE = 30.0f;
 
 WireItem::WireItem(b2World* world, GameItem* startSlot, GameItem* endSlot, int segmentCount) : world(world), startSlot(startSlot), endSlot(endSlot) {
     // Calculate the starting and ending positions of the wire based on the slot positions.
-    QPointF startPos = startSlot->pos();
+    QPointF startPos = startSlot->pos() + QPointF(0, -2);
     QPointF endPos = endSlot->pos();
     b2Vec2 start(startPos.x() / SCALE, -startPos.y() / SCALE);
     b2Vec2 end(endPos.x() / SCALE, -endPos.y() / SCALE);
@@ -50,7 +50,7 @@ WireItem::WireItem(b2World* world, GameItem* startSlot, GameItem* endSlot, int s
             jointDef.Initialize(segments[i-1], segment, segments[i-1]->GetWorldCenter(), segment->GetWorldCenter());
             jointDef.collideConnected = false;
             jointDef.length = segmentLength;
-            jointDef.frequencyHz = 8.0f;
+            jointDef.frequencyHz = 4.0f;
             jointDef.dampingRatio = 0.0f;
             joints.append(world->CreateJoint(&jointDef));
         }
@@ -71,7 +71,7 @@ WireItem::WireItem(b2World* world, GameItem* startSlot, GameItem* endSlot, int s
     world->CreateJoint(&lastAnchor);
 
     // Create the QT Visual.S
-    setPen(QPen(Qt::black, 2));
+    setPen(QPen(Qt::black, 5));
     setZValue(-1);
 }
 
