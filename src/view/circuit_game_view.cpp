@@ -42,7 +42,7 @@ CircuitGameView::CircuitGameView(QWidget *parent) : QMainWindow(parent), ui(new 
     homeInnerLayout->addWidget(startButton);
     homeInnerLayout->addWidget(quitButton);
     homeInnerPage->setLayout(homeInnerLayout);
-    homeInnerPage->setMaximumSize(260, 250);
+    homeInnerPage->setMaximumSize(275, 250);
 
     /// Add layout to home page.
     QBoxLayout *homeLayout = new QBoxLayout(QBoxLayout::LeftToRight, homePage);
