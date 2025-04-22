@@ -158,9 +158,9 @@ void CircuitGameView::recieveLevelDescription(QString levelName, QString levelDe
 void CircuitGameView::drawLevel() {
     if (scene) delete scene;
     scene = new GameScene(this);
-    scene->addGateSlot(8, 1);
-    scene->addGateSlot(8, 3);
-    scene->addGateSlot(8, 5);
+    scene->addGateSlot(8, 1, -1);
+    scene->addGateSlot(8, 3, -1);
+    scene->addGateSlot(8, 5, -1);
 
     for (GameObject* gameObj : modelGameObjs->values()) {
         if (gameObj->objType == GameObject::GameObjectType::IO) {
