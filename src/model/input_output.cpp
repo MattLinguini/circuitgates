@@ -16,7 +16,7 @@ InputOutput::InputOutput(int x, int y, int objectID, bool toggleable, Level* lvl
 
 void InputOutput::setState(bool state, int) {
     this->state = state;
-    sendState();
+    sendState()
 }
 
 void InputOutput::sendState() {

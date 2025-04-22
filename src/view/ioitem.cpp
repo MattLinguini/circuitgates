@@ -2,6 +2,7 @@
 #include "Box2D/Collision/Shapes/b2PolygonShape.h"
 #include "Box2D/Dynamics/b2Fixture.h"
 #include "Box2D/Dynamics/b2World.h"
+#include "qpainter.h"
 #include <QGraphicsScene>
 #include <QLineF>
 
@@ -57,6 +58,18 @@ void IOItem::updateGate() {
         setPos(bodyPos.x * SCALE, -bodyPos.y * SCALE);
         setRotation(-body->GetAngle() * 180.0f / b2_pi);
     }
+}
+
+void IOItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) {
+    Q_UNUSED(option);
+    Q_UNUSED(widget);
+
+    painter->setBrush(Qt::blue);
+
+    // Draw the rectangle with rounded corners
+    QRectF rect = boundingRect();
+    qreal cornerRadius = rect.width(); // Adjust corner radius here
+    painter->drawRoundedRect(rect, cornerRadius, cornerRadius);
 }
 
 int IOItem::getID() const {

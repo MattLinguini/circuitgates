@@ -31,6 +31,8 @@ class IOItem : public GameItem {
         /// @brief Called when the LogicGateItem changes position. Updates the box2d's position.
         QVariant itemChange(GraphicsItemChange change, const QVariant& value) override;
 
+        void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
+
         b2Body* body;
         b2World* world;
         float snapDistancePixels;
