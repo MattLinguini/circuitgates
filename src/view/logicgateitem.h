@@ -22,6 +22,10 @@ public:
     /// @brief Updates the LogicGateItem's position and rotation to match the box2d body.
     void updateGate();
 
+    LogicGate::GateType gateType;
+
+    int getID() const override;
+
 private:
     /// @brief Returns the closest GateSlot to the LogicGateItem's position.
     GateSlotItem* findClosestSlot();
@@ -44,6 +48,7 @@ private:
     float snapDistancePixels;
     float padding;
     float cellSize;
+    int id = -1;
 };
 
 #endif // LOGICGATEITEM_H

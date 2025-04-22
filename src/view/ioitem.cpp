@@ -8,7 +8,9 @@
 
 static constexpr float SCALE = 30.0f;
 
-IOItem::IOItem(b2World* world, float centerX_meters, float centerY_meters, float width_meters, float height_meters, float padding, float cellSize, QGraphicsItem* parent) : QGraphicsRectItem(parent), body(nullptr), snapDistancePixels(40.0f), padding(padding), cellSize(cellSize) {
+IOItem::IOItem(b2World* world, float centerX_meters, float centerY_meters, float width_meters, float height_meters, float padding, float cellSize, int id, QGraphicsItem* parent) : QGraphicsRectItem(parent), body(nullptr), snapDistancePixels(40.0f), padding(padding), cellSize(cellSize) {
+    this->id = id;
+
     // When it is moved, send the position changes to itemChange().
     setFlag(QGraphicsItem::ItemSendsScenePositionChanges, true);
 
@@ -68,5 +70,9 @@ void IOItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QW
     QRectF rect = boundingRect();
     qreal cornerRadius = rect.width(); // Adjust corner radius here
     painter->drawRoundedRect(rect, cornerRadius, cornerRadius);
+}
+
+int IOItem::getID() const {
+    return id;
 }
 

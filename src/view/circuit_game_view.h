@@ -5,6 +5,7 @@
 #include <QShowEvent>
 #include <QResizeEvent>
 #include <QWidget>
+#include <QGraphicsView>
 #include "src/model/circuit_game_model.h"
 #include <vector>
 
@@ -27,6 +28,10 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    QWidget *homePage;
+    QWidget *levelPage;
+    QWidget *gamePage;
+    QGraphicsView *gameView;
     CircuitGameModel *model;
     QMap<int, GameObject*>* modelGameObjs;
     QMap<GateType, int>* budget;
@@ -35,6 +40,9 @@ private:
     void addChildren(GameItem* source, GameObject* sourceObject, GameScene* scene);
     void drawLevel();
 
+    void displayMenu();
+    void displayLevels();
+    void resetGameProgress();
 
 signals:
     void createLevel(int levelId);

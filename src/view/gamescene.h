@@ -23,17 +23,17 @@ class GameScene : public QGraphicsScene {
         /// @brief Creates a gate slot at the specific x and y coordinates on the grid.
         /// @param x X coordinate of the gate slot.
         /// @param y Y coordinate of the gate slot.
-        GateSlotItem* addGateSlot(int x, int y);
+        GateSlotItem* addGateSlot(int x, int y, int ID);
 
         /// @brief Creates a logic gate at the specific x and y coordinates on the grid.
         /// @param x X coordinate of the gate slot.
         /// @param y Y coordinate of the gate slot.
-        void addLogicGate(int x, int y);
+        void addLogicGate(int x, int y, LogicGate::GateType gateType);
 
         /// @brief Creates a input/output at the specific x and y coordinates on the grid.
         /// @param x X coordinate of the gate slot.
         /// @param y Y coordinate of the gate slot.
-        IOItem* addIOItem(int x, int y);
+        IOItem* addIOItem(int x, int y, int ID);
 
         /// @brief Creates a gate slot at the specific x and y coordinates on the grid.
         /// @param startSlot The gate slot the wire will be starting from.

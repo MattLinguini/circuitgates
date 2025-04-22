@@ -102,6 +102,8 @@ void LogicGateItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 
             // Freeze the body after it has snapped
             body->SetType(b2_staticBody);
+            //TODO: EMIT TO MODEL
+
         }
     } else {
         if (body) {
@@ -117,5 +119,9 @@ void LogicGateItem::updateGate() {
         setPos(bodyPos.x * SCALE, -bodyPos.y * SCALE);
         setRotation(-body->GetAngle() * 180.0f / b2_pi);
     }
+}
+
+int LogicGateItem::getID() const {
+    return id;
 }
 

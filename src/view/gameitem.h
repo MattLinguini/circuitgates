@@ -10,8 +10,11 @@ class GameItem : public virtual QGraphicsRectItem  {
 
         virtual b2Body* getBody() const = 0;
 
+        virtual int getID() const = 0;
+
     private:
         b2Body* body;
+
 };
 
 #endif // GAMEITEM_H
