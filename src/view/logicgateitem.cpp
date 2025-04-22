@@ -129,10 +129,7 @@ void LogicGateItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
         setPos(closestSlot->pos());
 
         if (body) {
-            body->SetTransform(
-                b2Vec2(pos().x() / SCALE, -pos().y() / SCALE),
-                body->GetAngle()
-                );
+            body->SetTransform(b2Vec2(pos().x() / SCALE, -pos().y() / SCALE), 0.0f);
 
             // Freeze the body after it has snapped
             body->SetType(b2_staticBody);
