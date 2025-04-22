@@ -37,6 +37,9 @@ class GateSlotItem : public GameItem {
         /// @brief Called when the user releases the mouse after dragging
         void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;
 
+        /// @brief Used to draw the gate slot icon.
+        void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
+
         // Layout constants
         float padding;
         float cellSize;
@@ -47,6 +50,9 @@ class GateSlotItem : public GameItem {
         // Flags
         int id = -1;
         bool occupied = false;
+
+        // Icon for the gate slot.
+        QPixmap icon;
 };
 
 #endif // GAMEOBJECTS_H

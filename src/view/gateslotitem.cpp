@@ -30,6 +30,9 @@ GateSlotItem::GateSlotItem(b2World* world, float centerX, float centerY, float w
     setRect(-width/2 * SCALE, -height/2 * SCALE, width * SCALE, height * SCALE);
     setBrush(Qt::gray);
     setPos(centerX * SCALE, -centerY * SCALE);
+
+    // Load the gate slot icon
+    icon.load(":/gates/resources/default_gate.png");
 }
 
 b2Body* GateSlotItem::getBody() const {
@@ -55,3 +58,13 @@ bool GateSlotItem::isOccupied() const {
 void GateSlotItem::setOccupied(bool occ) {
     occupied = occ;
 }
+
+void GateSlotItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) {
+    QGraphicsRectItem::paint(painter, option, widget); // optional: keeps the gray box
+
+    if (!icon.isNull()) {
+        QRectF bounds = boundingRect();
+        painter->drawPixmap(bounds.toRect(), icon); // Stretch icon to fit the slot bounds
+    }
+}
+
