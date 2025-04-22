@@ -17,13 +17,15 @@ class IOItem : public GameItem {
         /// @param height   Height (in meters) of the item.
         /// @param padding  Padding around the grid.
         /// @param cellSize Cellsize of the scene.
-        IOItem(b2World* world, float centerX, float centerY, float width, float height, float padding, float cellSize, QGraphicsItem* parent = nullptr);
+        IOItem(b2World* world, float centerX, float centerY, float width, float height, float padding, float cellSize, int id, QGraphicsItem* parent = nullptr);
 
         /// @brief Returns the body of the specific LogicGate.
         b2Body* getBody() const override;
 
         /// @brief Updates the LogicGateItem's position and rotation to match the box2d body.
         void updateGate();
+
+        int getID() const override;
 
     private:
         /// @brief Called when the LogicGateItem changes position. Updates the box2d's position.
@@ -34,6 +36,7 @@ class IOItem : public GameItem {
         float snapDistancePixels;
         float padding;
         float cellSize;
+        int id = -1;
 };
 
 #endif // IOITEM_H

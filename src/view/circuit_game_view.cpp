@@ -161,10 +161,10 @@ void CircuitGameView::drawLevel() {
 
     for (GameObject* gameObj : modelGameObjs->values()) {
         if (gameObj->objType == GameObject::GameObjectType::IO) {
-            gameObj->asItem = scene->addIOItem(gameObj->x, gameObj->y);
+            gameObj->asItem = scene->addIOItem(gameObj->x, gameObj->y, gameObj->objectID);
             gameObj->inView = true;
         } else if (gameObj->objType == GameObject::GameObjectType::GATE) {
-            gameObj->asItem = scene->addGateSlot(gameObj->x, gameObj->y);
+            gameObj->asItem = scene->addGateSlot(gameObj->x, gameObj->y, gameObj->objectID);
             gameObj->inView = true;
         }
     }
@@ -178,8 +178,7 @@ void CircuitGameView::drawLevel() {
     for (GateType type : budget->keys()) {
         int amount = budget->value(type);
         for (int i = 0; i < amount; i ++) {
-            //NEEDS EXTRA PARAM FOR GATETYPE
-            scene->addLogicGate(5,5);
+            scene->addLogicGate(5,5, type);
         }
     }
 

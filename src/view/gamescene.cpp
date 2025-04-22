@@ -50,14 +50,14 @@ void GameScene::physicsLoop() {
     update();
 }
 
-GateSlotItem* GameScene::addGateSlot(int x, int y) {
+GateSlotItem* GameScene::addGateSlot(int x, int y, int id) {
     // Calculates the size and postion of the slot (in meters)
     float sizeMeters  = static_cast<float>(cellSize) / SCALE;
     float sceneXMeters = (padding + (x * cellSize) + (cellSize / 2)) / SCALE;
     float sceneYMeters = -(padding + (y * cellSize) + (cellSize / 2)) / SCALE;
 
     // Creates a slot and adds it to the scene and the vector containing all the current slots.
-    GateSlotItem* slot = new GateSlotItem(&world, sceneXMeters, sceneYMeters, sizeMeters, sizeMeters, cellSize, padding);
+    GateSlotItem* slot = new GateSlotItem(&world, sceneXMeters, sceneYMeters, sizeMeters, sizeMeters, cellSize, padding, id);
     addItem(slot);
     gateSlots.append(slot);
 
@@ -65,7 +65,7 @@ GateSlotItem* GameScene::addGateSlot(int x, int y) {
     return slot;
 }
 
-void GameScene::addLogicGate(int x, int y) {
+void GameScene::addLogicGate(int x, int y, LogicGate::GateType gateType) {
     // Calculates the size and postion of the slot (in meters)
     float sizeMeters  = static_cast<float>(cellSize) / SCALE;
     float sceneXMeters = (padding + (x * cellSize) + (cellSize / 2)) / SCALE;
@@ -73,6 +73,7 @@ void GameScene::addLogicGate(int x, int y) {
 
     // Creates a gate and adds it to the scene and the vector containing all the current gates.
     LogicGateItem* gate = new LogicGateItem(&world, sceneXMeters, sceneYMeters, sizeMeters, sizeMeters, padding, cellSize);
+    gate->gateType = gateType;
     addItem(gate);
     gates.append(gate);
 }
@@ -83,13 +84,13 @@ void GameScene::addWireItem(GameItem* startSlot, GameItem* endSlot) {
     wires.append(wire);
 }
 
-IOItem* GameScene::addIOItem(int x, int y) {
+IOItem* GameScene::addIOItem(int x, int y, int id) {
     // Calculates the size and postion of the slot (in meters)
     float sizeMeters  = static_cast<float>(cellSize) / SCALE;
     float sceneXMeters = (padding + (x * cellSize) + (cellSize / 2)) / SCALE;
     float sceneYMeters = -(padding + (y * cellSize) + (cellSize / 2)) / SCALE;
 
-    IOItem* io = new IOItem(&world, sceneXMeters, sceneYMeters, sizeMeters, sizeMeters, padding, cellSize);
+    IOItem* io = new IOItem(&world, sceneXMeters, sceneYMeters, sizeMeters, sizeMeters, padding, cellSize, id);
     addItem(io);
     ioitems.append(io);
 
