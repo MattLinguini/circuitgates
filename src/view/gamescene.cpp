@@ -1,17 +1,15 @@
 #include "gamescene.h"
 #include "gateslotitem.h"
+#include "logicgateitem.h"
+#include "ioitem.h"
+#include "wireitem.h"
 #include "Box2D/Common/b2Draw.h"
 #include "Box2D/Dynamics/b2Fixture.h"
 #include "Box2D/Dynamics/b2World.h"
-#include "qgraphicsitem.h"
-#include "src/view/ioitem.h"
-#include "src/view/logicgateitem.h"
-#include "src/view/wireitem.h"
+#include <QGraphicsItem>
+#include <QtGlobal>
 
-GameScene::GameScene(QObject* parent) : QGraphicsScene(parent), world(b2Vec2(0.0f, -50.0f)), cellSize(64), gridSize(7) {
-    // How much padding around the grid (in pixels)
-    const int padding = 10;
-
+GameScene::GameScene(QObject* parent) : QGraphicsScene(parent), world(b2Vec2(0.0f, -50.0f)), cellSize(64), gridSize(7), padding(10) {
     // Calculate total scene size and set it.
     int sceneWidth  = (gridSize + 2) * cellSize + 2 * padding;
     int sceneHeight = gridSize * cellSize + 2 * padding;
@@ -30,6 +28,7 @@ GameScene::GameScene(QObject* parent) : QGraphicsScene(parent), world(b2Vec2(0.0
     createWorldBounds();
 }
 
+
 void GameScene::physicsLoop() {
     float timeStep = 1.0f / 60.0f; // About 60 steps (frames) per second
     int velIters = 5; // Each frame, the loop will update the velocity of each body 5 times.
@@ -38,17 +37,14 @@ void GameScene::physicsLoop() {
     world.Step(timeStep, velIters, posIters); // Updates all the Box2D bodies.
 
     // Update the position of the Qt Object to match the Box2D bodies.
-    for (LogicGateItem* gate : gates) {
-        gate->updateGate();
-    }
+    for (LogicGateItem* gate : std::as_const(gates)) gate->updateGate();
 
     // Update the position of the QPath to match the Box2D bodies.
-    for (WireItem* wire : wires) {
-        wire->updateWirePath();
-    }
+    for (WireItem* wire : std::as_const(wires)) wire->updateWirePath();
 
     update();
 }
+
 
 GateSlotItem* GameScene::addGateSlot(int x, int y, int id) {
     // Calculates the size and postion of the slot (in meters)
@@ -65,6 +61,7 @@ GateSlotItem* GameScene::addGateSlot(int x, int y, int id) {
     return slot;
 }
 
+
 LogicGateItem* GameScene::addLogicGate(int x, int y, LogicGate::GateType gateType) {
     // Calculates the size and postion of the slot (in meters)
     float sizeMeters  = static_cast<float>(cellSize) / SCALE;
@@ -78,6 +75,7 @@ LogicGateItem* GameScene::addLogicGate(int x, int y, LogicGate::GateType gateTyp
 
     return gate;
 }
+
 
 void GameScene::addWireItem(GameItem* startSlot, GameItem* endSlot) {
     WireItem* wire = new WireItem(&world, startSlot, endSlot, 10);
@@ -98,6 +96,7 @@ IOItem* GameScene::addIOItem(int x, int y, int id) {
     return io;
 }
 
+
 void GameScene::drawBackground(QPainter* painter, const QRectF& rect) {
     Q_UNUSED(rect);
     painter->setPen(QPen(Qt::lightGray, 0));
@@ -116,44 +115,44 @@ void GameScene::drawBackground(QPainter* painter, const QRectF& rect) {
     }
 }
 
+
 void GameScene::drawForeground(QPainter* painter, const QRectF&) {
     debugDraw.setPainter(painter);
     world.DrawDebugData();
 }
 
+
 void GameScene::createWorldBounds() {
     // Define the pixel coordinates for the walls.
-    float left_px   = padding;
-    float top_px    = padding;
-    float right_px  = padding + gridSize * cellSize;
+    float left_px = padding;
+    float top_px = padding;
+    float right_px = padding + gridSize * cellSize;
     float bottom_px = padding + gridSize * cellSize;
 
-    // Wall thickness
-    float thickness_m = 0.5f;
+    float thickness_m = 0.5f; // Wall thickness
 
     // Calcuate the coordinates of the walls in meters
-    float left_m   = left_px / SCALE;
-    float top_m    = -top_px / SCALE; 
-    float right_m  = right_px / SCALE;
+    float left_m = left_px / SCALE;
+    float top_m = -top_px / SCALE;
+    float right_m = right_px / SCALE;
     float bottom_m = -bottom_px / SCALE;
     bottomWallY = bottom_m;
 
     // Calculate the width and height of the walls in meters.
-    float width_m  = (right_px - left_px) / SCALE;
+    float width_m = (right_px - left_px) / SCALE;
     float height_m = (bottom_px - top_px) / SCALE;
 
-    // Struct for the definition of walls. Box2D uses half-widths and center coordinates.
     struct WallDef {
         b2Vec2 center;
         b2Vec2 halfSize;
     };
 
-    // Defines all the walls.
+    // Defines all the walls based on the struct above.
     QVector<WallDef> walls = {
-        { b2Vec2((left_m + right_m) / 2, bottom_m - thickness_m), b2Vec2(width_m/2, thickness_m) }, // Top wall
-        { b2Vec2((left_m + right_m) / 2, top_m + thickness_m),     b2Vec2(width_m/2, thickness_m) }, // Bottom wall
-        { b2Vec2(left_m - thickness_m, (top_m + bottom_m) / 2),    b2Vec2(thickness_m, height_m/2) }, // Left wall
-        { b2Vec2(right_m + thickness_m, (top_m + bottom_m) / 2),   b2Vec2(thickness_m, height_m/2) }  // Right wall
+        {{ (left_m + right_m) / 2, bottom_m - thickness_m }, { width_m / 2, thickness_m }},
+        {{ (left_m + right_m) / 2, top_m + thickness_m },   { width_m / 2, thickness_m }},
+        {{ left_m - thickness_m, (top_m + bottom_m) / 2 },  { thickness_m, height_m / 2 }},
+        {{ right_m + thickness_m, (top_m + bottom_m) / 2 }, { thickness_m, height_m / 2 }}
     };
 
     // Loops through all the wall definitions and creates Box2D bodies for them.
@@ -164,10 +163,10 @@ void GameScene::createWorldBounds() {
 
         b2PolygonShape shape;
         shape.SetAsBox(def.halfSize.x, def.halfSize.y);
-
         body->CreateFixture(&shape, 0.0f);
     }
 }
+
 
 float GameScene::getBottomWallY() const {
     return bottomWallY;
