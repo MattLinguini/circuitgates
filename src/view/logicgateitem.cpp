@@ -126,7 +126,15 @@ void LogicGateItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
     GateSlotItem* closestSlot = findClosestSlot();
     if (closestSlot && isWithinSnapRange(closestSlot) && !closestSlot->isOccupied()) {
         // Snap to the center of the closest slot.
+        if (snappedSlot && snappedSlot != closestSlot) {
+            snappedSlot->setOccupied(false);  // Clear previous slot if moving to new one
+        }
+
+        // Set the slot to occupied
         setPos(closestSlot->pos());
+        closestSlot->setOccupied(true);
+        snappedSlot = closestSlot;
+
 
         if (body) {
             body->SetTransform(b2Vec2(pos().x() / SCALE, -pos().y() / SCALE), 0.0f);
@@ -134,8 +142,6 @@ void LogicGateItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
             // Freeze the body after it has snapped
             body->SetType(b2_staticBody);
 
-            // Ensure only one gate per slot
-            closestSlot->setOccupied(true);
 
             if (view) {
             view->sendViewToModel( closestSlot->getID(), this->gateType);
@@ -160,12 +166,11 @@ void LogicGateItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
         }
 
         // Clear any slot that was previously occupied by this gate
-        for (QGraphicsItem* item : scene()->items()) {
-            GateSlotItem* slot = dynamic_cast<GateSlotItem*>(item);
-            if (slot && slot->isOccupied() && slot->pos() == pos()) {
-                slot->setOccupied(false);
-            }
+        if (snappedSlot) {
+            snappedSlot->setOccupied(false);
+            snappedSlot = nullptr;
         }
+
     }
 
 }

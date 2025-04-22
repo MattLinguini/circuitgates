@@ -66,6 +66,10 @@ private:
     float cellSize;
     int id = -1;
     b2Vec2 originalPosition;
+
+    /// @brief To track the slot that has an object.
+    GateSlotItem* snappedSlot = nullptr;
+
 };
 
 #endif // LOGICGATEITEM_H
