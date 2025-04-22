@@ -41,9 +41,11 @@ public:
     ///@brief Returns the gates type.
     GateType getGateType();
 
+    void setGateType(GateType gateType);
+
 private:
     ///@brief Type of the gate.
-    GateType type;
+    GateType gateType;
 
     ///@brief ID of left wire.
     int leftID = -1;

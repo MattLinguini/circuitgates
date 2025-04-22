@@ -1,4 +1,5 @@
 #include "logicgateitem.h"
+#include "circuit_game_view.h"
 #include "Box2D/Collision/Shapes/b2PolygonShape.h"
 #include "Box2D/Dynamics/b2Fixture.h"
 #include "Box2D/Dynamics/b2World.h"
@@ -33,6 +34,7 @@ LogicGateItem::LogicGateItem(b2World* world, float centerX_meters, float centerY
     setRect(-width_meters/2 * SCALE, -height_meters/2 * SCALE, width_meters * SCALE, height_meters * SCALE);
     setBrush(Qt::yellow);
     setPos(centerX_meters * SCALE, -centerY_meters * SCALE);
+
 }
 
 b2Body* LogicGateItem::getBody() const {
@@ -102,7 +104,10 @@ void LogicGateItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 
             // Freeze the body after it has snapped
             body->SetType(b2_staticBody);
-            //TODO: EMIT TO MODEL
+
+            if (view) {
+            view->sendViewToModel( closestSlot->getID(), this->gateType);
+            }
 
         }
     } else {

@@ -53,6 +53,13 @@ QMap<GateType, int>* Level::getBudget() {
     return &budget;
 }
 
+void Level::validateSolution() {
+    for (int i : gameObjs.keys()) {
+        if (gameObjs.value(i)->objType == GameObject::GameObjectType::IO) {
+            gameObjs.value(i)->setState(gameObjs.value(i)->state, -1);
+        }
+    }
+}
 
 Level::~Level() {
     qDeleteAll(gameObjs);

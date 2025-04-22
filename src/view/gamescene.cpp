@@ -65,7 +65,7 @@ GateSlotItem* GameScene::addGateSlot(int x, int y, int id) {
     return slot;
 }
 
-void GameScene::addLogicGate(int x, int y, LogicGate::GateType gateType) {
+LogicGateItem* GameScene::addLogicGate(int x, int y, LogicGate::GateType gateType) {
     // Calculates the size and postion of the slot (in meters)
     float sizeMeters  = static_cast<float>(cellSize) / SCALE;
     float sceneXMeters = (padding + (x * cellSize) + (cellSize / 2)) / SCALE;
@@ -76,6 +76,8 @@ void GameScene::addLogicGate(int x, int y, LogicGate::GateType gateType) {
     gate->gateType = gateType;
     addItem(gate);
     gates.append(gate);
+
+    return gate;
 }
 
 void GameScene::addWireItem(GameItem* startSlot, GameItem* endSlot) {

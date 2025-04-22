@@ -5,7 +5,7 @@ LogicGate::LogicGate(int x, int y, int objectID, GateType type, Level* lvl) {
     this->x = x;
     this->y = y;
     this->objectID = objectID;
-    this->type = type;
+    this->gateType = type;
     this->parentLevel = lvl;
     this->destinations = std::vector<int>();
 }
@@ -29,7 +29,7 @@ void LogicGate::setState(bool state, int senderID) {
 }
 
 void LogicGate::verifyGate() {
-    switch(type) {
+    switch(gateType) {
         case GateType::OR:
             if (leftState == 1 | rightState == 1) {
                 state = 1;
@@ -77,16 +77,20 @@ void LogicGate::sendState() {
 }
 
 void LogicGate::updateType(GateType type) {
-    this->type = type;
+    this->gateType = type;
 }
 
 void LogicGate::addDestination(int objectID) {
     this->destinations.push_back(objectID);
 }
 
-///@brief Returns the gates type.
+///@brief Returns the gates gateType.
 GateType LogicGate::getGateType() {
-    return type;
+    return gateType;
+}
+
+void LogicGate::setGateType(GateType gateType) {
+    this->gateType = gateType;
 }
 
 std::vector<int>* LogicGate::getDestinations() {

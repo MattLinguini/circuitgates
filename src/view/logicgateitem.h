@@ -4,6 +4,8 @@
 #include "Box2D/Dynamics/b2Body.h"
 #include "gateslotitem.h"
 
+class CircuitGameView;
+
 class LogicGateItem : public GameItem {
 public:
     /// @brief Constructor to create a gate slot with a static box2d body and Qt Rectangle.
@@ -26,9 +28,15 @@ public:
 
     int getID() const override;
 
+    //TODO make this a getter and private
+    CircuitGameView* view = nullptr;
+
+
+
 private:
     /// @brief Returns the closest GateSlot to the LogicGateItem's position.
     GateSlotItem* findClosestSlot();
+
 
     /// @brief Returns whether the GateSlotItem is in range for the LogicGateItem to be snapped in.
     /// @param slot GateSlotItem to be checked.

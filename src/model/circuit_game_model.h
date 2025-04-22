@@ -48,6 +48,8 @@ public slots:
     /// @brief Slot to  select a level to generate.
     /// @param levelId: The id of the level to generate.
     void createLevel(int levelId);
+
+    void updateGate(int id, LogicGate::GateType gateType);
 };
 
 #endif // CIRCUIT_GAME_MODEL_H

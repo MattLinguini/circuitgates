@@ -34,6 +34,8 @@ public:
 
     QMap<GateType, int>* getBudget();
 
+    void validateSolution();
+
     ~Level();
 
 private:

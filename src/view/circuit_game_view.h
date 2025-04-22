@@ -24,6 +24,7 @@ class CircuitGameView : public QMainWindow
 public:
     CircuitGameView(QWidget *parent = nullptr);
     ~CircuitGameView();
+    void sendViewToModel(int id, LogicGate::GateType gateType);
 
 private:
     Ui::MainWindow *ui;
@@ -38,6 +39,7 @@ private:
 
 signals:
     void createLevel(int levelId);
+    void updateModel(int id, LogicGate::GateType gateType);
 
 public slots:
     void receiveLevelPointer(Level* lvl);

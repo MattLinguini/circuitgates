@@ -28,7 +28,7 @@ class GameScene : public QGraphicsScene {
         /// @brief Creates a logic gate at the specific x and y coordinates on the grid.
         /// @param x X coordinate of the gate slot.
         /// @param y Y coordinate of the gate slot.
-        void addLogicGate(int x, int y, LogicGate::GateType gateType);
+        LogicGateItem* addLogicGate(int x, int y, LogicGate::GateType gateType);
 
         /// @brief Creates a input/output at the specific x and y coordinates on the grid.
         /// @param x X coordinate of the gate slot.

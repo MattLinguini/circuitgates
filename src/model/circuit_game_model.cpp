@@ -43,6 +43,15 @@ void CircuitGameModel::createLevel(int levelId) {
     }
 }
 
+void CircuitGameModel::updateGate(int id, LogicGate::GateType gateType) {
+    GameObject* obj = currentLevel.getGameObjs()->value(id);
+    LogicGate* gate = dynamic_cast<LogicGate*>(obj);
+    if (gate != nullptr) {
+        gate->setGateType(gateType);
+        currentLevel.validateSolution();
+    }
+}
+
 void CircuitGameModel::loadLvl1() {
     //Set the level's budget
     currentLevel.setGateBudget(GateType::AND, 0);
