@@ -114,6 +114,8 @@ void LogicGateItem::mousePressEvent(QGraphicsSceneMouseEvent* event) {
 
     if (body) {
         body->SetType(b2_kinematicBody);
+        body->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
+        body->SetAngularVelocity(0.0f);
     }
 }
 
