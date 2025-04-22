@@ -62,6 +62,7 @@ SOURCES += \
     src/model/level.cpp \
     src/view/box2ddebug.cpp \
     src/view/circuit_game_view.cpp \
+    src/view/gameitem.cpp \
     src/view/gamescene.cpp \
     src/view/gateslotitem.cpp \
     src/view/ioitem.cpp \
