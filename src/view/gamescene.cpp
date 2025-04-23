@@ -148,7 +148,6 @@ void GameScene::createWorldBounds() {
     // Defines all the walls based on the struct above.
     QVector<WallDef> walls = {
         {{ (left_m + right_m) / 2, bottom_m - thickness_m }, { width_m / 2, thickness_m }},
-        {{ (left_m + right_m) / 2, top_m + thickness_m },   { width_m / 2, thickness_m }},
         {{ left_m - thickness_m, (top_m + bottom_m) / 2 },  { thickness_m, height_m / 2 }},
         {{ right_m + thickness_m, (top_m + bottom_m) / 2 }, { thickness_m, height_m / 2 }}
     };

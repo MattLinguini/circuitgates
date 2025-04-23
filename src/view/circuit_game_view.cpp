@@ -138,8 +138,8 @@ void CircuitGameView::drawLevel() {
     tutorialView->setScene(scene);
     tutorialView->resetTransform();
     tutorialView->setAlignment(Qt::AlignCenter);
-    tutorialView->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
-    tutorialView->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    tutorialView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    tutorialView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 }
 
 
@@ -385,10 +385,12 @@ void CircuitGameView::setupTutorialPage() {
 
     // Configure the tutorial view (QGraphicsView)
     tutorialView = new QGraphicsView;
-    tutorialView->setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
-    tutorialView->viewport()->setAttribute(Qt::WA_AlwaysStackOnTop, true);
-    tutorialView->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
+    tutorialView->setStyleSheet("background: transparent;");
     tutorialView->setBackgroundBrush(Qt::NoBrush);
+    tutorialView->setFrameStyle(QFrame::NoFrame);
+    tutorialView->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
+    tutorialView->viewport()->setAttribute(Qt::WA_TranslucentBackground);
+    tutorialView->setAttribute(Qt::WA_TranslucentBackground);
 
     // Instructional text
     QTextEdit* tutorialText = new QTextEdit;

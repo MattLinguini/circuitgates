@@ -102,12 +102,12 @@ void CircuitGameModel::loadLvl1() {
     currentLevel.setGateBudget(GateType::XOR, 0);
     currentLevel.setGateBudget(GateType::NOT, 0);
 
-    InputOutput* in1 = currentLevel.addIO(2, 0,1, 1);
-    InputOutput* in2 = currentLevel.addIO(4, 0, 1, 1);
+    InputOutput* in1 = currentLevel.addIO(2, 1,1, 1);
+    InputOutput* in2 = currentLevel.addIO(4, 1, 1, 1);
 
-    LogicGate* g1 = currentLevel.addGate(3,2,GateType::DEFAULT);
+    LogicGate* g1 = currentLevel.addGate(3,3,GateType::DEFAULT);
 
-    InputOutput* out1 = currentLevel.addIO(3, 4, 0, 1);
+    InputOutput* out1 = currentLevel.addIO(3, 5, 0, 1);
 
     in1->addDestination(g1->objectID);
     in2->addDestination(g1->objectID);
@@ -130,12 +130,12 @@ void CircuitGameModel::loadLvl2() {
     currentLevel.setGateBudget(GateType::XOR, 0);
     currentLevel.setGateBudget(GateType::NOT, 0);
 
-    InputOutput* in1 = currentLevel.addIO(2, 0, 1, 1);
-    InputOutput* in2 = currentLevel.addIO(4, 0, 1, 1);
+    InputOutput* in1 = currentLevel.addIO(2, 1, 1, 1);
+    InputOutput* in2 = currentLevel.addIO(4, 1, 1, 1);
 
-    LogicGate* g1 = currentLevel.addGate(3,2,GateType::DEFAULT);
+    LogicGate* g1 = currentLevel.addGate(3, 3, GateType::DEFAULT);
 
-    InputOutput* out1 = currentLevel.addIO(3, 4, 0, 1);
+    InputOutput* out1 = currentLevel.addIO(3, 5, 0, 1);
 
     in1->addDestination(g1->objectID);
     in2->addDestination(g1->objectID);
@@ -158,16 +158,16 @@ void CircuitGameModel::loadLvl3() {
     currentLevel.setGateBudget(GateType::XOR, 0);
     currentLevel.setGateBudget(GateType::NOT, 0);
 
-    InputOutput* in1 = currentLevel.addIO(2, 0, 1, 1);
-    InputOutput* in2 = currentLevel.addIO(4, 0, 1, 1);
+    InputOutput* in1 = currentLevel.addIO(2, 1, 1, 1);
+    InputOutput* in2 = currentLevel.addIO(4, 1, 1, 1);
 
     //TOGGLEABLE GATE -> EXPECTED: AND
-    LogicGate* g1 = currentLevel.addGate(2, 2, GateType::DEFAULT);
+    LogicGate* g1 = currentLevel.addGate(2, 3, GateType::DEFAULT);
     //TOGGLEABLE GATE -> EXPECTED: OR
-    LogicGate* g2 = currentLevel.addGate(4, 2, GateType::DEFAULT);
+    LogicGate* g2 = currentLevel.addGate(4, 3, GateType::DEFAULT);
 
-    InputOutput* out1 = currentLevel.addIO(2, 4, 0, 1);
-    InputOutput* out2 = currentLevel.addIO(4, 4, 0, 1);
+    InputOutput* out1 = currentLevel.addIO(2, 5, 0, 1);
+    InputOutput* out2 = currentLevel.addIO(4, 5, 0, 1);
 
     //Inputs to wires
     in1->addDestination(g1->objectID);
@@ -262,16 +262,16 @@ void CircuitGameModel::loadLvl6() {
     currentLevel.setGateBudget(GateType::XOR, 0);
     currentLevel.setGateBudget(GateType::NOT, 1);
 
-    InputOutput* in1 = currentLevel.addIO(2, 0, 1,1);
-    InputOutput* in2 = currentLevel.addIO(4, 0, 1, 1);
+    InputOutput* in1 = currentLevel.addIO(2, 1, 1,1);
+    InputOutput* in2 = currentLevel.addIO(4, 1, 1, 1);
 
     //TOGGLEABLE GATE -> EXPECTED: AND
-    LogicGate* g1 = currentLevel.addGate(2, 2, GateType::DEFAULT);
+    LogicGate* g1 = currentLevel.addGate(2, 3, GateType::DEFAULT);
     //TOGGLEABLE GATE -> EXPECTED: NOT
-    LogicGate* g2 = currentLevel.addGate(4, 2, GateType::DEFAULT);
+    LogicGate* g2 = currentLevel.addGate(4, 3, GateType::DEFAULT);
 
-    InputOutput* out1 = currentLevel.addIO(2, 4, 0, 1);
-    InputOutput* out2 = currentLevel.addIO(4, 4, 0, 0);
+    InputOutput* out1 = currentLevel.addIO(2, 5, 0, 1);
+    InputOutput* out2 = currentLevel.addIO(4, 5, 0, 0);
 
     //Inputs to wires
     in1->addDestination(g1->objectID);
@@ -298,17 +298,17 @@ void CircuitGameModel::loadLvl7() {
     currentLevel.setGateBudget(GateType::XOR, 1);
     currentLevel.setGateBudget(GateType::NOT, 0);
 
-    InputOutput* in1 = currentLevel.addIO(1, 0, 1, 1);
-    InputOutput* in2 = currentLevel.addIO(3, 0, 1, 1);
-    InputOutput* in3 = currentLevel.addIO(5, 0, 1, 1);
+    InputOutput* in1 = currentLevel.addIO(1, 1, 1, 1);
+    InputOutput* in2 = currentLevel.addIO(3, 1, 1, 1);
+    InputOutput* in3 = currentLevel.addIO(5, 1, 1, 1);
 
     //TOGGLEABLE GATE -> EXPECTED: XOR
-    LogicGate* g1 = currentLevel.addGate(2, 2, GateType::DEFAULT);
+    LogicGate* g1 = currentLevel.addGate(2, 3, GateType::DEFAULT);
     //TOGGLEABLE GATE -> EXPECTED: OR
-    LogicGate* g2 = currentLevel.addGate(4, 2, GateType::DEFAULT);
+    LogicGate* g2 = currentLevel.addGate(4, 3, GateType::DEFAULT);
 
-    InputOutput* out1 = currentLevel.addIO(2, 4, 0, 1);
-    InputOutput* out2 = currentLevel.addIO(4, 4, 0, 0);
+    InputOutput* out1 = currentLevel.addIO(2, 5, 0, 1);
+    InputOutput* out2 = currentLevel.addIO(4, 5, 0, 0);
 
     //Inputs to wires
     in1->addDestination(g1->objectID);
