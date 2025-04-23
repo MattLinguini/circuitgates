@@ -34,7 +34,8 @@ void CircuitGameView::createConnections() {
     connect(model, &CircuitGameModel::sendWinToView, this, &CircuitGameView::triggerWin);
 
     // @brief Sends information to the model as the game scene progresses.
-    connect(this, &CircuitGameView::updateModel, model, &CircuitGameModel::updateGate);
+    connect(this, &CircuitGameView::updateGateInModel, model, &CircuitGameModel::updateGate);
+    connect(this, &CircuitGameView::updateIOInModel, model, &CircuitGameModel::updateIO);
 }
 
 
@@ -73,10 +74,13 @@ void CircuitGameView::drawLevel() {
     scene->addGateSlot(8, 3, -1);
     scene->addGateSlot(8, 5, -1);
 
+    IOItem* IO;
     for (GameObject* gameObj : modelGameObjs->values()) {
         if (gameObj->objType == GameObject::GameObjectType::IO) {
-            gameObj->asItem = scene->addIOItem(gameObj->x, gameObj->y, gameObj->objectID);
+            IO = scene->addIOItem(gameObj->x, gameObj->y, gameObj->objectID);
+            gameObj->asItem = IO;
             gameObj->inView = true;
+            IO->setView(this);
         } else if (gameObj->objType == GameObject::GameObjectType::GATE) {
             gameObj->asItem = scene->addGateSlot(gameObj->x, gameObj->y, gameObj->objectID);
             gameObj->inView = true;
@@ -116,8 +120,12 @@ void CircuitGameView::drawLevel() {
 }
 
 
-void CircuitGameView::sendViewToModel(int id, LogicGate::GateType gateType) {
-    emit updateModel(id, gateType);
+void CircuitGameView::sendGateToModel(int id, LogicGate::GateType gateType) {
+    emit updateGateInModel(id, gateType);
+}
+
+void CircuitGameView::sendIOToModel(int id, bool state) {
+    emit updateIOInModel(id, state);
 }
 
 void CircuitGameView::triggerWin() {

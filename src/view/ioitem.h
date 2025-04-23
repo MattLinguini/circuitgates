@@ -9,6 +9,8 @@
 
 class WireItem;
 
+class CircuitGameView;
+
 /// @class IOItem
 /// @brief A GameItem that either gives or recieves power from or to a gate.
 class IOItem : public GameItem {
@@ -36,6 +38,10 @@ class IOItem : public GameItem {
 
         void addWire(WireItem* wire) override;
 
+        void setView(CircuitGameView* view);
+
+        CircuitGameView* setView();
+
     private:
         /// @brief Called when the LogicGateItem changes position. Updates the box2d's position.
         QVariant itemChange(GraphicsItemChange change, const QVariant& value) override;
@@ -60,6 +66,8 @@ class IOItem : public GameItem {
 
         // IO state (on or off).
         bool state = false;
+
+        CircuitGameView* view = nullptr;
 };
 
 #endif // IOITEM_H

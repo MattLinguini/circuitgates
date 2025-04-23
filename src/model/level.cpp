@@ -27,7 +27,7 @@ void Level::cleanLevel() {
 }
 
 InputOutput* Level::addIO(int x, int y, bool toggleable,bool inputType, bool expectedState) {
-    InputOutput* IO = new InputOutput(x, y, nextID, toggleable, this, inputType, expectedState);
+    InputOutput* IO = new InputOutput(x, y, nextID, this, inputType, expectedState);
     IO->objType = GameObject::GameObjectType::IO;
     gameObjs.insert(nextID, IO);
     if (!IO->getInputType()) {
@@ -64,7 +64,7 @@ bool Level::validateSolution() {
 
     for (int i : gameObjs.keys()) {
         IO = dynamic_cast<InputOutput*>(gameObjs.value(i));
-        if (IO && IO->getToggleable()) {
+        if (IO && IO->getInputType()==1) {
             IO->setState(IO->state, -1);
         }
     }

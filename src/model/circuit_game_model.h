@@ -50,6 +50,8 @@ public slots:
     void createLevel(int levelId);
 
     void updateGate(int id, LogicGate::GateType gateType);
+
+    void updateIO(int id, bool state);
 };
 
 #endif // CIRCUIT_GAME_MODEL_H

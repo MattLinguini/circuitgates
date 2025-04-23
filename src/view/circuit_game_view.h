@@ -32,7 +32,12 @@ class CircuitGameView : public QMainWindow {
         /// @brief Sends a gate update to the model.
         /// @param id The unique ID of the object being updated.
         /// @param gateType The gate type being placed or updated.
-        void sendViewToModel(int id, LogicGate::GateType gateType);
+        void sendGateToModel(int id, LogicGate::GateType gateType);
+
+        ///@brief Sends a IO update to the model.
+        /// @param id ID of IO gate to be updated.
+        /// @param state State to be sent to IO.
+        void sendIOToModel(int id, bool state);
 
     signals:
         /// @brief Signal to request creation of a new level.
@@ -42,7 +47,12 @@ class CircuitGameView : public QMainWindow {
         /// @brief Signal to update the model with a selected gate.
         /// @param id The ID of the slot where the gate is placed.
         /// @param gateType The logic gate type placed.
-        void updateModel(int id, LogicGate::GateType gateType);
+        void updateGateInModel(int id, LogicGate::GateType gateType);
+
+        /// @brief Signals to update the state of a given IO in model.
+        /// @param id The ID of the IO to be updated.
+        /// @param state State to be sent to IO.
+        void updateIOInModel(int id, bool state);
 
     public slots:
         /// @brief Receives a pointer to the level object from the model.

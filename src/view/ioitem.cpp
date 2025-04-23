@@ -6,8 +6,8 @@
 #include "src/view/wireitem.h"
 #include <QGraphicsScene>
 #include <QLineF>
+#include "circuit_game_view.h"
 
-static constexpr float SCALE = 30.0f;
 
 IOItem::IOItem(b2World* world, float centerX_meters, float centerY_meters, float width_meters, float height_meters, float padding, float cellSize, int id, QGraphicsItem* parent) : QGraphicsRectItem(parent), body(nullptr), snapDistancePixels(40.0f), padding(padding), cellSize(cellSize) {
     this->id = id;
@@ -77,6 +77,16 @@ int IOItem::getID() const {
     return id;
 }
 
+void IOItem::setView(CircuitGameView* view) {
+    this->view = view;
+}
+
+CircuitGameView* IOItem::setView() {
+    if (view) return this->view;
+    else return nullptr;
+}
+
+
 void IOItem::addWire(WireItem* wire) {
     if (!connectedWires.contains(wire)) {
         connectedWires.append(wire);
@@ -104,6 +114,10 @@ void IOItem::mousePressEvent(QGraphicsSceneMouseEvent* event) {
     // Toggle
     state = !state;
     togglePower(state);
+
+    if(view) {
+        this->view->sendIOToModel(this->id, state);
+    }
 
     // Ensure the scene still receives the event
     QGraphicsRectItem::mousePressEvent(event);
