@@ -15,16 +15,14 @@ signals:
     /// @brief Signal to send the level to the view.
     /// @param lvl: the level pointer to send.
     void sendLevelPointer(Level* lvl);
-    /// @brief Signal to send the level flavor text to the view.
-    /// @param levelName: The title of the level.
-    /// @param levelDesc: The description of the level.
-    void sendLevelDescription(QString levelName, QString levelDescription);
 
     void sendWinToView();
 
 private:
     /// @brief The current level object held in the model.
     Level currentLevel;
+    /// @brief Loads the tutorial level to the current model.
+    void loadTutorial();
     /// @brief Loads level one to the current model.
     void loadLvl1();
     /// @brief Loads level two to the current model.

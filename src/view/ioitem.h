@@ -3,10 +3,13 @@
 
 #include "Box2D/Dynamics/b2Body.h"
 #include "gameitem.h"
+#include "src/view/wireitem.h"
 #include <QGraphicsItem>
 #include <QGraphicsSceneEvent>
 #include <QVariant>
 
+/// @class IOItem
+/// @brief A GameItem that either gives or recieves power from or to a gate.
 class IOItem : public GameItem {
     public:
         /// @brief Constructor to create a gate slot with a static box2d body and Qt Rectangle.
@@ -25,19 +28,30 @@ class IOItem : public GameItem {
         /// @brief Updates the LogicGateItem's position and rotation to match the box2d body.
         void updateGate();
 
+        /// @brief Returns the ID of the IO item.
         int getID() const override;
+
+        void togglePower(bool state);
+
+        void addWire(WireItem* wire) override;
 
     private:
         /// @brief Called when the LogicGateItem changes position. Updates the box2d's position.
         QVariant itemChange(GraphicsItemChange change, const QVariant& value) override;
 
+        /// @brief Overriden paint method to add styling to the QT object.
         void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
 
+        // Physics
         b2Body* body;
         b2World* world;
+        QList<WireItem*> connectedWires;
+
+        // Layout constants
         float snapDistancePixels;
         float padding;
         float cellSize;
+
         int id = -1;
 };
 

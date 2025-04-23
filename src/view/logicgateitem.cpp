@@ -3,12 +3,12 @@
 #include "Box2D/Collision/Shapes/b2PolygonShape.h"
 #include "Box2D/Dynamics/b2Fixture.h"
 #include "Box2D/Dynamics/b2World.h"
+#include "src/view/gamescene.h"
 #include <QGraphicsScene>
 #include <QLineF>
 
-static constexpr float SCALE = 30.0f;
 
-LogicGateItem::LogicGateItem(b2World* world, float centerX_meters, float centerY_meters, float width_meters, float height_meters, float padding, float cellSize, QGraphicsItem* parent) : QGraphicsRectItem(parent), body(nullptr), snapDistancePixels(40.0f), padding(padding), cellSize(cellSize) {
+LogicGateItem::LogicGateItem(LogicGate::GateType gateType, b2World* world, float centerX_meters, float centerY_meters, float width_meters, float height_meters, float padding, float cellSize, QGraphicsItem* parent) : QGraphicsRectItem(parent), body(nullptr), snapDistancePixels(40.0f), padding(padding), cellSize(cellSize), gateType(gateType) {
     // Allow the item to be moved. When it is moved, send the position changes to itemChange().
     setFlag(QGraphicsItem::ItemIsMovable, true);
     setFlag(QGraphicsItem::ItemSendsScenePositionChanges, true);
@@ -32,9 +32,33 @@ LogicGateItem::LogicGateItem(b2World* world, float centerX_meters, float centerY
 
     // Create the Qt Rectangle with the same position as the box2d body.
     setRect(-width_meters/2 * SCALE, -height_meters/2 * SCALE, width_meters * SCALE, height_meters * SCALE);
-    setBrush(Qt::yellow);
+    switch (gateType) {
+        case LogicGate::GateType::OR: setBrush(Qt::green); break;
+        case LogicGate::GateType::AND: setBrush(Qt::yellow); break;
+        case LogicGate::GateType::NOT: setBrush(Qt::red); break;
+        case LogicGate::GateType::XOR: setBrush(Qt::blue); break;
+        case LogicGate::GateType::DEFAULT: setBrush(Qt::gray); break;
+    }
     setPos(centerX_meters * SCALE, -centerY_meters * SCALE);
+    originalPosition = b2Vec2(centerX_meters, centerY_meters);
 
+    // Load the gate icon corresponding to the GateType.
+    switch (gateType) {
+        case LogicGate::GateType::AND:
+            icon.load(":/gates/resources/and_gate.png");
+            break;
+        case LogicGate::GateType::OR:
+            icon.load(":/gates/resources/or_gate.png");
+            break;
+        case LogicGate::GateType::NOT:
+            icon.load(":/gates/resources/not_gate.png");
+            break;
+        case LogicGate::GateType::XOR:
+            icon.load(":/gates/resources/xor_gate.png");
+            break;
+        case LogicGate::GateType::DEFAULT:
+            break;
+    }
 }
 
 b2Body* LogicGateItem::getBody() const {
@@ -84,6 +108,8 @@ void LogicGateItem::mousePressEvent(QGraphicsSceneMouseEvent* event) {
 
     if (body) {
         body->SetType(b2_kinematicBody);
+        body->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
+        body->SetAngularVelocity(0.0f);
     }
 }
 
@@ -92,18 +118,24 @@ void LogicGateItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
     QGraphicsRectItem::mouseReleaseEvent(event);
 
     GateSlotItem* closestSlot = findClosestSlot();
-    if (closestSlot && isWithinSnapRange(closestSlot)) {
+    if (closestSlot && isWithinSnapRange(closestSlot) && !closestSlot->isOccupied()) {
         // Snap to the center of the closest slot.
+        if (snappedSlot && snappedSlot != closestSlot) {
+            snappedSlot->setOccupied(false);  // Clear previous slot if moving to new one
+        }
+
+        // Set the slot to occupied
         setPos(closestSlot->pos());
+        closestSlot->setOccupied(true);
+        snappedSlot = closestSlot;
+
 
         if (body) {
-            body->SetTransform(
-                b2Vec2(pos().x() / SCALE, -pos().y() / SCALE),
-                body->GetAngle()
-                );
+            body->SetTransform(b2Vec2(pos().x() / SCALE, -pos().y() / SCALE), 0.0f);
 
             // Freeze the body after it has snapped
             body->SetType(b2_staticBody);
+
 
             if (view) {
             view->sendViewToModel( closestSlot->getID(), this->gateType);
@@ -114,19 +146,65 @@ void LogicGateItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
         if (body) {
             // Let the body fall is not snapped.
             body->SetType(b2_dynamicBody);
+
+            GameScene* gameScene = qobject_cast<GameScene*>(scene());
+            if (gameScene) {
+                b2Vec2 bodyPos = body->GetPosition();
+                if (bodyPos.y < gameScene->getBottomWallY()) {
+                    // Respawn right now if too low
+                    body->SetTransform(originalPosition, 0.0f);
+                    body->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
+                    body->SetAngularVelocity(0.0f);
+                }
+            }
         }
+
+        // Clear any slot that was previously occupied by this gate
+        if (snappedSlot) {
+            snappedSlot->setOccupied(false);
+            snappedSlot = nullptr;
+        }
+
     }
+
 }
 
 void LogicGateItem::updateGate() {
     if (body) {
         b2Vec2 bodyPos = body->GetPosition();
+
+        GameScene* gameScene = qobject_cast<GameScene*>(scene());
+        if (gameScene) {
+            float wallThickness = 0.5f;
+
+            if (bodyPos.y < (gameScene->getBottomWallY() - wallThickness)) {
+                body->SetTransform(originalPosition, 0.0f);
+                body->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
+                body->SetAngularVelocity(0.0f);
+                bodyPos = body->GetPosition();
+            }
+        }
+
         setPos(bodyPos.x * SCALE, -bodyPos.y * SCALE);
         setRotation(-body->GetAngle() * 180.0f / b2_pi);
     }
 }
 
+
 int LogicGateItem::getID() const {
     return id;
 }
 
+void LogicGateItem::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*) {
+    painter->setOpacity(1.0);
+    painter->setBrush(Qt::white);
+    painter->drawRect(boundingRect());
+
+    if (!icon.isNull()) {
+        painter->drawPixmap(boundingRect().toRect(), icon);
+    }
+}
+
+void LogicGateItem::addWire(WireItem* wire) {}
+
+void LogicGateItem::togglePower(bool state) {}

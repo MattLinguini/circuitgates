@@ -3,6 +3,7 @@
 
 #include "Box2D/Dynamics/b2Body.h"
 #include "gateslotitem.h"
+#include "QPainter"
 
 class CircuitGameView;
 
@@ -16,7 +17,7 @@ public:
     /// @param height   Height (in meters) of the item.
     /// @param padding  Padding around the grid.
     /// @param cellSize Cellsize of the scene.
-    LogicGateItem(b2World* world, float centerX, float centerY, float width, float height, float padding, float cellSize, QGraphicsItem* parent = nullptr);
+    LogicGateItem(LogicGate::GateType gateType, b2World* world, float centerX, float centerY, float width, float height, float padding, float cellSize, QGraphicsItem* parent = nullptr);
 
     /// @brief Returns the body of the specific LogicGate.
     b2Body* getBody() const override;
@@ -28,10 +29,15 @@ public:
 
     int getID() const override;
 
+    void addWire(WireItem* wire) override;
+
+    void togglePower(bool state) override;
+
     //TODO make this a getter and private
     CircuitGameView* view = nullptr;
 
-
+    /// @brief Holds the icon that will be loaded.
+    QPixmap icon;
 
 private:
     /// @brief Returns the closest GateSlot to the LogicGateItem's position.
@@ -51,12 +57,21 @@ private:
     /// @brief Switches the LogicGate to allow movement instead of being static when clicked.
     void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
 
+    /// @brief Draws the gate icon.
+    void paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*) override;
+
+
     b2Body* body;
     b2World* world;
     float snapDistancePixels;
     float padding;
     float cellSize;
     int id = -1;
+    b2Vec2 originalPosition;
+
+    /// @brief To track the slot that has an object.
+    GateSlotItem* snappedSlot = nullptr;
+
 };
 
 #endif // LOGICGATEITEM_H

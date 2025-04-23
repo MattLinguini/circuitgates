@@ -3,10 +3,11 @@
 
 #include "Box2D/Dynamics/b2Body.h"
 #include "gameitem.h"
-#include <QGraphicsRectItem>
 #include "src/model/logic_gate.h"
+#include "src/view/wireitem.h"
 
-
+/// @class GameSlotItem
+/// @brief A GameItem that handles logic gates snapping into it and changing its type.
 class GateSlotItem : public GameItem {
     public:
         /// @brief Constructor to create a gate slot with a static box2d body and Qt Rectangle.
@@ -20,10 +21,20 @@ class GateSlotItem : public GameItem {
         /// @brief Returns the specific body for the gate slot.
         b2Body* getBody() const override;
 
-        LogicGate::GateType gateType;
-
         int getID() const override;
 
+        /// @brief Checks if the slot is occupied by a gate.
+        bool isOccupied() const;
+
+        /// @brief Sets the slot to occupied.
+        /// @param occ True if the slot has a gate inside of it, false otherwise.
+        void setOccupied(bool occ);
+
+        void togglePower(bool state);
+
+        void addWire(WireItem* wire) override;
+
+        LogicGate::GateType gateType;
     private:
         /// @brief Called automatically when item properties (like position) change.
         QVariant itemChange(GraphicsItemChange change, const QVariant& value) override;
@@ -31,10 +42,23 @@ class GateSlotItem : public GameItem {
         /// @brief Called when the user releases the mouse after dragging
         void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;
 
+        /// @brief Used to draw the gate slot icon.
+        void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
+
+        // Layout constants
         float padding;
         float cellSize;
+
+        // Box2D Physics body
         b2Body* body;
+        QList<WireItem*> connectedWires;
+
+        // Flags
         int id = -1;
+        bool occupied = false;
+
+        // Icon for the gate slot.
+        QPixmap icon;
 };
 
 #endif // GAMEOBJECTS_H

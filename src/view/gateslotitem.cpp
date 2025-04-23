@@ -30,6 +30,9 @@ GateSlotItem::GateSlotItem(b2World* world, float centerX, float centerY, float w
     setRect(-width/2 * SCALE, -height/2 * SCALE, width * SCALE, height * SCALE);
     setBrush(Qt::gray);
     setPos(centerX * SCALE, -centerY * SCALE);
+
+    // Load the gate slot icon
+    icon.load(":/gates/resources/default_gate.png");
 }
 
 b2Body* GateSlotItem::getBody() const {
@@ -47,3 +50,42 @@ void GateSlotItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event) {
 int GateSlotItem::getID() const {
     return id;
 }
+
+bool GateSlotItem::isOccupied() const {
+    return occupied;
+}
+
+void GateSlotItem::setOccupied(bool occ) {
+    occupied = occ;
+}
+
+void GateSlotItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) {
+    QGraphicsRectItem::paint(painter, option, widget);
+
+    if (!icon.isNull()) {
+        QRectF bounds = boundingRect();
+        painter->drawPixmap(bounds.toRect(), icon);
+    }
+}
+
+void GateSlotItem::addWire(WireItem* wire) {
+    if (!connectedWires.contains(wire)) {
+        connectedWires.append(wire);
+    }
+}
+
+void GateSlotItem::togglePower(bool state) {
+    if (state) {
+        setBrush(Qt::green);
+        for (WireItem* wire : std::as_const(connectedWires)) {
+            wire->togglePower(true);
+        }
+    }
+    else {
+        setBrush(Qt::red);
+        for (WireItem* wire : std::as_const(connectedWires)) {
+            wire->togglePower(false);
+        }
+    }
+}
+

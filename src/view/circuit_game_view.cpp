@@ -1,138 +1,34 @@
 #include "circuit_game_view.h"
-#include "qgraphicsitem.h"
 #include "ui_circuit_game_view.h"
-#include "src/model/circuit_game_model.h"
 #include "gamescene.h"
-#include <QPushButton>
-#include <QTextEdit>
+#include "src/model/circuit_game_model.h"
 #include <QBoxLayout>
 #include <QGridLayout>
+#include <QGraphicsItem>
+#include <QGraphicsView>
+#include <QPushButton>
+#include <QTextEdit>
+#include <QLabel>
+#include <QPixmap>
 
 CircuitGameView::CircuitGameView(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow), model(new CircuitGameModel(this)) {
     ui->setupUi(this);
-
     ui->stackedWidget->setStyleSheet("QPushButton {height: 50;}");
 
-    // PAGES
+    createConnections();
 
-    /// Setup homepage.
-    homePage = new QWidget(this);
-    QWidget *homeInnerPage = new QWidget(this);
+    setupHomePage();
+    setupLevelSelectPage();
+    setupGamePage();
+    setupTutorialPage();
+}
 
-    /// Setup homepage's contents.
-    QTextEdit *gameTitle = new QTextEdit("Circuit Game");
-    QTextCursor gameCursor = gameTitle->textCursor();
-    gameTitle->selectAll();
-    gameTitle->setAlignment(Qt::AlignCenter);
-    gameTitle->setMaximumHeight(63);
-    gameTitle->setFontPointSize(30);
-    gameTitle->setTextCursor(gameCursor);
-    gameTitle->setStyleSheet("background: transparent; border: 0;");
-    gameTitle->setReadOnly(true);
-    QPushButton *startButton = new QPushButton("Start Game");
-    QPushButton *quitButton = new QPushButton("Quit Game");
 
-    /// Connect buttons to functionality.
-    connect(startButton, &QPushButton::clicked, this, &CircuitGameView::displayLevels);
-    connect(quitButton, &QPushButton::clicked, QApplication::instance(), &QApplication::quit);
+CircuitGameView::~CircuitGameView() { delete ui; }
 
-    /// Add layout to inner home page.
-    QVBoxLayout *homeInnerLayout = new QVBoxLayout;
-    homeInnerLayout->addWidget(gameTitle);
-    homeInnerLayout->addWidget(startButton);
-    homeInnerLayout->addWidget(quitButton);
-    homeInnerPage->setLayout(homeInnerLayout);
-    homeInnerPage->setMaximumSize(275, 250);
 
-    /// Add layout to home page.
-    QBoxLayout *homeLayout = new QBoxLayout(QBoxLayout::LeftToRight, homePage);
-    homeLayout->addWidget(homeInnerPage, Qt::AlignCenter);
-    homePage->setLayout(homeLayout);
-
-    /// Setup level page.
-    levelPage = new QWidget(this);
-
-    /// Setup level page contents.
-    QWidget *levelSelect = new QWidget(this);
-    QTextEdit *levelTitle = new QTextEdit("Levels");
-    QTextCursor levelCursor = levelTitle->textCursor();
-    levelTitle->selectAll();
-    levelTitle->setMaximumHeight(63);
-    levelTitle->setFontPointSize(30);
-    levelTitle->setTextCursor(levelCursor);
-    levelTitle->setStyleSheet("background: transparent; border: 0;");
-    levelTitle->setReadOnly(true);
-    QPushButton *level_1 = new QPushButton("Level 1");
-    QPushButton *level_2 = new QPushButton("Level 2");
-    QPushButton *level_3 = new QPushButton("Level 3");
-    QPushButton *level_4 = new QPushButton("Level 4");
-    QPushButton *level_5 = new QPushButton("Level 5");
-    QPushButton *level_6 = new QPushButton("Level 6");
-    QPushButton *level_7 = new QPushButton("Level 7");
-    QPushButton *level_8 = new QPushButton("Level 8");
-    QPushButton *level_9 = new QPushButton("Level 9");
-    QPushButton *level_10 = new QPushButton("Level 10");
-    QPushButton *menuButton = new QPushButton("Return to Menu");
-
-    /// Connect buttons to functionality.
+void CircuitGameView::createConnections() {
     connect(this, &CircuitGameView::createLevel, model, &CircuitGameModel::createLevel);
-    connect(level_1, &QPushButton::clicked, this, [this]() {emit CircuitGameView::createLevel(1);});
-    connect(level_2, &QPushButton::clicked, this, [this]() {emit CircuitGameView::createLevel(2);});
-    connect(level_3, &QPushButton::clicked, this, [this]() {emit CircuitGameView::createLevel(3);});
-    connect(level_4, &QPushButton::clicked, this, [this]() {emit CircuitGameView::createLevel(4);});
-    connect(level_5, &QPushButton::clicked, this, [this]() {emit CircuitGameView::createLevel(5);});
-    connect(level_6, &QPushButton::clicked, this, [this]() {emit CircuitGameView::createLevel(6);});
-    connect(level_7, &QPushButton::clicked, this, [this]() {emit CircuitGameView::createLevel(7);});
-    connect(level_8, &QPushButton::clicked, this, [this]() {emit CircuitGameView::createLevel(8);});
-    connect(level_9, &QPushButton::clicked, this, [this]() {emit CircuitGameView::createLevel(9);});
-    connect(level_10, &QPushButton::clicked, this, [this]() {emit CircuitGameView::createLevel(10);});
-    connect(menuButton, &QPushButton::clicked, this, &CircuitGameView::displayMenu);
-
-    /// Add layout to level page.
-    QGridLayout *levelLayout = new QGridLayout;
-    levelLayout->addWidget(level_1, 0, 0);
-    levelLayout->addWidget(level_2, 0, 1);
-    levelLayout->addWidget(level_3, 0, 2);
-    levelLayout->addWidget(level_4, 0, 3);
-    levelLayout->addWidget(level_5, 0, 4);
-    levelLayout->addWidget(level_6, 1, 0);
-    levelLayout->addWidget(level_7, 1, 1);
-    levelLayout->addWidget(level_8, 1, 2);
-    levelLayout->addWidget(level_9, 1, 3);
-    levelLayout->addWidget(level_10, 1, 4);
-    levelLayout->addWidget(menuButton, 2, 0);
-    levelSelect->setLayout(levelLayout);
-
-    QVBoxLayout *levelOuterLayout = new QVBoxLayout;
-    levelOuterLayout->addWidget(levelTitle);
-    levelOuterLayout->addWidget(levelSelect);
-    levelPage->setLayout(levelOuterLayout);
-
-    /// Setup game page.
-    gamePage = new QWidget(this);
-
-    /// Setup game page contents.
-    gameView = new QGraphicsView;
-    QPushButton *levelButton = new QPushButton("Return to Levels");
-
-    /// Connect buttons to functionality.
-    connect(levelButton, &QPushButton::clicked, this, &CircuitGameView::displayLevels);
-
-    /// Add layout to game page.
-    QVBoxLayout *gameLayout = new QVBoxLayout;
-    gameLayout->addWidget(gameView);
-    gameLayout->addWidget(levelButton);
-    gamePage->setLayout(gameLayout);
-
-
-    /// Add pages to stacked widget.
-    ui->stackedWidget->addWidget(homePage);
-    ui->stackedWidget->addWidget(levelPage);
-    ui->stackedWidget->addWidget(gamePage);
-
-    // CONNECTIONS
-
-    /// @brief Creates connections to transfer level data to the view.
     connect(model, &CircuitGameModel::sendLevelPointer, this, &CircuitGameView::receiveLevelPointer);
     connect(model, &CircuitGameModel::sendLevelDescription, this, &CircuitGameView::recieveLevelDescription);
     connect(model, &CircuitGameModel::sendWinToView, this, &CircuitGameView::triggerWin);
@@ -141,13 +37,26 @@ CircuitGameView::CircuitGameView(QWidget *parent) : QMainWindow(parent), ui(new 
     connect(this, &CircuitGameView::updateModel, model, &CircuitGameModel::updateGate);
 }
 
+
 void CircuitGameView::displayMenu() {
     ui->stackedWidget->setCurrentWidget(homePage);
 }
 
+
 void CircuitGameView::displayLevels() {
     ui->stackedWidget->setCurrentWidget(levelPage);
 }
+
+
+void CircuitGameView::displayGame() {
+    ui->stackedWidget->setCurrentWidget(gamePage);
+}
+
+
+void CircuitGameView::displayTutorial() {
+    ui->stackedWidget->setCurrentWidget(tutorialPage);
+}
+
 
 void CircuitGameView::receiveLevelPointer(Level* lvl) {
     modelGameObjs = lvl->getGameObjs();
@@ -156,8 +65,6 @@ void CircuitGameView::receiveLevelPointer(Level* lvl) {
     drawLevel();
 }
 
-void CircuitGameView::recieveLevelDescription(QString levelName, QString levelDescription) {
-}
 
 void CircuitGameView::drawLevel() {
     if (scene) delete scene;
@@ -182,19 +89,32 @@ void CircuitGameView::drawLevel() {
         }
     }
 
-        LogicGateItem* gateItem;
-        for (GateType type : budget->keys()) {
-            int amount = budget->value(type);
-            for (int i = 0; i < amount; i ++) {
-                gateItem = scene->addLogicGate(8,1, type);
-                gateItem->view = this;
-            }
+    int count = 1;
+    LogicGateItem* gateItem;
+    for (GateType type : budget->keys()) {
+        int amount = budget->value(type);
+        for (int i = 0; i < amount; i ++) {
+            gateItem = scene->addLogicGate(8, count, type);
+            gateItem->view = this;
+            count+=2;
         }
+    }
+
+    scene->setSceneRect(scene->itemsBoundingRect()); // <- instead of manually setting dimensions if you can
 
     gameView->setScene(scene);
-    //ui->graphicsView->setScene(scene);
-    ui->stackedWidget->setCurrentWidget(gamePage);
+    gameView->resetTransform();
+    gameView->setAlignment(Qt::AlignCenter);
+    gameView->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    gameView->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+
+    tutorialView->setScene(scene);
+    tutorialView->resetTransform();
+    tutorialView->setAlignment(Qt::AlignCenter);
+    tutorialView->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    tutorialView->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
 }
+
 
 void CircuitGameView::sendViewToModel(int id, LogicGate::GateType gateType) {
     emit updateModel(id, gateType);
@@ -205,6 +125,138 @@ void CircuitGameView::triggerWin() {
     qDebug() << "You win!";
 }
 
-CircuitGameView::~CircuitGameView() {
-    delete ui;
+
+void CircuitGameView::setupHomePage() {
+    homePage = new QWidget(this);
+    QWidget *homeInnerPage = new QWidget(this);
+
+    QTextEdit *gameTitle = new QTextEdit("Circuit Game");
+    QTextCursor gameCursor = gameTitle->textCursor();
+    gameTitle->selectAll();
+    gameTitle->setAlignment(Qt::AlignCenter);
+    gameTitle->setMaximumHeight(63);
+    gameTitle->setFontPointSize(30);
+    gameTitle->setTextCursor(gameCursor);
+    gameTitle->setStyleSheet("background: transparent; border: 0;");
+    gameTitle->setReadOnly(true);
+
+    QPushButton *startButton = new QPushButton("Start Game");
+    QPushButton *quitButton = new QPushButton("Quit Game");
+    connect(startButton, &QPushButton::clicked, this, &CircuitGameView::displayLevels);
+    connect(quitButton, &QPushButton::clicked, QApplication::instance(), &QApplication::quit);
+
+    QVBoxLayout *homeInnerLayout = new QVBoxLayout;
+    homeInnerLayout->addWidget(gameTitle);
+    homeInnerLayout->addWidget(startButton);
+    homeInnerLayout->addWidget(quitButton);
+    homeInnerPage->setLayout(homeInnerLayout);
+    homeInnerPage->setMaximumSize(275, 250);
+
+    QBoxLayout *homeLayout = new QBoxLayout(QBoxLayout::LeftToRight, homePage);
+    homeLayout->addWidget(homeInnerPage, Qt::AlignCenter);
+    homePage->setLayout(homeLayout);
+
+    ui->stackedWidget->addWidget(homePage);
+}
+
+
+void CircuitGameView::setupLevelSelectPage() {
+    levelPage = new QWidget(this);
+
+    QTextEdit *levelTitle = new QTextEdit("Levels");
+    levelTitle->setMaximumHeight(63);
+    levelTitle->setFontPointSize(30);
+    levelTitle->setStyleSheet("background: transparent; border: 0;");
+    levelTitle->setReadOnly(true);
+
+    QWidget *levelSelect = new QWidget(this);
+    QGridLayout *levelLayout = new QGridLayout;
+    for (int i = 1; i <= 10; ++i) {
+        QPushButton *levelButton = new QPushButton(QString("Level %1").arg(i));
+        connect(levelButton, &QPushButton::clicked, this, [this, i]() {
+            emit createLevel(i);
+        });
+        connect(levelButton, &QPushButton::clicked, this, &CircuitGameView::displayGame);
+        levelLayout->addWidget(levelButton, (i - 1) / 5, (i - 1) % 5);
+    }
+
+    QPushButton *menuButton = new QPushButton("Return to Menu");
+    QPushButton *tutorialButton = new QPushButton("Tutorial");
+
+    connect(menuButton, &QPushButton::clicked, this, &CircuitGameView::displayMenu);
+    connect(tutorialButton, &QPushButton::clicked, this, &CircuitGameView::displayTutorial);
+    connect(tutorialButton, &QPushButton::clicked, this, [this]() {emit createLevel(-1);});
+
+    levelLayout->addWidget(menuButton, 2, 0);
+    levelLayout->addWidget(tutorialButton, 2, 1);
+    levelSelect->setLayout(levelLayout);
+
+    QVBoxLayout *levelOuterLayout = new QVBoxLayout;
+    levelOuterLayout->addWidget(levelTitle);
+    levelOuterLayout->addWidget(levelSelect);
+    levelPage->setLayout(levelOuterLayout);
+
+    ui->stackedWidget->addWidget(levelPage);
+}
+
+
+void CircuitGameView::setupGamePage() {
+    gamePage = new QWidget(this);
+
+    gameView = new QGraphicsView;
+    gameView->setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
+    gameView->viewport()->setAttribute(Qt::WA_AlwaysStackOnTop, true);
+    gameView->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
+    gameView->setBackgroundBrush(Qt::NoBrush);
+
+    QPushButton *levelButton = new QPushButton("Return to Levels");
+    connect(levelButton, &QPushButton::clicked, this, &CircuitGameView::displayLevels);
+
+    QVBoxLayout *gameLayout = new QVBoxLayout;
+    gameLayout->addWidget(gameView);
+    gameLayout->addWidget(levelButton);
+    gamePage->setLayout(gameLayout);
+
+    ui->stackedWidget->addWidget(gamePage);
+}
+
+
+void CircuitGameView::setupTutorialPage() {
+    tutorialPage = new QWidget(this);
+    QWidget *tutorialInnerPage = new QWidget(this);
+
+    tutorialView = new QGraphicsView;
+    tutorialView->setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
+    tutorialView->viewport()->setAttribute(Qt::WA_AlwaysStackOnTop, true);
+    tutorialView->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
+    tutorialView->setBackgroundBrush(Qt::NoBrush);
+
+    QTextEdit *tutorialText = new QTextEdit;
+    tutorialText->setFontPointSize(12);
+    tutorialText->setPlainText("Here is pictured a basic circuit puzzle.\n\n"
+                                "In the center of the puzzle is a gate, with an input above and an output below.\n\n"
+                                "Inputs and outputs send and recieve their state as indicated by \n\n"
+                                "Your objective is to solve each puzzle such that the outputs match their expected state.\n\n"
+                                "You can slot the gates into a socket by dragging them into the socket.\n\n"
+                                "The top gate is an OR gate. This gate passes on positive state if one or either input is positive.\n\n"
+                                "The 2nd gate is an AND gate. This gate only passes positive state if both inputs are positive.\n\n"
+                                "The 3rd gate is a NOT gate. This gate passes on the opposite signal of its input.\n\n"
+                                "The last gate is an XOR gate. This gate only passes on state if some, but not all, inputs are positive.\n\n");
+    tutorialText->setReadOnly(true);
+    tutorialText->setMaximumWidth(250);
+
+    QPushButton *levelButton = new QPushButton("Return to Levels");
+    connect(levelButton, &QPushButton::clicked, this, &CircuitGameView::displayLevels);
+
+    QGridLayout *tutorialInnerLayout = new QGridLayout;
+    tutorialInnerLayout->addWidget(tutorialView, 0, 0);
+    tutorialInnerLayout->addWidget(tutorialText, 0, 1);
+    tutorialInnerPage->setLayout(tutorialInnerLayout);
+
+    QVBoxLayout *tutorialLayout = new QVBoxLayout;
+    tutorialLayout->addWidget(tutorialInnerPage);
+    tutorialLayout->addWidget(levelButton);
+    tutorialPage->setLayout(tutorialLayout);
+
+    ui->stackedWidget->addWidget(tutorialPage);
 }

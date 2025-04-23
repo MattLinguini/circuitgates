@@ -21,6 +21,8 @@ public:
 
     void createWires();
 
+    void togglePower(bool state);
+
 private:
     b2World* world;
     QVector<b2Body*> segments;
