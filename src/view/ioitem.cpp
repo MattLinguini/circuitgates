@@ -3,6 +3,7 @@
 #include "Box2D/Dynamics/b2Fixture.h"
 #include "Box2D/Dynamics/b2World.h"
 #include "qpainter.h"
+#include "src/view/wireitem.h"
 #include <QGraphicsScene>
 #include <QLineF>
 
