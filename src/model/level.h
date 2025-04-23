@@ -16,15 +16,22 @@ class Level
 public:
     Level();
 
-    ///@brief Gate types.
+    /// @brief Gate types.
     //enum class GateType {OR, AND, NOT, XOR, DEFAULT};
 
+    /// @brief Returns a pointer to a requested object.
+    /// @id ID of object to lookup.
     GameObject* objectLookup(int id);
 
-    ///@brief Cleans out gameObjs and budget for a new level.
+    /// @brief Cleans out gameObjs and budget for a new level.
     void cleanLevel();
 
-    InputOutput* addIO(int x, int y, bool toggleable,bool inputType, bool expectedState = 0);
+    /// @brief Adds an IO to the level.
+    /// @param x X coordinate
+    /// @param y Y coordinate
+    /// @param toggleable Determines whether the gate is clickable or not.
+    /// @
+    InputOutput* addIO(int x, int y, bool inputType, bool expectedState = 0);
 
     LogicGate* addGate(int x, int y, GateType type);
 
@@ -39,6 +46,7 @@ public:
 
     void connectObjsToModel(CircuitGameModel* model);
 
+    /// @brief Cleans up level and it's dependencies.
     ~Level();
 
 private:
@@ -55,6 +63,7 @@ private:
     /// @brief Tracks the next GameObject ID.
     int nextID = 1;
 
+    /// @brief List of all output IDs.
     QList<int> outputIDs;
 
 };

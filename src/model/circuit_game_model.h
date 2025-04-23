@@ -49,14 +49,23 @@ private:
     void loadLvl10();
 
 public slots:
-    /// @brief Slot to  select a level to generate.
+    /// @brief Slot to select a level to generate.
     /// @param levelId: The id of the level to generate.
     void createLevel(int levelId);
 
+    /// @brief Slot to update a gate's type.
+    /// @param id ID of gate to be updated.
+    /// @param gateType GateType to set gate to.
     void updateGate(int id, LogicGate::GateType gateType);
 
+    /// @brief Updates the state of a given IO.
+    /// @param id ID of io to be updated.
+    /// @param state State to set IO to.
     void updateIO(int id, bool state);
 
+    /// @brief Tells the model when an objects internal state has been changed.
+    /// @param id ID of object.
+    /// @state state New state of object.
     void receiveObjectUpdate(int id, bool state);
 };
 
