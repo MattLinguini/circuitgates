@@ -59,6 +59,7 @@ void LogicGate::verifyGate() {
             }
             break;
         case GateType::DEFAULT:
+            state = 0;
             break;
     }
     sendState();

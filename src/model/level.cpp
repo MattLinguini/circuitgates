@@ -58,7 +58,6 @@ QMap<GateType, int>* Level::getBudget() {
 }
 
 bool Level::validateSolution() {
-    qDebug() << "validating...";
     bool win = true;
     InputOutput* IO;
 
@@ -74,9 +73,6 @@ bool Level::validateSolution() {
     for (int i : std::as_const(outputIDs)) {
         IO = dynamic_cast<InputOutput*>(gameObjs.value(i));
         if (IO) {
-            qDebug() << IO->objectID;
-            IO->checkState();
-            qDebug() << IO->getExpectedState();
             if (IO->state != IO->getExpectedState()) {
                 win = false;
             }

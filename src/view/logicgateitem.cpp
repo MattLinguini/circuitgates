@@ -154,6 +154,7 @@ void LogicGateItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event) {
 
         // Clear any slot that was previously occupied by this gate
         if (snappedSlot) {
+            view->sendGateToModel(snappedSlot->getID(), GateType::DEFAULT);
             snappedSlot->setOccupied(false);
             snappedSlot = nullptr;
         }
