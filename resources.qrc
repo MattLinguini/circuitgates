@@ -6,4 +6,10 @@
         <file>resources/xor_gate.png</file>
         <file>resources/and_gate.png</file>
     </qresource>
+    <qresource prefix="/ui">
+        <file>resources/home_bg.png</file>
+        <file>resources/bg.png</file>
+        <file>resources/title.png</file>
+        <file>resources/text_levels.png</file>
+    </qresource>
 </RCC>
