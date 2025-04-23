@@ -128,6 +128,7 @@ void LogicGateItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event) {
         // Snap to the center of the closest slot.
         if (snappedSlot && snappedSlot != closestSlot) {
             snappedSlot->setOccupied(false);  // Clear previous slot if moving to new one
+            view->sendGateToModel(snappedSlot->getID(), GateType::DEFAULT);
         }
 
         // Set the slot to occupied
