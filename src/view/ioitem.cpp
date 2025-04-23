@@ -97,3 +97,13 @@ void IOItem::togglePower(bool state) {
     }
 }
 
+void IOItem::mousePressEvent(QGraphicsSceneMouseEvent* event) {
+    Q_UNUSED(event);
+
+    // Toggle
+    state = !state;
+    togglePower(state);
+
+    // Ensure the scene still receives the event
+    QGraphicsRectItem::mousePressEvent(event);
+}
