@@ -181,14 +181,16 @@ void CircuitGameView::drawLevel() {
         }
     }
 
-        LogicGateItem* gateItem;
-        for (GateType type : budget->keys()) {
-            int amount = budget->value(type);
-            for (int i = 0; i < amount; i ++) {
-                gateItem = scene->addLogicGate(8,1, type);
-                gateItem->view = this;
-            }
+    int count = 1;
+    LogicGateItem* gateItem;
+    for (GateType type : budget->keys()) {
+        int amount = budget->value(type);
+        for (int i = 0; i < amount; i ++) {
+            gateItem = scene->addLogicGate(8, count, type);
+            gateItem->view = this;
+            count+=2;
         }
+    }
 
     gameView->setScene(scene);
     ui->stackedWidget->setCurrentWidget(gamePage);

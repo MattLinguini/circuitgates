@@ -8,7 +8,7 @@
 
 static constexpr float SCALE = 30.0f;
 
-LogicGateItem::LogicGateItem(b2World* world, float centerX_meters, float centerY_meters, float width_meters, float height_meters, float padding, float cellSize, QGraphicsItem* parent) : QGraphicsRectItem(parent), body(nullptr), snapDistancePixels(40.0f), padding(padding), cellSize(cellSize) {
+LogicGateItem::LogicGateItem(LogicGate::GateType gateType, b2World* world, float centerX_meters, float centerY_meters, float width_meters, float height_meters, float padding, float cellSize, QGraphicsItem* parent) : QGraphicsRectItem(parent), body(nullptr), snapDistancePixels(40.0f), padding(padding), cellSize(cellSize), gateType(gateType) {
     // Allow the item to be moved. When it is moved, send the position changes to itemChange().
     setFlag(QGraphicsItem::ItemIsMovable, true);
     setFlag(QGraphicsItem::ItemSendsScenePositionChanges, true);
@@ -32,7 +32,13 @@ LogicGateItem::LogicGateItem(b2World* world, float centerX_meters, float centerY
 
     // Create the Qt Rectangle with the same position as the box2d body.
     setRect(-width_meters/2 * SCALE, -height_meters/2 * SCALE, width_meters * SCALE, height_meters * SCALE);
-    setBrush(Qt::yellow);
+    switch (gateType) {
+        case LogicGate::GateType::OR: setBrush(Qt::green); break;
+        case LogicGate::GateType::AND: setBrush(Qt::yellow); break;
+        case LogicGate::GateType::NOT: setBrush(Qt::red); break;
+        case LogicGate::GateType::XOR: setBrush(Qt::blue); break;
+        case LogicGate::GateType::DEFAULT: setBrush(Qt::gray); break;
+    }
     setPos(centerX_meters * SCALE, -centerY_meters * SCALE);
 
 }

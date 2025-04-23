@@ -72,8 +72,7 @@ LogicGateItem* GameScene::addLogicGate(int x, int y, LogicGate::GateType gateTyp
     float sceneYMeters = -(padding + (y * cellSize) + (cellSize / 2)) / SCALE;
 
     // Creates a gate and adds it to the scene and the vector containing all the current gates.
-    LogicGateItem* gate = new LogicGateItem(&world, sceneXMeters, sceneYMeters, sizeMeters, sizeMeters, padding, cellSize);
-    gate->gateType = gateType;
+    LogicGateItem* gate = new LogicGateItem(gateType, &world, sceneXMeters, sceneYMeters, sizeMeters, sizeMeters, padding, cellSize);
     addItem(gate);
     gates.append(gate);
 

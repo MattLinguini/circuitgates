@@ -16,7 +16,7 @@ public:
     /// @param height   Height (in meters) of the item.
     /// @param padding  Padding around the grid.
     /// @param cellSize Cellsize of the scene.
-    LogicGateItem(b2World* world, float centerX, float centerY, float width, float height, float padding, float cellSize, QGraphicsItem* parent = nullptr);
+    LogicGateItem(LogicGate::GateType gateType, b2World* world, float centerX, float centerY, float width, float height, float padding, float cellSize, QGraphicsItem* parent = nullptr);
 
     /// @brief Returns the body of the specific LogicGate.
     b2Body* getBody() const override;
