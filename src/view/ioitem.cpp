@@ -33,7 +33,7 @@ IOItem::IOItem(b2World* world, float centerX_meters, float centerY_meters, float
 
     // Create the Qt Rectangle with the same position as the box2d body.
     setRect(-width_meters/3 * SCALE, -height_meters/3 * SCALE, width_meters/1.5 * SCALE, height_meters/1.5 * SCALE);
-    setBrush(Qt::blue);
+    setBrush(Qt::red);
     setPos(centerX_meters * SCALE, -centerY_meters * SCALE);
 }
 
@@ -64,15 +64,36 @@ void IOItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QW
     Q_UNUSED(option);
     Q_UNUSED(widget);
 
-    painter->setBrush(Qt::blue);
+    painter->setBrush(brush());
 
     // Draw the rectangle with rounded corners
     QRectF rect = boundingRect();
-    qreal cornerRadius = rect.width(); // Adjust corner radius here
+    qreal cornerRadius = rect.width();
     painter->drawRoundedRect(rect, cornerRadius, cornerRadius);
 }
 
 int IOItem::getID() const {
     return id;
+}
+
+void IOItem::addWire(WireItem* wire) {
+    if (!connectedWires.contains(wire)) {
+        connectedWires.append(wire);
+    }
+}
+
+void IOItem::togglePower(bool state) {
+    if (state) {
+        setBrush(Qt::green);
+        for (WireItem* wire : std::as_const(connectedWires)) {
+            wire->togglePower(true);
+        }
+    }
+    else {
+        setBrush(Qt::red);
+        for (WireItem* wire : std::as_const(connectedWires)) {
+            wire->togglePower(false);
+        }
+    }
 }
 

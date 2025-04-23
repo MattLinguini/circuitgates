@@ -3,6 +3,7 @@
 
 #include "Box2D/Dynamics/b2Body.h"
 #include "gameitem.h"
+#include "src/view/wireitem.h"
 #include <QGraphicsItem>
 #include <QGraphicsSceneEvent>
 #include <QVariant>
@@ -30,6 +31,10 @@ class IOItem : public GameItem {
         /// @brief Returns the ID of the IO item.
         int getID() const override;
 
+        void togglePower(bool state);
+
+        void addWire(WireItem* wire) override;
+
     private:
         /// @brief Called when the LogicGateItem changes position. Updates the box2d's position.
         QVariant itemChange(GraphicsItemChange change, const QVariant& value) override;
@@ -40,6 +45,7 @@ class IOItem : public GameItem {
         // Physics
         b2Body* body;
         b2World* world;
+        QList<WireItem*> connectedWires;
 
         // Layout constants
         float snapDistancePixels;

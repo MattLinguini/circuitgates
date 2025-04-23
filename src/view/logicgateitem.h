@@ -29,6 +29,10 @@ public:
 
     int getID() const override;
 
+    void addWire(WireItem* wire) override;
+
+    void togglePower(bool state) override;
+
     //TODO make this a getter and private
     CircuitGameView* view = nullptr;
 

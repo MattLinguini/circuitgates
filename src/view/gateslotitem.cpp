@@ -68,3 +68,24 @@ void GateSlotItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* opti
     }
 }
 
+void GateSlotItem::addWire(WireItem* wire) {
+    if (!connectedWires.contains(wire)) {
+        connectedWires.append(wire);
+    }
+}
+
+void GateSlotItem::togglePower(bool state) {
+    if (state) {
+        setBrush(Qt::green);
+        for (WireItem* wire : std::as_const(connectedWires)) {
+            wire->togglePower(true);
+        }
+    }
+    else {
+        setBrush(Qt::red);
+        for (WireItem* wire : std::as_const(connectedWires)) {
+            wire->togglePower(false);
+        }
+    }
+}
+
