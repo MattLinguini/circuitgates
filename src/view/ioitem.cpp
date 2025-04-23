@@ -124,9 +124,6 @@ void IOItem::togglePower(bool state) {
             wire->togglePower(false);
         }
     }
-
-    update();
-    scene()->update();
 }
 
 

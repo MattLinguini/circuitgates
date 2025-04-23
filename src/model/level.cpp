@@ -68,6 +68,14 @@ QMap<GateType, int>* Level::getBudget() {
 bool Level::validateSolution() {
     bool win = true;
     InputOutput* IO;
+    LogicGate* gate;
+
+    for (int i : gameObjs.keys()) {
+        gate = dynamic_cast<LogicGate*>(gameObjs.value(i));
+        if (gate && gate->getGateType() == LogicGate::GateType::DEFAULT) {
+            win = false;
+        }
+    }
 
     for (int i : gameObjs.keys()) {
         IO = dynamic_cast<InputOutput*>(gameObjs.value(i));

@@ -72,9 +72,10 @@ void CircuitGameView::receiveLevelPointer(Level* lvl) {
 void CircuitGameView::drawLevel() {
     if (scene) delete scene;
     scene = new GameScene(this);
-    scene->addGateSlot(8, 1, -1);
-    scene->addGateSlot(8, 3, -1);
-    scene->addGateSlot(8, 5, -1);
+    scene->addGateSlot(8, 0, -1);
+    scene->addGateSlot(8, 2, -1);
+    scene->addGateSlot(8, 4, -1);
+    scene->addGateSlot(8, 6, -1);
 
     IOItem* IO;
     for (GameObject* gameObj : modelGameObjs->values()) {
@@ -96,7 +97,7 @@ void CircuitGameView::drawLevel() {
         }
     }
 
-    int count = 1;
+    int count = 0;
     LogicGateItem* gateItem;
     for (GateType type : budget->keys()) {
         int amount = budget->value(type);
