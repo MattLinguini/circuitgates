@@ -10,6 +10,8 @@
 
 GameScene::GameScene(QObject* parent)
     : QGraphicsScene(parent), world(b2Vec2(0.0f, -50.0f)), cellSize(64), gridSize(7), padding(10) {
+    setBackgroundBrush(Qt::NoBrush);
+
     // Calculate total scene size and set it.
     int sceneWidth  = (gridSize + 2) * cellSize + 2 * padding;
     int sceneHeight = gridSize * cellSize + 2 * padding;
@@ -95,7 +97,13 @@ IOItem* GameScene::addIOItem(int x, int y, int id, bool state, bool isOutput, bo
 
 void GameScene::drawBackground(QPainter* painter, const QRectF& rect) {
     Q_UNUSED(rect);
-    painter->setPen(QPen(Qt::lightGray, 0));
+    painter->setPen(QPen(QColor(64, 141, 62, 255), 3));
+
+    QRect gridRect(padding, padding, gridSize * cellSize, gridSize * cellSize);
+    painter->fillRect(gridRect, QColor(35, 35, 35));
+
+    QRect gateSelectRect(padding + (gridSize+1) * cellSize, padding, cellSize, gridSize * cellSize);
+    painter->fillRect(gateSelectRect, QColor(35, 35, 35));
 
     // Draw vertical grid lines
     for (int i = 0; i <= gridSize+2; ++i) {

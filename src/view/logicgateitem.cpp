@@ -42,23 +42,7 @@ LogicGateItem::LogicGateItem(LogicGate::GateType gateType, b2World* world, float
     setPos(centerX_meters * SCALE, -centerY_meters * SCALE);
     originalPosition = b2Vec2(centerX_meters, centerY_meters);
 
-    // Load the gate icon corresponding to the GateType.
-    switch (gateType) {
-        case LogicGate::GateType::AND:
-            icon.load(":/gates/resources/and_gate.png");
-            break;
-        case LogicGate::GateType::OR:
-            icon.load(":/gates/resources/or_gate.png");
-            break;
-        case LogicGate::GateType::NOT:
-            icon.load(":/gates/resources/not_gate.png");
-            break;
-        case LogicGate::GateType::XOR:
-            icon.load(":/gates/resources/xor_gate.png");
-            break;
-        case LogicGate::GateType::DEFAULT:
-            break;
-    }
+    togglePower(false);
 }
 
 
@@ -141,6 +125,7 @@ void LogicGateItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event) {
 
             // Freeze the body after it has snapped
             body->SetType(b2_staticBody);
+            snappedSlot->setCurrentGate(this);
 
 
             if (view) {
@@ -155,6 +140,7 @@ void LogicGateItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event) {
         // Clear any slot that was previously occupied by this gate
         if (snappedSlot) {
             view->sendGateToModel(snappedSlot->getID(), GateType::DEFAULT);
+            snappedSlot->setCurrentGate(nullptr);
             snappedSlot->setOccupied(false);
             snappedSlot = nullptr;
         }
@@ -191,12 +177,11 @@ int LogicGateItem::getID() const {
 
 
 void LogicGateItem::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*) {
-    painter->setOpacity(1.0);
-    painter->setBrush(Qt::white);
-    painter->drawRect(boundingRect());
-
     if (!icon.isNull()) {
         painter->drawPixmap(boundingRect().toRect(), icon);
+    } else {
+        painter->setBrush(Qt::gray);
+        painter->drawRect(boundingRect());
     }
 }
 
@@ -214,4 +199,40 @@ CircuitGameView* LogicGateItem::getView() const {
 void LogicGateItem::addWire(WireItem* /*wire*/) {}
 
 
-void LogicGateItem::togglePower(bool /*state*/) {}
+void LogicGateItem::togglePower(bool state) {
+    if (state) {
+        switch (gateType) {
+            case LogicGate::GateType::AND:
+                icon.load(":/gates/resources/and_gate_power.png");
+                break;
+            case LogicGate::GateType::OR:
+                icon.load(":/gates/resources/or_gate_power.png");
+                break;
+            case LogicGate::GateType::NOT:
+                icon.load(":/gates/resources/not_gate_power.png");
+                break;
+            case LogicGate::GateType::XOR:
+                icon.load(":/gates/resources/xor_gate_power.png");
+                break;
+            case LogicGate::GateType::DEFAULT:
+                break;
+        }
+    } else {
+        switch (gateType) {
+        case LogicGate::GateType::AND:
+            icon.load(":/gates/resources/and_gate.png");
+            break;
+        case LogicGate::GateType::OR:
+            icon.load(":/gates/resources/or_gate.png");
+            break;
+        case LogicGate::GateType::NOT:
+            icon.load(":/gates/resources/not_gate.png");
+            break;
+        case LogicGate::GateType::XOR:
+            icon.load(":/gates/resources/xor_gate.png");
+            break;
+        case LogicGate::GateType::DEFAULT:
+            break;
+        }
+    }
+}

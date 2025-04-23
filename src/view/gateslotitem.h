@@ -6,6 +6,8 @@
 #include "src/model/logic_gate.h"
 #include "src/view/wireitem.h"
 
+class LogicGateItem;
+
 /// @class GameSlotItem
 /// @brief A GameItem that handles logic gates snapping into it and changing its type.
 class GateSlotItem : public GameItem {
@@ -29,6 +31,13 @@ class GateSlotItem : public GameItem {
         /// @brief Sets the slot to occupied.
         /// @param occ True if the slot has a gate inside of it, false otherwise.
         void setOccupied(bool occ);
+
+        /// @brief Sets the current gate in the slot.
+        /// @param gate Gate to be set.
+        void setCurrentGate(LogicGateItem* gate);
+
+        /// @brief Gets the current gate in the slot.
+        LogicGateItem* getCurrentGate();
 
         /// @brief Toggles the power of itself and any wires connected to it.
         /// @param state True if powered on, false otherwise.
@@ -59,6 +68,8 @@ class GateSlotItem : public GameItem {
         int id = -1;
         bool occupied = false;
         LogicGate::GateType gateType;
+
+        LogicGateItem* currentGate;
 
         // Icon for the gate slot.
         QPixmap icon;

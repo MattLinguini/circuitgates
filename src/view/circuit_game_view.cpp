@@ -104,6 +104,7 @@ void CircuitGameView::drawLevel() {
     for (GameObject* gameObj : modelGameObjs->values()) {
         for (int i : *gameObj->getDestinations()) {
             scene->addWireItem(gameObj->asItem, modelGameObjs->value(i)->asItem);
+            gameObj->asItem->togglePower(gameObj->state);
         }
     }
 
@@ -118,13 +119,21 @@ void CircuitGameView::drawLevel() {
         }
     }
 
-    scene->setSceneRect(scene->itemsBoundingRect());
+    const int fixedGrid = 7;  // or whatever you use as max grid width
+    const int padding = 10;
+    const int cellSize = 64;
+
+    int sceneWidth  = (fixedGrid + 2) * cellSize + 2 * padding;
+    int sceneHeight = (fixedGrid + 2) * cellSize + 2 * padding;
+    scene->setSceneRect(0, 0, sceneWidth, sceneHeight);
 
     gameView->setScene(scene);
-    gameView->resetTransform();
+    gameView->setFixedSize(1100, 675); // Or calculated based on grid
     gameView->setAlignment(Qt::AlignCenter);
-    gameView->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
-    gameView->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    gameView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    gameView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+    gameView->centerOn(scene->sceneRect().center());
 
     tutorialView->setScene(scene);
     tutorialView->resetTransform();
@@ -310,10 +319,12 @@ void CircuitGameView::setupGamePage() {
 
     // Configure the game view
     gameView = new QGraphicsView;
-    gameView->setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
-    gameView->viewport()->setAttribute(Qt::WA_AlwaysStackOnTop, true);
-    gameView->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
+    gameView->setStyleSheet("background: transparent;");
     gameView->setBackgroundBrush(Qt::NoBrush);
+    gameView->setFrameStyle(QFrame::NoFrame);
+    gameView->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
+    gameView->viewport()->setAttribute(Qt::WA_TranslucentBackground);
+    gameView->setAttribute(Qt::WA_TranslucentBackground);
 
     // Return button styled and centered
     QPushButton* levelButton = new QPushButton("LEVEL SELECT");
@@ -348,10 +359,19 @@ void CircuitGameView::setupGamePage() {
     buttonRow->addWidget(levelButton);
     buttonRow->addStretch();
 
-    // Final vertical layout for the page
+    QHBoxLayout* centeredViewRow = new QHBoxLayout;
+    centeredViewRow->addStretch();
+    centeredViewRow->addWidget(gameView);
+    centeredViewRow->addStretch();
+
+    QHBoxLayout* centeredButtonRow = new QHBoxLayout;
+    centeredButtonRow->addStretch();
+    centeredButtonRow->addWidget(levelButton);
+    centeredButtonRow->addStretch();
+
     QVBoxLayout* gameLayout = new QVBoxLayout;
-    gameLayout->addWidget(gameView);
-    gameLayout->addLayout(buttonRow);
+    gameLayout->addLayout(centeredViewRow);
+    gameLayout->addLayout(centeredButtonRow);
     gameLayout->setContentsMargins(20, 20, 20, 20);
     gameLayout->setSpacing(20);
 
@@ -393,7 +413,7 @@ void CircuitGameView::setupTutorialPage() {
     tutorialContent->addWidget(tutorialText);
 
     // Return button styled and centered
-    QPushButton* levelButton = new QPushButton("Return to Levels");
+    QPushButton* levelButton = new QPushButton("LEVEL SELECT");
     levelButton->setFixedSize(200, 50);
     levelButton->setStyleSheet(R"(
         QPushButton {

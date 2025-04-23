@@ -72,7 +72,7 @@ WireItem::WireItem(b2World* world, GameItem* startSlot, GameItem* endSlot, int s
     world->CreateJoint(&lastAnchor);
 
     // Create the QT Visual.S
-    setPen(QPen(Qt::black, 5));
+    setPen(QPen(QColor(26, 26, 26, 255), 5));
     setZValue(-1);
 
     startSlot->addWire(this);
@@ -100,9 +100,9 @@ void WireItem::updateWirePath() {
 
 void WireItem::togglePower(bool state) {
     if (state) {
-        setPen(QPen(Qt::yellow, 5));
+        setPen(QPen(QColor(255, 237, 3, 255), 5));
     }
     else {
-        setPen(QPen(Qt::black, 5));
+        setPen(QPen(QColor(26, 26, 26, 255), 5));
     }
 }

@@ -4,11 +4,12 @@
 #include "Box2D/Dynamics/b2World.h"
 #include <QGraphicsSceneMouseEvent>
 #include <QPainter>
+#include "logicgateitem.h"
 
 static constexpr float SCALE = 30.0f;
 
 GateSlotItem::GateSlotItem(b2World* world, float centerX, float centerY, float width, float height, float cellSize, float padding, int id, QGraphicsItem* parent)
-    : QGraphicsRectItem(parent), padding(padding), cellSize(cellSize) {
+    : QGraphicsRectItem(parent), padding(padding), cellSize(cellSize), currentGate(nullptr) {
     this->id = id;
     // Setup invisible Box2D static body
     b2BodyDef bodyDef;
@@ -29,11 +30,10 @@ GateSlotItem::GateSlotItem(b2World* world, float centerX, float centerY, float w
 
     // Create the Qt Rectangle with the same position as the box2d body.
     setRect(-width/2 * SCALE, -height/2 * SCALE, width * SCALE, height * SCALE);
-    setBrush(Qt::gray);
     setPos(centerX * SCALE, -centerY * SCALE);
 
     // Load the gate slot icon
-    icon.load(":/gates/resources/default_gate.png");
+    icon.load(":/gates/resources/plug.png");
 }
 
 
@@ -84,17 +84,30 @@ void GateSlotItem::addWire(WireItem* wire) {
 }
 
 
+void GateSlotItem::setCurrentGate(LogicGateItem* gate) {
+    currentGate = gate;
+}
+
+LogicGateItem* GateSlotItem::getCurrentGate() {
+    return currentGate;
+}
+
+
 void GateSlotItem::togglePower(bool state) {
     if (state) {
-        setBrush(Qt::green);
         for (WireItem* wire : std::as_const(connectedWires)) {
             wire->togglePower(true);
         }
+        if (currentGate) {
+            currentGate->togglePower(true);
+        }
     }
     else {
-        setBrush(Qt::red);
         for (WireItem* wire : std::as_const(connectedWires)) {
             wire->togglePower(false);
+        }
+        if (currentGate) {
+            currentGate->togglePower(false);
         }
     }
 }
