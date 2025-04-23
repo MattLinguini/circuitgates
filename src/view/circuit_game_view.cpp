@@ -33,6 +33,7 @@ void CircuitGameView::createConnections() {
     connect(this, &CircuitGameView::createLevel, model, &CircuitGameModel::createLevel);
     connect(model, &CircuitGameModel::sendLevelPointer, this, &CircuitGameView::receiveLevelPointer);
     connect(model, &CircuitGameModel::sendWinToView, this, &CircuitGameView::triggerWin);
+    connect(model, &CircuitGameModel::emitObjectState, this, &CircuitGameView::receiveObjectUpdate);
 
     // @brief Sends information to the model as the game scene progresses.
     connect(this, &CircuitGameView::updateGateInModel, model, &CircuitGameModel::updateGate);
@@ -145,6 +146,11 @@ void CircuitGameView::triggerWin() {
 
     winDialog->show();
 }
+
+void CircuitGameView::receiveObjectUpdate(int id, bool state) {
+    //TODO DO STUFF WITH INCOMING INFO
+}
+
 
 
 void CircuitGameView::setupHomePage() {

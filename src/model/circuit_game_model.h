@@ -18,9 +18,13 @@ signals:
 
     void sendWinToView();
 
+    /// @brief Signal to update the state of a view object.
+    void emitObjectState(int id, bool state);
+
 private:
     /// @brief The current level object held in the model.
     Level currentLevel;
+
     /// @brief Loads the tutorial level to the current model.
     void loadTutorial();
     /// @brief Loads level one to the current model.
@@ -52,6 +56,8 @@ public slots:
     void updateGate(int id, LogicGate::GateType gateType);
 
     void updateIO(int id, bool state);
+
+    void receiveObjectUpdate(int id, bool state);
 };
 
 #endif // CIRCUIT_GAME_MODEL_H

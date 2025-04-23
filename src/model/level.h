@@ -10,6 +10,7 @@
 
 using GateType = LogicGate::GateType;
 
+class CircuitGameModel;
 class Level
 {
 public:
@@ -35,6 +36,8 @@ public:
     QMap<GateType, int>* getBudget();
 
     bool validateSolution();
+
+    void connectObjsToModel(CircuitGameModel* model);
 
     ~Level();
 

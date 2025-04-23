@@ -2,12 +2,14 @@
 #include <QJsonDocument>
 #include <QFile>
 #include <QByteArray>
+#include "game_object.h"
 
 CircuitGameModel::CircuitGameModel(QObject *parent) : QObject(parent), currentLevel() {}
 
 void CircuitGameModel::createLevel(int levelId) {
     //Clears out currentLevel's memory for a new level to take place.
     currentLevel.cleanLevel();
+
 
     switch (levelId) {
     case 1:
@@ -46,6 +48,10 @@ void CircuitGameModel::createLevel(int levelId) {
     }
 }
 
+void CircuitGameModel::receiveObjectUpdate(int id, bool state) {
+    emit emitObjectState(id, state);
+}
+
 void CircuitGameModel::updateGate(int id, LogicGate::GateType gateType) {
     GameObject* obj = currentLevel.getGameObjs()->value(id);
     LogicGate* gate = dynamic_cast<LogicGate*>(obj);
@@ -81,8 +87,10 @@ void CircuitGameModel::loadTutorial() {
     in1->addDestination(g1->objectID);
     g1->addDestination(out1->objectID);
 
-    in1->setState(1, 0);
+    in1->setState(0, 0);
     out1->setState(0, 0);
+
+    currentLevel.connectObjsToModel(this);
 
     emit sendLevelPointer(&currentLevel);
 }
@@ -109,6 +117,8 @@ void CircuitGameModel::loadLvl1() {
     in1->setState(0,0);
     in2->setState(0,0);
 
+    currentLevel.connectObjsToModel(this);
+
     //Sends a pointer of the created level to the view
     emit sendLevelPointer(&currentLevel);
 }
@@ -134,6 +144,8 @@ void CircuitGameModel::loadLvl2() {
 
     in1->setState(0,0);
     in2->setState(0,0);
+
+    currentLevel.connectObjsToModel(this);
 
     //Sends a pointer of the created level to the view
     emit sendLevelPointer(&currentLevel);
@@ -169,6 +181,8 @@ void CircuitGameModel::loadLvl3() {
     in1->setState(0,0);
     in2->setState(0,0);
 
+    currentLevel.connectObjsToModel(this);
+
     //Sends a pointer of the created level to the view
     emit sendLevelPointer(&currentLevel);
 }
@@ -196,6 +210,8 @@ void CircuitGameModel::loadLvl4() {
 
     g1->addDestination(g2->objectID);
     g2->addDestination(out1->objectID);
+
+    currentLevel.connectObjsToModel(this);
 
     emit sendLevelPointer(&currentLevel);
 }
@@ -234,6 +250,8 @@ void CircuitGameModel::loadLvl5() {
     g1->addDestination(out1->objectID);
     g3->addDestination(out2->objectID);
 
+    currentLevel.connectObjsToModel(this);
+
     emit sendLevelPointer(&currentLevel);
 }
 
@@ -266,6 +284,8 @@ void CircuitGameModel::loadLvl6() {
 
     in1->setState(0,0);
     in2->setState(1,0);
+
+    currentLevel.connectObjsToModel(this);
 
     //Sends a pointer of the created level to the view
     emit sendLevelPointer(&currentLevel);
@@ -303,6 +323,8 @@ void CircuitGameModel::loadLvl7() {
     in1->setState(1,0);
     in2->setState(1,0);
     in3->setState(0,0);
+
+    currentLevel.connectObjsToModel(this);
 
     //Sends a pointer of the created level to the view
     emit sendLevelPointer(&currentLevel);
@@ -344,6 +366,8 @@ void CircuitGameModel::loadLvl8() {
     in2->setState(1,0);
     in3->setState(0,0);
 
+    currentLevel.connectObjsToModel(this);
+
     //Sends a pointer of the created level to the view
     emit sendLevelPointer(&currentLevel);
 }
@@ -381,6 +405,8 @@ void CircuitGameModel::loadLvl9() {
     in1->setState(1,0);
     in2->setState(0,0);
     in3->setState(0,0);
+
+    currentLevel.connectObjsToModel(this);
 
     //Sends a pointer of the created level to the view
     emit sendLevelPointer(&currentLevel);
@@ -420,6 +446,8 @@ void CircuitGameModel::loadLvl10() {
     in1->setState(0,0);
     in2->setState(1,0);
     in3->setState(1,0);
+
+    currentLevel.connectObjsToModel(this);
 
     //Sends a pointer of the created level to the view
     emit sendLevelPointer(&currentLevel);

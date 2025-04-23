@@ -61,6 +61,8 @@ class CircuitGameView : public QMainWindow {
 
         void triggerWin();
 
+        void receiveObjectUpdate(int id, bool state);
+
     private:
         /// @brief Draws the current level's objects into the scene.
         void drawLevel();

@@ -1,4 +1,5 @@
 #include "level.h"
+#include "circuit_game_model.h"
 
 Level::Level()
 {
@@ -12,6 +13,13 @@ void Level::addToGameObjs(GameObject *obj) {
 
 GameObject* Level::objectLookup(int id) {
     return this->gameObjs.value(id);
+}
+
+void Level::connectObjsToModel(CircuitGameModel* model) {
+    for (int i : gameObjs.keys()) {
+        GameObject* obj = gameObjs.value(i);
+        QObject::connect(obj, &GameObject::stateChanged, model, &CircuitGameModel::receiveObjectUpdate);
+    }
 }
 
 void Level::cleanLevel() {
