@@ -122,12 +122,12 @@ void CircuitGameView::setupHomePage() {
     QWidget *homeInnerPage = new QWidget(this);
 
     QTextEdit *gameTitle = new QTextEdit("Circuit Game");
-    QTextCursor gameCursor = gameTitle->textCursor();
+    QTextCursor cursor = gameTitle->textCursor();
     gameTitle->selectAll();
     gameTitle->setAlignment(Qt::AlignCenter);
     gameTitle->setMaximumHeight(63);
     gameTitle->setFontPointSize(30);
-    gameTitle->setTextCursor(gameCursor);
+    gameTitle->setTextCursor(cursor);
     gameTitle->setStyleSheet("background: transparent; border: 0;");
     gameTitle->setReadOnly(true);
 
@@ -155,8 +155,11 @@ void CircuitGameView::setupLevelSelectPage() {
     levelPage = new QWidget(this);
 
     QTextEdit *levelTitle = new QTextEdit("Levels");
+    QTextCursor cursor = levelTitle->textCursor();
+    levelTitle->selectAll();
     levelTitle->setMaximumHeight(63);
     levelTitle->setFontPointSize(30);
+    levelTitle->setTextCursor(cursor);
     levelTitle->setStyleSheet("background: transparent; border: 0;");
     levelTitle->setReadOnly(true);
 
