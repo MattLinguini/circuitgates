@@ -57,6 +57,16 @@ void CircuitGameModel::updateGate(int id, LogicGate::GateType gateType) {
     }
 }
 
+void CircuitGameModel::updateIO(int id, bool state) {
+    InputOutput* obj = dynamic_cast<InputOutput*>(this->currentLevel.objectLookup(id));
+    if (obj->getToggleable()) {
+        obj->setState(state, 0);
+        if (currentLevel.validateSolution()) {
+            emit sendWinToView();
+        }
+    }
+}
+
 void CircuitGameModel::loadTutorial() {
     //Set the level's budget
     currentLevel.setGateBudget(GateType::AND, 1);

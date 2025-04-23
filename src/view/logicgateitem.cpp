@@ -138,7 +138,7 @@ void LogicGateItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 
 
             if (view) {
-            view->sendViewToModel( closestSlot->getID(), this->gateType);
+            view->sendGateToModel( closestSlot->getID(), this->gateType);
             }
 
         }
