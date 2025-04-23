@@ -22,34 +22,37 @@ public:
     explicit GameObject(QObject* parent = nullptr, Level* lvl = nullptr) : QObject(parent), parentLevel(lvl) {}
     virtual ~GameObject() = default;
 
-    ///@brief Sets the state of the object.
+    /// @brief Sets the state of the object.
     virtual void setState(bool state, int senderID = 0) = 0;
 
-    ///@brief Adds a destination to this objects destinations list.
+    /// @brief Adds a destination to this objects destinations list.
     virtual void addDestination(int objectID) = 0;
 
-    ///@brief Gets a gameObject's destinations.
+    /// @brief Gets a gameObject's destinations.
     virtual std::vector<int>* getDestinations() = 0;
 
-    ///@brief Describes the type of game object
+    /// @brief Describes the type of game object
     enum class GameObjectType {GATE, IO};
 
-    ///@brief Object ID.
+    /// @brief Object ID.
     int objectID;
 
-    ///@brief On or off.
+    /// @brief On or off.
     bool state = 0;
 
+    /// @brief Tracks the type of the object.
     GameObjectType objType;
 
-    ///@brief Object's x coordinate.
+    /// @brief Object's x coordinate.
     int x;
 
-    ///@brief Object's y coordinate.
+    /// @brief Object's y coordinate.
     int y;
 
+    /// @brief Tracks whether an object is in the view.
     bool inView = 0;
 
+    /// @brief Tracks the object in the view as an item.
     GameItem* asItem;
 
 signals:
