@@ -3,10 +3,11 @@
 
 #include "Box2D/Dynamics/b2Body.h"
 #include "gameitem.h"
-#include "src/view/wireitem.h"
 #include <QGraphicsItem>
 #include <QGraphicsSceneEvent>
 #include <QVariant>
+
+class WireItem;
 
 class CircuitGameView;
 
@@ -33,7 +34,7 @@ class IOItem : public GameItem {
         /// @brief Returns the ID of the IO item.
         int getID() const override;
 
-        void togglePower(bool state);
+        void togglePower(bool state) override;
 
         void addWire(WireItem* wire) override;
 
