@@ -49,11 +49,6 @@ class CircuitGameView : public QMainWindow {
         /// @param lvl The loaded level.
         void receiveLevelPointer(Level* lvl);
 
-        /// @brief Receives level name and description from the model.
-        /// @param levelName The name of the level.
-        /// @param levelDescription The description of the level.
-        void recieveLevelDescription(QString levelName, QString levelDescription);
-
     private:
         /// @brief Draws the current level's objects into the scene.
         void drawLevel();

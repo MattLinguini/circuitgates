@@ -46,7 +46,6 @@ void CircuitGameModel::createLevel(int levelId) {
     }
 }
 
-
 void CircuitGameModel::updateGate(int id, LogicGate::GateType gateType) {
     GameObject* obj = currentLevel.getGameObjs()->value(id);
     LogicGate* gate = dynamic_cast<LogicGate*>(obj);
@@ -100,11 +99,6 @@ void CircuitGameModel::loadLvl1() {
 
     //Sends a pointer of the created level to the view
     emit sendLevelPointer(&currentLevel);
-
-    //Updates the level name and description in the view.
-    QString levelName = "Level 1";
-    QString levelDescription = "Some flavor text or tutorial text or something for level 1  .";
-    emit sendLevelDescription(levelName, levelDescription);
 }
 
 void CircuitGameModel::loadLvl2() {
@@ -131,11 +125,6 @@ void CircuitGameModel::loadLvl2() {
 
     //Sends a pointer of the created level to the view
     emit sendLevelPointer(&currentLevel);
-
-    //Updates the level name and description in the view.
-    QString levelName = "Level 2";
-    QString levelDescription = "Some flavor text or tutorial text or something for level 2.";
-    emit sendLevelDescription(levelName, levelDescription);
 }
 
 void CircuitGameModel::loadLvl3() {
@@ -170,11 +159,6 @@ void CircuitGameModel::loadLvl3() {
 
     //Sends a pointer of the created level to the view
     emit sendLevelPointer(&currentLevel);
-
-    //Updates the level name and description in the view.addGate
-    QString levelName = "Level 3";
-    QString levelDescription = "Some flavor text or tutorial text or something for level 3.";
-    emit sendLevelDescription(levelName, levelDescription);
 }
 
 void CircuitGameModel::loadLvl4() {
@@ -202,11 +186,6 @@ void CircuitGameModel::loadLvl4() {
     g2->addDestination(out1->objectID);
 
     emit sendLevelPointer(&currentLevel);
-
-    //Updates the level name and description in the view.
-    QString levelName = "Level 4";
-    QString levelDescription = "Some flavor text or tutorial text or something for level 4.";
-    emit sendLevelDescription(levelName, levelDescription);
 }
 
 void CircuitGameModel::loadLvl5() {
@@ -244,12 +223,6 @@ void CircuitGameModel::loadLvl5() {
     g3->addDestination(out2->objectID);
 
     emit sendLevelPointer(&currentLevel);
-
-
-    //Updates the level name and description in the view.
-    QString levelName = "Level 5";
-    QString levelDescription = "Some flavor text or tutorial text or something for level 5.";
-    emit sendLevelDescription(levelName, levelDescription);
 }
 
 void CircuitGameModel::loadLvl6() {
@@ -284,11 +257,6 @@ void CircuitGameModel::loadLvl6() {
 
     //Sends a pointer of the created level to the view
     emit sendLevelPointer(&currentLevel);
-
-    //Updates the level name and description in the view.
-    QString levelName = "Level 6";
-    QString levelDescription = "Some flavor text or tutorial text or something for level 6.";
-    emit sendLevelDescription(levelName, levelDescription);
 }
 
 void CircuitGameModel::loadLvl7() {
@@ -326,11 +294,6 @@ void CircuitGameModel::loadLvl7() {
 
     //Sends a pointer of the created level to the view
     emit sendLevelPointer(&currentLevel);
-
-    //Updates the level name and description in the view.
-    QString levelName = "Level 7";
-    QString levelDescription = "Some flavor text or tutorial text or something for level 7.";
-    emit sendLevelDescription(levelName, levelDescription);
 }
 
 void CircuitGameModel::loadLvl8() {
@@ -371,11 +334,6 @@ void CircuitGameModel::loadLvl8() {
 
     //Sends a pointer of the created level to the view
     emit sendLevelPointer(&currentLevel);
-
-    //Updates the level name and description in the view.
-    QString levelName = "Level 8";
-    QString levelDescription = "Some flavor text or tutorial text or something for level 8.";
-    emit sendLevelDescription(levelName, levelDescription);
 }
 
 void CircuitGameModel::loadLvl9() {
@@ -414,11 +372,6 @@ void CircuitGameModel::loadLvl9() {
 
     //Sends a pointer of the created level to the view
     emit sendLevelPointer(&currentLevel);
-
-    //Updates the level name and description in the view.
-    QString levelName = "Level 9";
-    QString levelDescription = "Some flavor text or tutorial text or something for level 9.";
-    emit sendLevelDescription(levelName, levelDescription);
 }
 
 void CircuitGameModel::loadLvl10() {
@@ -458,9 +411,4 @@ void CircuitGameModel::loadLvl10() {
 
     //Sends a pointer of the created level to the view
     emit sendLevelPointer(&currentLevel);
-
-    //Updates the level name and description in the view.
-    QString levelName = "Level 10";
-    QString levelDescription = "Some flavor text or tutorial text or something for level 10.";
-    emit sendLevelDescription(levelName, levelDescription);
 }

@@ -30,7 +30,6 @@ CircuitGameView::~CircuitGameView() { delete ui; }
 void CircuitGameView::createConnections() {
     connect(this, &CircuitGameView::createLevel, model, &CircuitGameModel::createLevel);
     connect(model, &CircuitGameModel::sendLevelPointer, this, &CircuitGameView::receiveLevelPointer);
-    connect(model, &CircuitGameModel::sendLevelDescription, this, &CircuitGameView::recieveLevelDescription);
     connect(this, &CircuitGameView::updateModel, model, &CircuitGameModel::updateGate);
 }
 
@@ -60,10 +59,6 @@ void CircuitGameView::receiveLevelPointer(Level* lvl) {
     budget = lvl->getBudget();
 
     drawLevel();
-}
-
-
-void CircuitGameView::recieveLevelDescription(QString levelName, QString levelDescription) {
 }
 
 
