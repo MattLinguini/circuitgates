@@ -79,13 +79,13 @@ void GameScene::addWireItem(GameItem* startSlot, GameItem* endSlot) {
     wires.append(wire);
 }
 
-IOItem* GameScene::addIOItem(int x, int y, int id, bool isOutput, bool expectedState) {
+IOItem* GameScene::addIOItem(int x, int y, int id, bool state, bool isOutput, bool expectedState) {
     // Calculates the size and postion of the slot (in meters)
     float sizeMeters  = static_cast<float>(cellSize) / SCALE;
     float sceneXMeters = (padding + (x * cellSize) + (cellSize / 2)) / SCALE;
     float sceneYMeters = -(padding + (y * cellSize) + (cellSize / 2)) / SCALE;
 
-    IOItem* io = new IOItem(&world, sceneXMeters, sceneYMeters, sizeMeters, sizeMeters, padding, cellSize, id, isOutput, expectedState);
+    IOItem* io = new IOItem(&world, sceneXMeters, sceneYMeters, sizeMeters, sizeMeters, padding, cellSize, id, state, isOutput, expectedState);
     addItem(io);
     ioitems.append(io);
 

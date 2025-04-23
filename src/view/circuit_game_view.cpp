@@ -80,7 +80,7 @@ void CircuitGameView::drawLevel() {
     for (GameObject* gameObj : modelGameObjs->values()) {
         if (gameObj->objType == GameObject::GameObjectType::IO) {
             InputOutput* io = dynamic_cast<InputOutput*>(gameObj);
-            IO = scene->addIOItem(gameObj->x, gameObj->y, gameObj->objectID, io->getInputType(), io->getExpectedState());
+            IO = scene->addIOItem(gameObj->x, gameObj->y, gameObj->objectID, io->state, io->getInputType(), io->getExpectedState());
             gameObj->asItem = IO;
             gameObj->inView = true;
             IO->setView(this);
@@ -107,7 +107,7 @@ void CircuitGameView::drawLevel() {
         }
     }
 
-    scene->setSceneRect(scene->itemsBoundingRect()); // <- instead of manually setting dimensions if you can
+    scene->setSceneRect(scene->itemsBoundingRect());
 
     gameView->setScene(scene);
     gameView->resetTransform();
@@ -147,10 +147,12 @@ void CircuitGameView::triggerWin() {
     winDialog->show();
 }
 
-void CircuitGameView::receiveObjectUpdate(int id, bool state) {
-    //TODO DO STUFF WITH INCOMING INFO
-}
 
+void CircuitGameView::receiveObjectUpdate(int id, bool state) {
+    GameObject* gameObj = modelGameObjs->value(id);
+    gameObj->asItem->togglePower(state);
+    gameObj->asItem->update();
+}
 
 
 void CircuitGameView::setupHomePage() {

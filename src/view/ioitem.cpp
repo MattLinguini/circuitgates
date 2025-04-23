@@ -8,8 +8,8 @@
 #include <QLineF>
 #include "circuit_game_view.h"
 
-IOItem::IOItem(b2World* world, float centerX_meters, float centerY_meters, float width_meters, float height_meters, float padding, float cellSize, int id, bool isOutput, bool expectedtState, QGraphicsItem* parent)
-    : QGraphicsRectItem(parent), body(nullptr), snapDistancePixels(40.0f), padding(padding), cellSize(cellSize), state(false), expectedState(expectedtState), isInput(isOutput) {
+IOItem::IOItem(b2World* world, float centerX_meters, float centerY_meters, float width_meters, float height_meters, float padding, float cellSize, int id, bool state, bool isOutput, bool expectedtState, QGraphicsItem* parent)
+    : QGraphicsRectItem(parent), body(nullptr), snapDistancePixels(40.0f), padding(padding), cellSize(cellSize), state(state), expectedState(expectedtState), isInput(isOutput) {
     this->id = id;
 
     // When it is moved, send the position changes to itemChange().
@@ -34,7 +34,6 @@ IOItem::IOItem(b2World* world, float centerX_meters, float centerY_meters, float
 
     // Create the Qt Rectangle with the same position as the box2d body.
     setRect(-width_meters/3 * SCALE, -height_meters/3 * SCALE, width_meters/1.5 * SCALE, height_meters/1.5 * SCALE);
-    setBrush(Qt::red);
     setPos(centerX_meters * SCALE, -centerY_meters * SCALE);
 }
 
@@ -67,6 +66,13 @@ void IOItem::updateGate() {
 void IOItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) {
     Q_UNUSED(option);
     Q_UNUSED(widget);
+
+    // Set the brush based on current state
+    if (state) {
+        setBrush(Qt::green);
+    } else {
+        setBrush(Qt::red);
+    }
 
     painter->setBrush(brush());
 
@@ -105,6 +111,7 @@ void IOItem::addWire(WireItem* wire) {
 
 
 void IOItem::togglePower(bool state) {
+    this->state = state;
     if (state) {
         setBrush(Qt::green);
         for (WireItem* wire : std::as_const(connectedWires)) {
@@ -117,6 +124,9 @@ void IOItem::togglePower(bool state) {
             wire->togglePower(false);
         }
     }
+
+    update();
+    scene()->update();
 }
 
 
@@ -124,7 +134,6 @@ void IOItem::mousePressEvent(QGraphicsSceneMouseEvent* event) {
     Q_UNUSED(event);
 
     if(isInput) {
-        // Toggle
         state = !state;
         togglePower(state);
 

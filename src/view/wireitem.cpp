@@ -76,7 +76,6 @@ WireItem::WireItem(b2World* world, GameItem* startSlot, GameItem* endSlot, int s
     setZValue(-1);
 
     startSlot->addWire(this);
-    endSlot->addWire(this);
 }
 
 

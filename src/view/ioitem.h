@@ -23,7 +23,7 @@ class IOItem : public GameItem {
         /// @param height   Height (in meters) of the item.
         /// @param padding  Padding around the grid.
         /// @param cellSize Cellsize of the scene.
-        IOItem(b2World* world, float centerX, float centerY, float width, float height, float padding, float cellSize, int id, bool isOutput, bool expectedtState, QGraphicsItem* parent = nullptr);
+        IOItem(b2World* world, float centerX, float centerY, float width, float height, float padding, float cellSize, int id, bool state, bool isOutput, bool expectedtState, QGraphicsItem* parent = nullptr);
 
         /// @brief Returns the body of the specific LogicGate.
         b2Body* getBody() const override;
