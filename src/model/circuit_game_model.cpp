@@ -40,8 +40,12 @@ void CircuitGameModel::createLevel(int levelId) {
     case 10:
         loadLvl10();
         break;
+    case -1:
+        loadTutorial();
+        break;
     }
 }
+
 
 void CircuitGameModel::updateGate(int id, LogicGate::GateType gateType) {
     GameObject* obj = currentLevel.getGameObjs()->value(id);
@@ -50,6 +54,26 @@ void CircuitGameModel::updateGate(int id, LogicGate::GateType gateType) {
         gate->setGateType(gateType);
         currentLevel.validateSolution();
     }
+}
+
+void CircuitGameModel::loadTutorial() {
+    //Set the level's budget
+    currentLevel.setGateBudget(GateType::AND, 1);
+    currentLevel.setGateBudget(GateType::OR, 1);
+    currentLevel.setGateBudget(GateType::XOR, 1);
+    currentLevel.setGateBudget(GateType::NOT, 1);
+
+    InputOutput* in1 = currentLevel.addIO(3, 1, 1);
+    LogicGate* g1 = currentLevel.addGate(3, 3, GateType::DEFAULT);
+    InputOutput* out1 = currentLevel.addIO(3, 5, 0);
+
+    in1->addDestination(g1->objectID);
+    g1->addDestination(out1->objectID);
+
+    in1->setState(1, 0);
+    out1->setState(0, 0);
+
+    emit sendLevelPointer(&currentLevel);
 }
 
 void CircuitGameModel::loadLvl1() {

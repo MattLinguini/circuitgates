@@ -8,6 +8,8 @@
 #include <QGraphicsView>
 #include <QPushButton>
 #include <QTextEdit>
+#include <QLabel>
+#include <QPixmap>
 
 CircuitGameView::CircuitGameView(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow), model(new CircuitGameModel(this)) {
     ui->setupUi(this);
@@ -40,6 +42,11 @@ void CircuitGameView::displayMenu() {
 
 void CircuitGameView::displayLevels() {
     ui->stackedWidget->setCurrentWidget(levelPage);
+}
+
+
+void CircuitGameView::displayGame() {
+    ui->stackedWidget->setCurrentWidget(gamePage);
 }
 
 
@@ -94,13 +101,19 @@ void CircuitGameView::drawLevel() {
         }
     }
 
-    gameView->setScene(scene);
     scene->setSceneRect(scene->itemsBoundingRect()); // <- instead of manually setting dimensions if you can
+
+    gameView->setScene(scene);
     gameView->resetTransform();
     gameView->setAlignment(Qt::AlignCenter);
     gameView->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
     gameView->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
-    ui->stackedWidget->setCurrentWidget(gamePage);
+
+    tutorialView->setScene(scene);
+    tutorialView->resetTransform();
+    tutorialView->setAlignment(Qt::AlignCenter);
+    tutorialView->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    tutorialView->setVerticalScrollBarPolicy(Qt::ScrollBarAsNeeded);
 }
 
 
@@ -138,6 +151,8 @@ void CircuitGameView::setupHomePage() {
     QBoxLayout *homeLayout = new QBoxLayout(QBoxLayout::LeftToRight, homePage);
     homeLayout->addWidget(homeInnerPage, Qt::AlignCenter);
     homePage->setLayout(homeLayout);
+
+    ui->stackedWidget->addWidget(homePage);
 }
 
 
@@ -157,6 +172,7 @@ void CircuitGameView::setupLevelSelectPage() {
         connect(levelButton, &QPushButton::clicked, this, [this, i]() {
             emit createLevel(i);
         });
+        connect(levelButton, &QPushButton::clicked, this, &CircuitGameView::displayGame);
         levelLayout->addWidget(levelButton, (i - 1) / 5, (i - 1) % 5);
     }
 
@@ -165,6 +181,7 @@ void CircuitGameView::setupLevelSelectPage() {
 
     connect(menuButton, &QPushButton::clicked, this, &CircuitGameView::displayMenu);
     connect(tutorialButton, &QPushButton::clicked, this, &CircuitGameView::displayTutorial);
+    connect(tutorialButton, &QPushButton::clicked, this, [this]() {emit createLevel(-1);});
 
     levelLayout->addWidget(menuButton, 2, 0);
     levelLayout->addWidget(tutorialButton, 2, 1);
@@ -174,6 +191,8 @@ void CircuitGameView::setupLevelSelectPage() {
     levelOuterLayout->addWidget(levelTitle);
     levelOuterLayout->addWidget(levelSelect);
     levelPage->setLayout(levelOuterLayout);
+
+    ui->stackedWidget->addWidget(levelPage);
 }
 
 
@@ -185,6 +204,7 @@ void CircuitGameView::setupGamePage() {
     gameView->viewport()->setAttribute(Qt::WA_AlwaysStackOnTop, true);
     gameView->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
     gameView->setBackgroundBrush(Qt::NoBrush);
+
     QPushButton *levelButton = new QPushButton("Return to Levels");
     connect(levelButton, &QPushButton::clicked, this, &CircuitGameView::displayLevels);
 
@@ -192,20 +212,31 @@ void CircuitGameView::setupGamePage() {
     gameLayout->addWidget(gameView);
     gameLayout->addWidget(levelButton);
     gamePage->setLayout(gameLayout);
+
+    ui->stackedWidget->addWidget(gamePage);
 }
 
 
 void CircuitGameView::setupTutorialPage() {
     tutorialPage = new QWidget(this);
 
+    tutorialView = new QGraphicsView;
+    tutorialView->setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
+    tutorialView->viewport()->setAttribute(Qt::WA_AlwaysStackOnTop, true);
+    tutorialView->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
+    tutorialView->setBackgroundBrush(Qt::NoBrush);
+
     QTextEdit *tutorialText = new QTextEdit("a;lksdjfaldksfajsdf");
+    tutorialText->setMaximumWidth(250);
+
+    QPushButton *levelButton = new QPushButton("Return to Levels");
+    connect(levelButton, &QPushButton::clicked, this, &CircuitGameView::displayLevels);
+
     QGridLayout *tutorialLayout = new QGridLayout;
-    tutorialLayout->addWidget(tutorialText);
-    // tutorialLayout->addWidget(levelButton);
+    tutorialLayout->addWidget(tutorialView, 0, 0);
+    tutorialLayout->addWidget(tutorialText, 0, 1);
+    tutorialLayout->addWidget(levelButton, 1, 0);
     tutorialPage->setLayout(tutorialLayout);
 
-    ui->stackedWidget->addWidget(homePage);
-    ui->stackedWidget->addWidget(levelPage);
-    ui->stackedWidget->addWidget(gamePage);
     ui->stackedWidget->addWidget(tutorialPage);
 }

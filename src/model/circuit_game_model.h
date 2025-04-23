@@ -23,6 +23,8 @@ signals:
 private:
     /// @brief The current level object held in the model.
     Level currentLevel;
+    /// @brief Loads the tutorial level to the current model.
+    void loadTutorial();
     /// @brief Loads level one to the current model.
     void loadLvl1();
     /// @brief Loads level two to the current model.

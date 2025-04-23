@@ -61,8 +61,11 @@ class CircuitGameView : public QMainWindow {
         /// @brief Displays the main menu.
         void displayMenu();
 
-        /// brief Displays the level selection page.
+        /// @brief Displays the level selection page.
         void displayLevels();
+
+        /// @brief Displays the game page.
+        void displayGame();
 
         /// @brief Displays the tutorial page.
         void displayTutorial();
@@ -92,6 +95,7 @@ class CircuitGameView : public QMainWindow {
         QWidget *gamePage;
         QWidget *tutorialPage;
         QGraphicsView *gameView;
+        QGraphicsView *tutorialView;
 
         // Model and game state
         CircuitGameModel *model;
