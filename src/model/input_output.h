@@ -13,7 +13,7 @@ class InputOutput : public GameObject
 {
 public:
     ///@brief Constructor.
-    InputOutput(int x, int y, int objectID, bool toggleable, Level* lvl);
+    InputOutput(int x, int y, int objectID, bool toggleable, Level* lvl,bool inputType, bool expectedState = 0);
 
     ///@brief Sends the current state to it's destinations.
     void sendState();
@@ -30,9 +30,23 @@ public:
     //TEST METHOD
     void checkState();
 
+    ///@brief Returns whether or not an IO is toggleable.
+    bool getToggleable() const;
+
+    ///@brief Returns the outputs expected state.
+    bool getExpectedState() const;
+
+    bool getInputType();
+
 private:
     ///@brief Sets whether the object is clickable. (
     bool toggleable;
+
+    ///@brief State that an output must be in for the level to be won.
+    bool expectedState;
+
+    ///@brief 1 if IO is an input, 0 if IO is an output.
+    bool inputType;
 };
 
 #endif // INPUT_OUTPUT_H

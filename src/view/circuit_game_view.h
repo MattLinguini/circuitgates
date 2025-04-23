@@ -52,5 +52,6 @@ signals:
 public slots:
     void receiveLevelPointer(Level* lvl);
     void recieveLevelDescription(QString levelName, QString levelDescription);
+    void triggerWin();
 };
 #endif // CIRCUIT_GAME_VIEW_H

@@ -20,6 +20,8 @@ signals:
     /// @param levelDesc: The description of the level.
     void sendLevelDescription(QString levelName, QString levelDescription);
 
+    void sendWinToView();
+
 private:
     /// @brief The current level object held in the model.
     Level currentLevel;

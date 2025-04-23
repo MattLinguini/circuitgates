@@ -135,6 +135,7 @@ CircuitGameView::CircuitGameView(QWidget *parent) : QMainWindow(parent), ui(new 
     /// @brief Creates connections to transfer level data to the view.
     connect(model, &CircuitGameModel::sendLevelPointer, this, &CircuitGameView::receiveLevelPointer);
     connect(model, &CircuitGameModel::sendLevelDescription, this, &CircuitGameView::recieveLevelDescription);
+    connect(model, &CircuitGameModel::sendWinToView, this, &CircuitGameView::triggerWin);
 
     // @brief Sends information to the model as the game scene progresses.
     connect(this, &CircuitGameView::updateModel, model, &CircuitGameModel::updateGate);
@@ -197,6 +198,11 @@ void CircuitGameView::drawLevel() {
 
 void CircuitGameView::sendViewToModel(int id, LogicGate::GateType gateType) {
     emit updateModel(id, gateType);
+}
+
+void CircuitGameView::triggerWin() {
+//TODO ADD WIN SCREEN
+    qDebug() << "You win!";
 }
 
 CircuitGameView::~CircuitGameView() {
