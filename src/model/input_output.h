@@ -27,9 +27,6 @@ public:
     ///@brief Gets a gameObject's destinations.
     std::vector<int>* getDestinations() override;
 
-    //TEST METHOD
-    void checkState();
-
     ///@brief Returns the outputs expected state.
     bool getExpectedState() const;
 

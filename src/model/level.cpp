@@ -34,7 +34,7 @@ void Level::cleanLevel() {
     outputIDs.clear();
 }
 
-InputOutput* Level::addIO(int x, int y, bool toggleable, bool inputType, bool expectedState) {
+InputOutput* Level::addIO(int x, int y, bool inputType, bool expectedState) {
     InputOutput* IO = new InputOutput(x, y, nextID, this, inputType, expectedState);
     IO->objType = GameObject::GameObjectType::IO;
     gameObjs.insert(nextID, IO);
@@ -75,7 +75,6 @@ bool Level::validateSolution() {
             IO->setState(IO->state, -1);
         }
     }
-
 
     //Check if all outputs contain the expected state
     for (int i : std::as_const(outputIDs)) {

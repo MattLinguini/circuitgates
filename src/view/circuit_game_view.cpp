@@ -135,9 +135,13 @@ void CircuitGameView::sendIOToModel(int id, bool state) {
 
 void CircuitGameView::triggerWin() {
     winDialog = new QDialog;
-    QPushButton *btn = new QPushButton("You won!!");
+    QLabel *lbl = new QLabel;
+    lbl->setAlignment(Qt::AlignCenter);
+    lbl->setText("Puzzle Solved");
+    QPushButton *btn = new QPushButton("OK");
     QVBoxLayout *layout = new QVBoxLayout;
 
+    layout->addWidget(lbl);
     layout->addWidget(btn);
     winDialog->setLayout(layout);
     winDialog->setMinimumSize(200, 100);
@@ -268,14 +272,14 @@ void CircuitGameView::setupTutorialPage() {
     tutorialText->setPlainText("Here is pictured a basic circuit puzzle.\n\n"
                                 "In the center of the puzzle is a gate, with an input above and an output below.\n\n"
                                 "Inputs and outputs send and recieve their state as indicated by wires and their color.\n\n"
-                                "Your objective is to solve each puzzle such that the outputs match their expected state.\n\n"
-                                "You can slot the gates into a socket by dragging them into the socket.\n\n"
+                                "Your objective is to solve each puzzle such that the outputs match their expected state, which can be seen in the upper right corner of each output.\n\n"
+                                "Click the inputs at the top to change their signal. You can slot the gates into a socket by dragging them into the socket.\n\n"
                                 "The top gate is an OR gate. This gate passes on positive state if one or either input is positive.\n\n"
                                 "The 2nd gate is an AND gate. This gate only passes positive state if both inputs are positive.\n\n"
                                 "The 3rd gate is a NOT gate. This gate passes on the opposite signal of its input.\n\n"
                                 "The last gate is an XOR gate. This gate only passes on state if some, but not all, inputs are positive.\n\n");
     tutorialText->setReadOnly(true);
-    tutorialText->setMaximumWidth(275);
+    tutorialText->setMaximumWidth(300);
 
     QPushButton *levelButton = new QPushButton("Return to Levels");
     connect(levelButton, &QPushButton::clicked, this, &CircuitGameView::displayLevels);
