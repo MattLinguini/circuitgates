@@ -23,7 +23,7 @@ public:
     ///@brief Cleans out gameObjs and budget for a new level.
     void cleanLevel();
 
-    InputOutput* addIO(int x, int y, bool toggleable);
+    InputOutput* addIO(int x, int y, bool toggleable,bool inputType, bool expectedState = 0);
 
     LogicGate* addGate(int x, int y, GateType type);
 
@@ -34,7 +34,7 @@ public:
 
     QMap<GateType, int>* getBudget();
 
-    void validateSolution();
+    bool validateSolution();
 
     ~Level();
 
@@ -51,6 +51,8 @@ private:
 
     /// @brief Tracks the next GameObject ID.
     int nextID = 1;
+
+    QList<int> outputIDs;
 
 };
 

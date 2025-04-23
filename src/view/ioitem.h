@@ -43,6 +43,9 @@ class IOItem : public GameItem {
         /// @brief Overriden paint method to add styling to the QT object.
         void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
 
+        /// @brief Override for mouse click toggling.
+        void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
+
         // Physics
         b2Body* body;
         b2World* world;
@@ -54,6 +57,9 @@ class IOItem : public GameItem {
         float cellSize;
 
         int id = -1;
+
+        // IO state (on or off).
+        bool state = false;
 };
 
 #endif // IOITEM_H

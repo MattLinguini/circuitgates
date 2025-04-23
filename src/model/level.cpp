@@ -23,12 +23,16 @@ void Level::cleanLevel() {
 
     gameObjs.clear();
     budget.clear();
+    outputIDs.clear();
 }
 
-InputOutput* Level::addIO(int x, int y, bool toggleable) {
-    InputOutput* IO = new InputOutput(x, y, nextID, toggleable, this);
+InputOutput* Level::addIO(int x, int y, bool toggleable,bool inputType, bool expectedState) {
+    InputOutput* IO = new InputOutput(x, y, nextID, toggleable, this, inputType, expectedState);
     IO->objType = GameObject::GameObjectType::IO;
     gameObjs.insert(nextID, IO);
+    if (!IO->getInputType()) {
+        outputIDs.append(nextID);
+    }
     nextID++;
     return IO;
 }
@@ -53,15 +57,40 @@ QMap<GateType, int>* Level::getBudget() {
     return &budget;
 }
 
-void Level::validateSolution() {
+bool Level::validateSolution() {
+    qDebug() << "validating...";
+    bool win = true;
+    InputOutput* IO;
+
     for (int i : gameObjs.keys()) {
-        if (gameObjs.value(i)->objType == GameObject::GameObjectType::IO) {
-            gameObjs.value(i)->setState(gameObjs.value(i)->state, -1);
+        IO = dynamic_cast<InputOutput*>(gameObjs.value(i));
+        if (IO && IO->getToggleable()) {
+            IO->setState(IO->state, -1);
         }
     }
+
+
+    //Check if all outputs contain the expected state
+    for (int i : outputIDs) {
+        IO = dynamic_cast<InputOutput*>(gameObjs.value(i));
+        if (IO) {
+            qDebug() << IO->objectID;
+            IO->checkState();
+            qDebug() << IO->getExpectedState();
+            if (IO->state != IO->getExpectedState()) {
+                win = false;
+            }
+        } else {
+            qDebug() << "Warning: Output object " << i << " is not an InputOutput!";
+            win = false; // safer fallback
+        }
+    }
+    return win;
 }
 
 Level::~Level() {
     qDeleteAll(gameObjs);
     gameObjs.clear();
+    outputIDs.clear();
+    budget.clear();
 }

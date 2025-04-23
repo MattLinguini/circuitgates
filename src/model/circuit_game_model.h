@@ -16,6 +16,8 @@ signals:
     /// @param lvl: the level pointer to send.
     void sendLevelPointer(Level* lvl);
 
+    void sendWinToView();
+
 private:
     /// @brief The current level object held in the model.
     Level currentLevel;
