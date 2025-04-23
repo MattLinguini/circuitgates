@@ -4,12 +4,11 @@
 
 using std::vector;
 
-InputOutput::InputOutput(int x, int y, int objectID, bool toggleable, Level* lvl,bool inputType, bool expectedState)
+InputOutput::InputOutput(int x, int y, int objectID, Level* lvl,bool inputType, bool expectedState)
 {
     this->x = x;
     this->y = y;
     this->objectID = objectID;
-    this->toggleable = toggleable;
     this->parentLevel = lvl;
     this->inputType = inputType;
     this->expectedState = expectedState;
@@ -39,10 +38,6 @@ void  InputOutput::addDestination(int objectID) {
 
 void InputOutput::checkState() {
     qDebug() << state;
-}
-
-bool InputOutput::getToggleable() const{
-    return toggleable;
 }
 
 bool InputOutput::getExpectedState() const{
