@@ -214,6 +214,7 @@ void CircuitGameView::setupGamePage() {
 
 void CircuitGameView::setupTutorialPage() {
     tutorialPage = new QWidget(this);
+    QWidget *tutorialInnerPage = new QWidget(this);
 
     tutorialView = new QGraphicsView;
     tutorialView->setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
@@ -227,10 +228,14 @@ void CircuitGameView::setupTutorialPage() {
     QPushButton *levelButton = new QPushButton("Return to Levels");
     connect(levelButton, &QPushButton::clicked, this, &CircuitGameView::displayLevels);
 
-    QGridLayout *tutorialLayout = new QGridLayout;
-    tutorialLayout->addWidget(tutorialView, 0, 0);
-    tutorialLayout->addWidget(tutorialText, 0, 1);
-    tutorialLayout->addWidget(levelButton, 1, 0);
+    QGridLayout *tutorialInnerLayout = new QGridLayout;
+    tutorialInnerLayout->addWidget(tutorialView, 0, 0);
+    tutorialInnerLayout->addWidget(tutorialText, 0, 1);
+    tutorialInnerPage->setLayout(tutorialInnerLayout);
+
+    QVBoxLayout *tutorialLayout = new QVBoxLayout;
+    tutorialLayout->addWidget(tutorialInnerPage);
+    tutorialLayout->addWidget(levelButton);
     tutorialPage->setLayout(tutorialLayout);
 
     ui->stackedWidget->addWidget(tutorialPage);
