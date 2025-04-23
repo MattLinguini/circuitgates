@@ -57,6 +57,7 @@ private:
     float padding;
     float cellSize;
     int id = -1;
+    b2Vec2 originalPosition;
 };
 
 #endif // LOGICGATEITEM_H

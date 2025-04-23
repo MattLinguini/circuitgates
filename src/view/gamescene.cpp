@@ -136,6 +136,7 @@ void GameScene::createWorldBounds() {
     float top_m    = -top_px / SCALE; 
     float right_m  = right_px / SCALE;
     float bottom_m = -bottom_px / SCALE;
+    bottomWallY = bottom_m;
 
     // Calculate the width and height of the walls in meters.
     float width_m  = (right_px - left_px) / SCALE;
@@ -168,3 +169,6 @@ void GameScene::createWorldBounds() {
     }
 }
 
+float GameScene::getBottomWallY() const {
+    return bottomWallY;
+}

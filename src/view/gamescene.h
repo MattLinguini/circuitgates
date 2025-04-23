@@ -40,6 +40,8 @@ class GameScene : public QGraphicsScene {
         /// @param endSlot The gate slot the wire will end at.
         void addWireItem(GameItem* startSlot, GameItem* endSlot);
 
+        float getBottomWallY() const;
+
     private slots:
         /// @brief Steps through each physics movement.
         void physicsLoop();
@@ -64,6 +66,7 @@ class GameScene : public QGraphicsScene {
         int cellSize;
         int gridSize;
         int padding;
+        float bottomWallY;
 };
 
 #endif // GAMESCENE_H

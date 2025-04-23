@@ -3,10 +3,10 @@
 #include "Box2D/Collision/Shapes/b2PolygonShape.h"
 #include "Box2D/Dynamics/b2Fixture.h"
 #include "Box2D/Dynamics/b2World.h"
+#include "src/view/gamescene.h"
 #include <QGraphicsScene>
 #include <QLineF>
 
-static constexpr float SCALE = 30.0f;
 
 LogicGateItem::LogicGateItem(LogicGate::GateType gateType, b2World* world, float centerX_meters, float centerY_meters, float width_meters, float height_meters, float padding, float cellSize, QGraphicsItem* parent) : QGraphicsRectItem(parent), body(nullptr), snapDistancePixels(40.0f), padding(padding), cellSize(cellSize), gateType(gateType) {
     // Allow the item to be moved. When it is moved, send the position changes to itemChange().
@@ -40,6 +40,7 @@ LogicGateItem::LogicGateItem(LogicGate::GateType gateType, b2World* world, float
         case LogicGate::GateType::DEFAULT: setBrush(Qt::gray); break;
     }
     setPos(centerX_meters * SCALE, -centerY_meters * SCALE);
+    originalPosition = b2Vec2(centerX_meters, centerY_meters);
 
 }
 
@@ -120,17 +121,44 @@ void LogicGateItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
         if (body) {
             // Let the body fall is not snapped.
             body->SetType(b2_dynamicBody);
+
+            GameScene* gameScene = qobject_cast<GameScene*>(scene());
+            if (gameScene) {
+                b2Vec2 bodyPos = body->GetPosition();
+                if (bodyPos.y < gameScene->getBottomWallY()) {
+                    // Respawn right now if too low
+                    body->SetTransform(originalPosition, 0.0f);
+                    body->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
+                    body->SetAngularVelocity(0.0f);
+                }
+            }
         }
     }
+
 }
 
 void LogicGateItem::updateGate() {
     if (body) {
         b2Vec2 bodyPos = body->GetPosition();
+
+        GameScene* gameScene = qobject_cast<GameScene*>(scene());
+        if (gameScene) {
+            float wallThickness = 0.5f;
+
+            if (bodyPos.y < (gameScene->getBottomWallY() - wallThickness)) {
+                body->SetTransform(originalPosition, 0.0f);
+                body->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
+                body->SetAngularVelocity(0.0f);
+                bodyPos = body->GetPosition();
+            }
+        }
+
         setPos(bodyPos.x * SCALE, -bodyPos.y * SCALE);
         setRotation(-body->GetAngle() * 180.0f / b2_pi);
     }
 }
+
+
 
 int LogicGateItem::getID() const {
     return id;
