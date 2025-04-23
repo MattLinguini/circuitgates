@@ -34,7 +34,9 @@ class GameScene : public QGraphicsScene {
         /// @brief Creates a input/output at the specific x and y coordinates on the grid.
         /// @param x X coordinate of the gate slot.
         /// @param y Y coordinate of the gate slot.
-        IOItem* addIOItem(int x, int y, int ID);
+        /// @param isOutput Whether the IO should be an output or not.
+        /// @param expectedState 0 if off, 1 if on.
+        IOItem* addIOItem(int x, int y, int ID, bool isOutput, bool expectedState);
 
         /// @brief Creates a gate slot at the specific x and y coordinates on the grid.
         /// @param startSlot The gate slot the wire will be starting from.

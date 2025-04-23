@@ -8,7 +8,8 @@
 #include <QLineF>
 #include "circuit_game_view.h"
 
-IOItem::IOItem(b2World* world, float centerX_meters, float centerY_meters, float width_meters, float height_meters, float padding, float cellSize, int id, QGraphicsItem* parent) : QGraphicsRectItem(parent), body(nullptr), snapDistancePixels(40.0f), padding(padding), cellSize(cellSize), state(false) {
+IOItem::IOItem(b2World* world, float centerX_meters, float centerY_meters, float width_meters, float height_meters, float padding, float cellSize, int id, bool isOutput, bool expectedtState, QGraphicsItem* parent)
+    : QGraphicsRectItem(parent), body(nullptr), snapDistancePixels(40.0f), padding(padding), cellSize(cellSize), state(false), expectedState(expectedtState), isInput(isOutput) {
     this->id = id;
 
     // When it is moved, send the position changes to itemChange().
@@ -73,6 +74,16 @@ void IOItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QW
     QRectF rect = boundingRect();
     qreal cornerRadius = rect.width();
     painter->drawRoundedRect(rect, cornerRadius, cornerRadius);
+
+    if (!isInput) {
+        const int circleDiameter = 10;
+        QRectF indicatorRect(rect.right() - circleDiameter - 2, rect.top() + 2, circleDiameter, circleDiameter);
+
+        QColor indicatorColor = expectedState ? Qt::green : Qt::red;
+        painter->setBrush(indicatorColor);
+        painter->setPen(Qt::black);
+        painter->drawEllipse(indicatorRect);
+    }
 }
 
 
@@ -112,12 +123,14 @@ void IOItem::togglePower(bool state) {
 void IOItem::mousePressEvent(QGraphicsSceneMouseEvent* event) {
     Q_UNUSED(event);
 
-    // Toggle
-    state = !state;
-    togglePower(state);
+    if(isInput) {
+        // Toggle
+        state = !state;
+        togglePower(state);
 
-    if(view) {
-        this->view->sendIOToModel(this->id, state);
+        if(view) {
+            this->view->sendIOToModel(this->id, state);
+        }
     }
 
     // Ensure the scene still receives the event

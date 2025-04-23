@@ -7,7 +7,8 @@
 
 static constexpr float SCALE = 30.0f;
 
-GateSlotItem::GateSlotItem(b2World* world, float centerX, float centerY, float width, float height, float cellSize, float padding, int id, QGraphicsItem* parent) : QGraphicsRectItem(parent), padding(padding), cellSize(cellSize) {
+GateSlotItem::GateSlotItem(b2World* world, float centerX, float centerY, float width, float height, float cellSize, float padding, int id, QGraphicsItem* parent)
+    : QGraphicsRectItem(parent), padding(padding), cellSize(cellSize) {
     this->id = id;
     // Setup invisible Box2D static body
     b2BodyDef bodyDef;

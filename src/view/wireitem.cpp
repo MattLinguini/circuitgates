@@ -4,7 +4,8 @@
 
 static constexpr float SCALE = 30.0f;
 
-WireItem::WireItem(b2World* world, GameItem* startSlot, GameItem* endSlot, int segmentCount) : world(world), startSlot(startSlot), endSlot(endSlot) {
+WireItem::WireItem(b2World* world, GameItem* startSlot, GameItem* endSlot, int segmentCount)
+    : world(world), startSlot(startSlot), endSlot(endSlot) {
     // Calculate the starting and ending positions of the wire based on the slot positions.
     QPointF startPos = startSlot->pos() + QPointF(0, -2);
     QPointF endPos = endSlot->pos();

@@ -12,7 +12,8 @@
 #include <QPixmap>
 #include <QDialog>
 
-CircuitGameView::CircuitGameView(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow), model(new CircuitGameModel(this)) {
+CircuitGameView::CircuitGameView(QWidget *parent)
+    : QMainWindow(parent), ui(new Ui::MainWindow), model(new CircuitGameModel(this)) {
     ui->setupUi(this);
     ui->stackedWidget->setStyleSheet("QPushButton {height: 50;}");
 
@@ -77,7 +78,8 @@ void CircuitGameView::drawLevel() {
     IOItem* IO;
     for (GameObject* gameObj : modelGameObjs->values()) {
         if (gameObj->objType == GameObject::GameObjectType::IO) {
-            IO = scene->addIOItem(gameObj->x, gameObj->y, gameObj->objectID);
+            InputOutput* io = dynamic_cast<InputOutput*>(gameObj);
+            IO = scene->addIOItem(gameObj->x, gameObj->y, gameObj->objectID, io->getInputType(), io->getExpectedState());
             gameObj->asItem = IO;
             gameObj->inView = true;
             IO->setView(this);

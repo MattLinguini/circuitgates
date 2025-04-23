@@ -8,7 +8,8 @@
 #include <QGraphicsItem>
 #include <QtGlobal>
 
-GameScene::GameScene(QObject* parent) : QGraphicsScene(parent), world(b2Vec2(0.0f, -50.0f)), cellSize(64), gridSize(7), padding(10) {
+GameScene::GameScene(QObject* parent)
+    : QGraphicsScene(parent), world(b2Vec2(0.0f, -50.0f)), cellSize(64), gridSize(7), padding(10) {
     // Calculate total scene size and set it.
     int sceneWidth  = (gridSize + 2) * cellSize + 2 * padding;
     int sceneHeight = gridSize * cellSize + 2 * padding;
@@ -78,13 +79,13 @@ void GameScene::addWireItem(GameItem* startSlot, GameItem* endSlot) {
     wires.append(wire);
 }
 
-IOItem* GameScene::addIOItem(int x, int y, int id) {
+IOItem* GameScene::addIOItem(int x, int y, int id, bool isOutput, bool expectedState) {
     // Calculates the size and postion of the slot (in meters)
     float sizeMeters  = static_cast<float>(cellSize) / SCALE;
     float sceneXMeters = (padding + (x * cellSize) + (cellSize / 2)) / SCALE;
     float sceneYMeters = -(padding + (y * cellSize) + (cellSize / 2)) / SCALE;
 
-    IOItem* io = new IOItem(&world, sceneXMeters, sceneYMeters, sizeMeters, sizeMeters, padding, cellSize, id);
+    IOItem* io = new IOItem(&world, sceneXMeters, sceneYMeters, sizeMeters, sizeMeters, padding, cellSize, id, isOutput, expectedState);
     addItem(io);
     ioitems.append(io);
 

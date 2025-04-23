@@ -33,6 +33,7 @@ public:
     ///@brief Returns the outputs expected state.
     bool getExpectedState() const;
 
+    /// @brief Returns the inputType;
     bool getInputType();
 
 private:

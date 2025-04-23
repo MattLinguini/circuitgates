@@ -49,5 +49,5 @@ std::vector<int>* InputOutput::getDestinations() {
 }
 
 bool InputOutput::getInputType() {
-    return this->inputType;
+    return inputType;
 }
