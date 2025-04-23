@@ -30,7 +30,7 @@ CircuitGameView::~CircuitGameView() { delete ui; }
 void CircuitGameView::createConnections() {
     connect(this, &CircuitGameView::createLevel, model, &CircuitGameModel::createLevel);
     connect(model, &CircuitGameModel::sendLevelPointer, this, &CircuitGameView::receiveLevelPointer);
-    connect(model, &CircuitGameModel::sendLevelDescription, this, &CircuitGameView::recieveLevelDescription);
+    // connect(model, &CircuitGameModel::sendLevelDescription, this, &CircuitGameView::recieveLevelDescription);
     connect(model, &CircuitGameModel::sendWinToView, this, &CircuitGameView::triggerWin);
 
     // @brief Sends information to the model as the game scene progresses.
