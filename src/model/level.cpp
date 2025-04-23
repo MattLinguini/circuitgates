@@ -76,7 +76,6 @@ bool Level::validateSolution() {
         }
     }
 
-
     //Check if all outputs contain the expected state
     for (int i : std::as_const(outputIDs)) {
         IO = dynamic_cast<InputOutput*>(gameObjs.value(i));

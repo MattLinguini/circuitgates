@@ -62,6 +62,7 @@ void LogicGate::verifyGate() {
             state = 0;
             break;
     }
+    emit this->stateChanged(this->objectID, this->state);
     sendState();
 }
 
@@ -69,7 +70,6 @@ void LogicGate::sendState() {
     for (int i : destinations) {
         GameObject* obj = dynamic_cast<GameObject*>(this->parentLevel->objectLookup(i));
         if (obj) {
-            emit obj->stateChanged(this->objectID, this->state);
             obj->setState(this->state, this->objectID);
         } else {
             qDebug() << "Warning: object ID" << i << "not found in Level!";
@@ -98,6 +98,3 @@ std::vector<int>* LogicGate::getDestinations() {
     return &destinations;
 }
 
-void LogicGate::checkState() {
-    qDebug() << state;
-}

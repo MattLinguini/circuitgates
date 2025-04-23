@@ -49,6 +49,7 @@ void CircuitGameModel::createLevel(int levelId) {
 }
 
 void CircuitGameModel::receiveObjectUpdate(int id, bool state) {
+    qDebug() << id << " " << state;
     emit emitObjectState(id, state);
 }
 

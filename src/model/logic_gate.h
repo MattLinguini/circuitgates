@@ -36,8 +36,6 @@ public:
     ///@brief Gets a gameObject's destinations.
     std::vector<int>* getDestinations() override;
 
-    void checkState();
-
     ///@brief Returns the gates type.
     GateType getGateType();
 
