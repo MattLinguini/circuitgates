@@ -229,10 +229,10 @@ void CircuitGameView::setupTutorialPage() {
                                 "Inputs and outputs send and recieve their state as indicated by \n\n"
                                 "Your objective is to solve each puzzle such that the outputs match their expected state.\n\n"
                                 "You can slot the gates into a socket by dragging them into the socket.\n\n"
-                                "The top gate is an AND gate. This gate only passes positive state if both inputs are positive.\n\n"
-                                "The 2nd gate is an OR gate. This gate passes on positive state if one or either input is positive.\n\n"
-                                "The 3rd gate is an XOR gate. This gate only passes on state if some, but not all, inputs are positive.\n\n"
-                                "The last gate is a NOT gate. This gate passes on the opposite signal of its input.\n\n");
+                                "The top gate is an OR gate. This gate passes on positive state if one or either input is positive.\n\n"
+                                "The 2nd gate is an AND gate. This gate only passes positive state if both inputs are positive.\n\n"
+                                "The 3rd gate is a NOT gate. This gate passes on the opposite signal of its input.\n\n"
+                                "The last gate is an XOR gate. This gate only passes on state if some, but not all, inputs are positive.\n\n");
     tutorialText->setReadOnly(true);
     tutorialText->setMaximumWidth(250);
 
