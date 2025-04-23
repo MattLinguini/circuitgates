@@ -14,8 +14,10 @@ class GameItem : public virtual QGraphicsRectItem  {
         /// @brief Returns the Gate or IO ID.
         virtual int getID() const = 0;
 
+        /// @brief Adds a wire to the GameItem
         virtual void addWire(WireItem* wire) = 0;
 
+        /// @brief Toggles the power of the GameItem
         virtual void togglePower(bool state) = 0;
 };
 

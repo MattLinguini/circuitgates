@@ -4,7 +4,7 @@
 
 using std::vector;
 
-InputOutput::InputOutput(int x, int y, int objectID, Level* lvl,bool inputType, bool expectedState)
+InputOutput::InputOutput(int x, int y, int objectID, Level* lvl, bool inputType, bool expectedState)
 {
     this->x = x;
     this->y = y;

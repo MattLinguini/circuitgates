@@ -60,7 +60,6 @@ SOURCES += \
     src/model/logic_gate.cpp \
     main.cpp \
     src/model/level.cpp \
-    src/view/box2ddebug.cpp \
     src/view/circuit_game_view.cpp \
     src/view/gamescene.cpp \
     src/view/gateslotitem.cpp \
@@ -121,7 +120,6 @@ HEADERS += \
     src/model/input_output.h \
     src/model/logic_gate.h \
     src/model/level.h \
-    src/view/box2ddebug.h \
     src/view/circuit_game_view.h \
     src/view/gameitem.h \
     src/view/gamescene.h \

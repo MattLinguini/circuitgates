@@ -3,7 +3,6 @@
 #include "logicgateitem.h"
 #include "ioitem.h"
 #include "wireitem.h"
-#include "Box2D/Common/b2Draw.h"
 #include "Box2D/Dynamics/b2Fixture.h"
 #include "Box2D/Dynamics/b2World.h"
 #include <QGraphicsItem>
@@ -14,10 +13,6 @@ GameScene::GameScene(QObject* parent) : QGraphicsScene(parent), world(b2Vec2(0.0
     int sceneWidth  = (gridSize + 2) * cellSize + 2 * padding;
     int sceneHeight = gridSize * cellSize + 2 * padding;
     setSceneRect(0, 0, sceneWidth, sceneHeight);
-
-    // Allow Debug drawing for the Box2D bodies.
-    debugDraw.SetFlags(b2Draw::e_shapeBit);
-    world.SetDebugDraw(&debugDraw);
 
     // Start the simulation, will run the loop every 16ms.
     timer.setInterval(16);
@@ -113,12 +108,6 @@ void GameScene::drawBackground(QPainter* painter, const QRectF& rect) {
         painter->drawLine(padding, y, padding + (gridSize) * cellSize, y);
         painter->drawLine(padding + (gridSize+1) * cellSize, y, padding + (gridSize+2) * cellSize, y);
     }
-}
-
-
-void GameScene::drawForeground(QPainter* painter, const QRectF&) {
-    debugDraw.setPainter(painter);
-    world.DrawDebugData();
 }
 
 

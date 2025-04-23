@@ -5,7 +5,6 @@
 #include <QHash>
 #include <QTimer>
 #include "Box2D/Dynamics/b2World.h"
-#include "box2ddebug.h"
 #include "gateslotitem.h"
 #include "logicgateitem.h"
 #include "src/view/ioitem.h"
@@ -53,9 +52,6 @@ class GameScene : public QGraphicsScene {
         /// @brief Draws the grid background of the game scene.
         void drawBackground(QPainter* painter, const QRectF& rect) override;
 
-        /// @brief Draws the debug boxes on the Box2D physics objects.
-        void drawForeground(QPainter* painter, const QRectF&) override;
-
         /// @brief Creates the walls around the grid to keep physics objects in.
         void createWorldBounds();
 
@@ -70,7 +66,6 @@ class GameScene : public QGraphicsScene {
 
         // Physics and debug
         b2World world;
-        Box2DDebugDraw debugDraw;
         float bottomWallY;
 
         // Layout constants

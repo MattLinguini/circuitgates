@@ -7,7 +7,6 @@
 #include <QGraphicsScene>
 #include <QLineF>
 
-
 LogicGateItem::LogicGateItem(LogicGate::GateType gateType, b2World* world, float centerX_meters, float centerY_meters, float width_meters, float height_meters, float padding, float cellSize, QGraphicsItem* parent) : QGraphicsRectItem(parent), body(nullptr), snapDistancePixels(40.0f), padding(padding), cellSize(cellSize), gateType(gateType) {
     // Allow the item to be moved. When it is moved, send the position changes to itemChange().
     setFlag(QGraphicsItem::ItemIsMovable, true);
@@ -61,9 +60,11 @@ LogicGateItem::LogicGateItem(LogicGate::GateType gateType, b2World* world, float
     }
 }
 
+
 b2Body* LogicGateItem::getBody() const {
     return body;
 }
+
 
 QVariant LogicGateItem::itemChange(GraphicsItemChange change, const QVariant& value) {
     if (change == QGraphicsItem::ItemPositionHasChanged && body) {
@@ -76,12 +77,14 @@ QVariant LogicGateItem::itemChange(GraphicsItemChange change, const QVariant& va
     return QGraphicsRectItem::itemChange(change, value);
 }
 
+
 GateSlotItem* LogicGateItem::findClosestSlot() {
     GateSlotItem* closest = nullptr;
     float closestDistanceSquared = std::numeric_limits<float>::max();
 
     // Search all the items in the scene and find the cloest slot.
-    for (QGraphicsItem* item : scene()->items()) {
+    const QList<QGraphicsItem*>& items = scene()->items();
+    for (QGraphicsItem* item : items) {
         GateSlotItem* slot = dynamic_cast<GateSlotItem*>(item);
         if (slot) {
             QPointF delta = pos() - slot->pos();
@@ -97,11 +100,13 @@ GateSlotItem* LogicGateItem::findClosestSlot() {
     return closest;
 }
 
+
 bool LogicGateItem::isWithinSnapRange(GateSlotItem* slot) {
     const float maxSnapDistance = 40.0f;
 
     return QLineF(pos(), slot->pos()).length() <= maxSnapDistance;
 }
+
 
 void LogicGateItem::mousePressEvent(QGraphicsSceneMouseEvent* event) {
     QGraphicsRectItem::mousePressEvent(event);
@@ -113,8 +118,8 @@ void LogicGateItem::mousePressEvent(QGraphicsSceneMouseEvent* event) {
     }
 }
 
-void LogicGateItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
-{
+
+void LogicGateItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event) {
     QGraphicsRectItem::mouseReleaseEvent(event);
 
     GateSlotItem* closestSlot = findClosestSlot();
@@ -138,36 +143,22 @@ void LogicGateItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 
 
             if (view) {
-            view->sendGateToModel( closestSlot->getID(), this->gateType);
+                view->sendGateToModel(closestSlot->getID(), this->gateType);
             }
 
         }
-    } else {
-        if (body) {
-            // Let the body fall is not snapped.
-            body->SetType(b2_dynamicBody);
-
-            GameScene* gameScene = qobject_cast<GameScene*>(scene());
-            if (gameScene) {
-                b2Vec2 bodyPos = body->GetPosition();
-                if (bodyPos.y < gameScene->getBottomWallY()) {
-                    // Respawn right now if too low
-                    body->SetTransform(originalPosition, 0.0f);
-                    body->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
-                    body->SetAngularVelocity(0.0f);
-                }
-            }
-        }
+    }
+    else {
+        body->SetType(b2_dynamicBody);
 
         // Clear any slot that was previously occupied by this gate
         if (snappedSlot) {
             snappedSlot->setOccupied(false);
             snappedSlot = nullptr;
         }
-
     }
-
 }
+
 
 void LogicGateItem::updateGate() {
     if (body) {
@@ -178,9 +169,10 @@ void LogicGateItem::updateGate() {
             float wallThickness = 0.5f;
 
             if (bodyPos.y < (gameScene->getBottomWallY() - wallThickness)) {
-                body->SetTransform(originalPosition, 0.0f);
                 body->SetLinearVelocity(b2Vec2(0.0f, 0.0f));
                 body->SetAngularVelocity(0.0f);
+                body->SetTransform(originalPosition, 0.0f);
+                body->SetType(b2_staticBody);
                 bodyPos = body->GetPosition();
             }
         }
@@ -195,6 +187,7 @@ int LogicGateItem::getID() const {
     return id;
 }
 
+
 void LogicGateItem::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*) {
     painter->setOpacity(1.0);
     painter->setBrush(Qt::white);
@@ -205,6 +198,18 @@ void LogicGateItem::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QW
     }
 }
 
-void LogicGateItem::addWire(WireItem* wire) {}
 
-void LogicGateItem::togglePower(bool state) {}
+void LogicGateItem::setView(CircuitGameView* viewObj) {
+    view = viewObj;
+}
+
+
+CircuitGameView* LogicGateItem::getView() const {
+    return view;
+}
+
+
+void LogicGateItem::addWire(WireItem* /*wire*/) {}
+
+
+void LogicGateItem::togglePower(bool /*state*/) {}

@@ -34,13 +34,17 @@ class IOItem : public GameItem {
         /// @brief Returns the ID of the IO item.
         int getID() const override;
 
+        /// @brief Toggles the power of itself and any wires connected to it.
+        /// @param state True if powered on, false otherwise.
         void togglePower(bool state) override;
 
+        /// @brief Lets the Gate know a wire is connected to it.
+        /// @param wire Pointer to a WireItem.
         void addWire(WireItem* wire) override;
 
+        /// @brief Sets a reference to the view that the item is contained in.
+        /// @param view View to be set.
         void setView(CircuitGameView* view);
-
-        CircuitGameView* setView();
 
     private:
         /// @brief Called when the LogicGateItem changes position. Updates the box2d's position.
@@ -62,10 +66,8 @@ class IOItem : public GameItem {
         float padding;
         float cellSize;
 
-        int id = -1;
-
-        // IO state (on or off).
-        bool state = false;
+        int id;
+        bool state;
 
         CircuitGameView* view = nullptr;
 };

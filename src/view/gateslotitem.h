@@ -30,11 +30,13 @@ class GateSlotItem : public GameItem {
         /// @param occ True if the slot has a gate inside of it, false otherwise.
         void setOccupied(bool occ);
 
-        void togglePower(bool state);
+        /// @brief Toggles the power of itself and any wires connected to it.
+        /// @param state True if powered on, false otherwise.
+        void togglePower(bool state) override;
 
+        /// @brief Lets the Gate know a wire is connected to it.
+        /// @param wire Pointer to a WireItem.
         void addWire(WireItem* wire) override;
-
-        LogicGate::GateType gateType;
     private:
         /// @brief Called automatically when item properties (like position) change.
         QVariant itemChange(GraphicsItemChange change, const QVariant& value) override;
@@ -56,6 +58,7 @@ class GateSlotItem : public GameItem {
         // Flags
         int id = -1;
         bool occupied = false;
+        LogicGate::GateType gateType;
 
         // Icon for the gate slot.
         QPixmap icon;

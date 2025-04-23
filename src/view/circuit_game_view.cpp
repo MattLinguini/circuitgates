@@ -99,7 +99,7 @@ void CircuitGameView::drawLevel() {
         int amount = budget->value(type);
         for (int i = 0; i < amount; i ++) {
             gateItem = scene->addLogicGate(8, count, type);
-            gateItem->view = this;
+            gateItem->setView(this);
             count+=2;
         }
     }
@@ -124,9 +124,11 @@ void CircuitGameView::sendGateToModel(int id, LogicGate::GateType gateType) {
     emit updateGateInModel(id, gateType);
 }
 
+
 void CircuitGameView::sendIOToModel(int id, bool state) {
     emit updateIOInModel(id, state);
 }
+
 
 void CircuitGameView::triggerWin() {
     winDialog = new QDialog;
@@ -136,6 +138,9 @@ void CircuitGameView::triggerWin() {
     layout->addWidget(btn);
     winDialog->setLayout(layout);
     winDialog->setMinimumSize(200, 100);
+
+    connect(btn, &QPushButton::clicked, winDialog, &QDialog::close);
+
     winDialog->show();
 }
 

@@ -8,8 +8,7 @@
 #include <QLineF>
 #include "circuit_game_view.h"
 
-
-IOItem::IOItem(b2World* world, float centerX_meters, float centerY_meters, float width_meters, float height_meters, float padding, float cellSize, int id, QGraphicsItem* parent) : QGraphicsRectItem(parent), body(nullptr), snapDistancePixels(40.0f), padding(padding), cellSize(cellSize) {
+IOItem::IOItem(b2World* world, float centerX_meters, float centerY_meters, float width_meters, float height_meters, float padding, float cellSize, int id, QGraphicsItem* parent) : QGraphicsRectItem(parent), body(nullptr), snapDistancePixels(40.0f), padding(padding), cellSize(cellSize), state(false) {
     this->id = id;
 
     // When it is moved, send the position changes to itemChange().
@@ -38,9 +37,11 @@ IOItem::IOItem(b2World* world, float centerX_meters, float centerY_meters, float
     setPos(centerX_meters * SCALE, -centerY_meters * SCALE);
 }
 
+
 b2Body* IOItem::getBody() const {
     return body;
 }
+
 
 QVariant IOItem::itemChange(GraphicsItemChange change, const QVariant& value) {
     if (change == QGraphicsItem::ItemPositionHasChanged && body) {
@@ -61,6 +62,7 @@ void IOItem::updateGate() {
     }
 }
 
+
 void IOItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) {
     Q_UNUSED(option);
     Q_UNUSED(widget);
@@ -73,17 +75,14 @@ void IOItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QW
     painter->drawRoundedRect(rect, cornerRadius, cornerRadius);
 }
 
+
 int IOItem::getID() const {
     return id;
 }
 
+
 void IOItem::setView(CircuitGameView* view) {
     this->view = view;
-}
-
-CircuitGameView* IOItem::setView() {
-    if (view) return this->view;
-    else return nullptr;
 }
 
 
@@ -92,6 +91,7 @@ void IOItem::addWire(WireItem* wire) {
         connectedWires.append(wire);
     }
 }
+
 
 void IOItem::togglePower(bool state) {
     if (state) {
@@ -107,6 +107,7 @@ void IOItem::togglePower(bool state) {
         }
     }
 }
+
 
 void IOItem::mousePressEvent(QGraphicsSceneMouseEvent* event) {
     Q_UNUSED(event);

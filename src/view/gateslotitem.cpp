@@ -35,29 +35,36 @@ GateSlotItem::GateSlotItem(b2World* world, float centerX, float centerY, float w
     icon.load(":/gates/resources/default_gate.png");
 }
 
+
 b2Body* GateSlotItem::getBody() const {
     return body;
 }
+
 
 QVariant GateSlotItem::itemChange(GraphicsItemChange change, const QVariant& value) {
     return QGraphicsRectItem::itemChange(change, value);
 }
 
+
 void GateSlotItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event) {
     QGraphicsRectItem::mouseReleaseEvent(event);
 }
+
 
 int GateSlotItem::getID() const {
     return id;
 }
 
+
 bool GateSlotItem::isOccupied() const {
     return occupied;
 }
 
+
 void GateSlotItem::setOccupied(bool occ) {
     occupied = occ;
 }
+
 
 void GateSlotItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) {
     QGraphicsRectItem::paint(painter, option, widget);
@@ -68,11 +75,13 @@ void GateSlotItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* opti
     }
 }
 
+
 void GateSlotItem::addWire(WireItem* wire) {
     if (!connectedWires.contains(wire)) {
         connectedWires.append(wire);
     }
 }
+
 
 void GateSlotItem::togglePower(bool state) {
     if (state) {
