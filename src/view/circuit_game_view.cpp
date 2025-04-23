@@ -73,6 +73,7 @@ CircuitGameView::CircuitGameView(QWidget *parent) : QMainWindow(parent), ui(new 
     QPushButton *level_9 = new QPushButton("Level 9");
     QPushButton *level_10 = new QPushButton("Level 10");
     QPushButton *menuButton = new QPushButton("Return to Menu");
+    QPushButton *tutorialButton = new QPushButton("Tutorial");
 
     /// Connect buttons to functionality.
     connect(this, &CircuitGameView::createLevel, model, &CircuitGameModel::createLevel);
@@ -87,6 +88,7 @@ CircuitGameView::CircuitGameView(QWidget *parent) : QMainWindow(parent), ui(new 
     connect(level_9, &QPushButton::clicked, this, [this]() {emit CircuitGameView::createLevel(9);});
     connect(level_10, &QPushButton::clicked, this, [this]() {emit CircuitGameView::createLevel(10);});
     connect(menuButton, &QPushButton::clicked, this, &CircuitGameView::displayMenu);
+    connect(tutorialButton, &QPushButton::clicked, this, &CircuitGameView::displayTutorial);
 
     /// Add layout to level page.
     QGridLayout *levelLayout = new QGridLayout;
@@ -101,6 +103,7 @@ CircuitGameView::CircuitGameView(QWidget *parent) : QMainWindow(parent), ui(new 
     levelLayout->addWidget(level_9, 1, 3);
     levelLayout->addWidget(level_10, 1, 4);
     levelLayout->addWidget(menuButton, 2, 0);
+    levelLayout->addWidget(tutorialButton, 2, 1);
     levelSelect->setLayout(levelLayout);
 
     QVBoxLayout *levelOuterLayout = new QVBoxLayout;
@@ -124,11 +127,25 @@ CircuitGameView::CircuitGameView(QWidget *parent) : QMainWindow(parent), ui(new 
     gameLayout->addWidget(levelButton);
     gamePage->setLayout(gameLayout);
 
+    /// Setup tutorial page.
+    tutorialPage = new QWidget(this);
+
+    /// Setup tutorial page contents
+    QTextEdit *tutorialText = new QTextEdit("a;lksdjfaldksfajsdf");
+
+    /// Connect buttons to functionalit.
+
+    /// Add layout to game page.
+    QGridLayout *tutorialLayout = new QGridLayout;
+    tutorialLayout->addWidget(tutorialText);
+    tutorialLayout->addWidget(levelButton);
+    tutorialPage->setLayout(tutorialLayout);
 
     /// Add pages to stacked widget.
     ui->stackedWidget->addWidget(homePage);
     ui->stackedWidget->addWidget(levelPage);
     ui->stackedWidget->addWidget(gamePage);
+    ui->stackedWidget->addWidget(tutorialPage);
 
     // CONNECTIONS
 
@@ -146,6 +163,10 @@ void CircuitGameView::displayMenu() {
 
 void CircuitGameView::displayLevels() {
     ui->stackedWidget->setCurrentWidget(levelPage);
+}
+
+void CircuitGameView::displayTutorial() {
+    ui->stackedWidget->setCurrentWidget(tutorialPage);
 }
 
 void CircuitGameView::receiveLevelPointer(Level* lvl) {

@@ -42,6 +42,29 @@ LogicGateItem::LogicGateItem(LogicGate::GateType gateType, b2World* world, float
     setPos(centerX_meters * SCALE, -centerY_meters * SCALE);
     originalPosition = b2Vec2(centerX_meters, centerY_meters);
 
+    // Load the gate icon corresponding to the GateType.
+    switch (gateType) {
+        case LogicGate::GateType::AND:
+            texture.load(":/gates/resources/and_gate.png");
+            qDebug("AND!!!");
+            break;
+        case LogicGate::GateType::OR:
+            texture.load(":/gates/resources/or_gate.png");
+            qDebug("OR!!!");
+            break;
+        case LogicGate::GateType::NOT:
+            texture.load(":/gates/resources/not_gate.png");
+            qDebug("NOT!!!");
+            break;
+        case LogicGate::GateType::XOR:
+            texture.load(":/gates/resources/xor_gate.png");
+            qDebug("XOR!!!");
+            break;
+        case LogicGate::GateType::DEFAULT:
+            texture.load(":/gates/resources/default_gate.png");
+            qDebug("DEFAULT!!!");
+            break;
+    }
 }
 
 b2Body* LogicGateItem::getBody() const {
@@ -164,3 +187,11 @@ int LogicGateItem::getID() const {
     return id;
 }
 
+void LogicGateItem::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*) {
+    if (!texture.isNull()) {
+        painter->drawPixmap(boundingRect().toRect(), texture);
+    } else {
+        painter->setBrush(Qt::gray);
+        painter->drawRect(boundingRect());
+    }
+}

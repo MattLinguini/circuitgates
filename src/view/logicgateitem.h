@@ -3,6 +3,7 @@
 
 #include "Box2D/Dynamics/b2Body.h"
 #include "gateslotitem.h"
+#include "QPainter"
 
 class CircuitGameView;
 
@@ -31,6 +32,9 @@ public:
     //TODO make this a getter and private
     CircuitGameView* view = nullptr;
 
+    /// @brief Holds the icon that will be loaded.
+    QPixmap texture;
+
 
 
 private:
@@ -50,6 +54,10 @@ private:
 
     /// @brief Switches the LogicGate to allow movement instead of being static when clicked.
     void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
+
+    /// @brief Draws the gate icon.
+    void paint(QPainter* painter, const QStyleOptionGraphicsItem*, QWidget*) override;
+
 
     b2Body* body;
     b2World* world;
