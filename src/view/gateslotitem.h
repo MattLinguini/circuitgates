@@ -4,6 +4,7 @@
 #include "Box2D/Dynamics/b2Body.h"
 #include "gameitem.h"
 #include "src/model/logic_gate.h"
+#include "src/view/wireitem.h"
 
 /// @class GameSlotItem
 /// @brief A GameItem that handles logic gates snapping into it and changing its type.
@@ -29,6 +30,10 @@ class GateSlotItem : public GameItem {
         /// @param occ True if the slot has a gate inside of it, false otherwise.
         void setOccupied(bool occ);
 
+        void togglePower(bool state);
+
+        void addWire(WireItem* wire) override;
+
         LogicGate::GateType gateType;
     private:
         /// @brief Called automatically when item properties (like position) change.
@@ -46,6 +51,7 @@ class GateSlotItem : public GameItem {
 
         // Box2D Physics body
         b2Body* body;
+        QList<WireItem*> connectedWires;
 
         // Flags
         int id = -1;

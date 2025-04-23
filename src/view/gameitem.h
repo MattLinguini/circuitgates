@@ -4,6 +4,8 @@
 #include "Box2D/Dynamics/b2Body.h"
 #include <QGraphicsRectItem>
 
+class WireItem;
+
 class GameItem : public virtual QGraphicsRectItem  {
     public:
         /// @brief Returns the Box2D body.
@@ -11,6 +13,10 @@ class GameItem : public virtual QGraphicsRectItem  {
 
         /// @brief Returns the Gate or IO ID.
         virtual int getID() const = 0;
+
+        virtual void addWire(WireItem* wire) = 0;
+
+        virtual void togglePower(bool state) = 0;
 };
 
 #endif // GAMEITEM_H

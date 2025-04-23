@@ -191,7 +191,6 @@ void LogicGateItem::updateGate() {
 }
 
 
-
 int LogicGateItem::getID() const {
     return id;
 }
@@ -205,3 +204,7 @@ void LogicGateItem::paint(QPainter* painter, const QStyleOptionGraphicsItem*, QW
         painter->drawPixmap(boundingRect().toRect(), icon);
     }
 }
+
+void LogicGateItem::addWire(WireItem* wire) {}
+
+void LogicGateItem::togglePower(bool state) {}
