@@ -10,6 +10,7 @@
 #include <QTextEdit>
 #include <QLabel>
 #include <QPixmap>
+#include <QDialog>
 
 CircuitGameView::CircuitGameView(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow), model(new CircuitGameModel(this)) {
     ui->setupUi(this);
@@ -120,8 +121,14 @@ void CircuitGameView::sendViewToModel(int id, LogicGate::GateType gateType) {
 }
 
 void CircuitGameView::triggerWin() {
-//TODO ADD WIN SCREEN
-    qDebug() << "You win!";
+    winDialog = new QDialog;
+    QPushButton *btn = new QPushButton("You won!!");
+    QVBoxLayout *layout = new QVBoxLayout;
+
+    layout->addWidget(btn);
+    winDialog->setLayout(layout);
+    winDialog->setMinimumSize(200, 100);
+    winDialog->show();
 }
 
 

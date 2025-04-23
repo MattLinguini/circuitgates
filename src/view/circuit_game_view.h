@@ -93,6 +93,7 @@ class CircuitGameView : public QMainWindow {
         QWidget *tutorialPage;
         QGraphicsView *gameView;
         QGraphicsView *tutorialView;
+        QDialog *winDialog;
 
         // Model and game state
         CircuitGameModel *model;
