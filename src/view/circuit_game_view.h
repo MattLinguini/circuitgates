@@ -1,9 +1,9 @@
-// * Checked by ?
+// * Checked by Andrew Kellmer
 
 /*
  * Authors:     Adam Wightman, Alex Johnson, Andrew Kellmer, Matt Bennett
  * Date:        24 April, 2025
- * Description: ?
+ * Description: Defines a CircuitGameView object with the purpose of displaying a circuit game.
  */
 
 #ifndef CIRCUIT_GAME_VIEW_H
@@ -67,8 +67,12 @@ class CircuitGameView : public QMainWindow {
         /// @param lvl The loaded level.
         void receiveLevelPointer(Level* lvl);
 
+        /// @brief Recieves a signal from the model to display win message.
         void triggerWin();
 
+        /// @brief Recieves data from the model to update a game objects state.
+        /// @param id The id of the object to update.
+        /// @param state The state to update the object to.
         void receiveObjectUpdate(int id, bool state);
 
     private:
