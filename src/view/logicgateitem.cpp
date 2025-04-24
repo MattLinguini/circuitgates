@@ -1,3 +1,11 @@
+// * Checked by ?
+
+/*
+ * Authors:     Adam Wightman, Alex Johnson, Andrew Kellmer, Matt Bennett
+ * Date:        24 April, 2025
+ * Description: ?
+ */
+
 #include "logicgateitem.h"
 #include "circuit_game_view.h"
 #include "Box2D/Collision/Shapes/b2PolygonShape.h"

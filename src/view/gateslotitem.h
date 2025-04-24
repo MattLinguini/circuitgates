@@ -1,3 +1,11 @@
+// * Checked by ?
+
+/*
+ * Authors:     Adam Wightman, Alex Johnson, Andrew Kellmer, Matt Bennett
+ * Date:        24 April, 2025
+ * Description: ?
+ */
+
 #ifndef GAMEOBJECTS_H
 #define GAMEOBJECTS_H
 

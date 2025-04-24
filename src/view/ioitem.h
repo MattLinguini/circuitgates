@@ -1,3 +1,11 @@
+// * Checked by ?
+
+/*
+ * Authors:     Adam Wightman, Alex Johnson, Andrew Kellmer, Matt Bennett
+ * Date:        24 April, 2025
+ * Description: ?
+ */
+
 #ifndef IOITEM_H
 #define IOITEM_H
 

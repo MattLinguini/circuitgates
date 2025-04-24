@@ -1,3 +1,11 @@
+// * Checked by ?
+
+/*
+ * Authors:     Adam Wightman, Alex Johnson, Andrew Kellmer, Matt Bennett
+ * Date:        24 April, 2025
+ * Description: ?
+ */
+
 #ifndef LOGICGATEITEM_H
 #define LOGICGATEITEM_H
 
