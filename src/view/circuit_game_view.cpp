@@ -1,18 +1,16 @@
-// * Checked by ?
+// * Checked by Andrew Kellmer
 
 /*
  * Authors:     Adam Wightman, Alex Johnson, Andrew Kellmer, Matt Bennett
  * Date:        24 April, 2025
- * Description: ?
+ * Description: Implements the view declared by circuit_game_view.h to display a circuit game.
  */
 
 #include "circuit_game_view.h"
 #include "ui_circuit_game_view.h"
 #include "gamescene.h"
 #include "src/model/circuit_game_model.h"
-#include <QBoxLayout>
 #include <QGridLayout>
-#include <QGraphicsItem>
 #include <QGraphicsView>
 #include <QPushButton>
 #include <QTextEdit>
