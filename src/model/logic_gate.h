@@ -1,4 +1,4 @@
-// * Checked by ?
+// * Checked by Alex JOhnson
 
 /*
  * Authors:     Adam Wightman, Alex Johnson, Andrew Kellmer, Matt Bennett
