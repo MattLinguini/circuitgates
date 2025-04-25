@@ -1,9 +1,10 @@
-// * Checked by ?
+// * Checked by Alex Johnson
 
 /*
  * Authors:     Adam Wightman, Alex Johnson, Andrew Kellmer, Matt Bennett
  * Date:        24 April, 2025
- * Description: ?
+ * Description: This class manages the program's backend. Such as loading levels and
+ * sending and receiving information from the view.
  */
 
 #ifndef CIRCUIT_GAME_MODEL_H
@@ -24,6 +25,7 @@ signals:
     /// @param lvl: the level pointer to send.
     void sendLevelPointer(Level* lvl);
 
+    /// @brief Signals to the view that the level has been beaten.
     void sendWinToView();
 
     /// @brief Signal to update the state of a view object.

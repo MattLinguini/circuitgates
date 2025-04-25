@@ -1,4 +1,4 @@
-// * Checked by ?
+// * Checked by Alex Johnson
 
 /*
  * Authors:     Adam Wightman, Alex Johnson, Andrew Kellmer, Matt Bennett
@@ -42,9 +42,6 @@ public:
     /// @brief On or off.
     bool state = 0;
 
-    /// @brief Tracks the type of the object.
-    GameObjectType objType;
-
     /// @brief Object's x coordinate.
     int x;
 
@@ -53,6 +50,9 @@ public:
 
     /// @brief Tracks whether an object is in the view.
     bool inView = 0;
+
+    /// @brief Tracks the type of the object.
+    GameObjectType objType;
 
     /// @brief Tracks the object in the view as an item.
     GameItem* asItem;
