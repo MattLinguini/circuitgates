@@ -1,9 +1,10 @@
-// * Checked by ?
+// * Checked by Matt Bennett
 
 /*
  * Authors:     Adam Wightman, Alex Johnson, Andrew Kellmer, Matt Bennett
  * Date:        24 April, 2025
- * Description: ?
+ * Description: This class manages the program's backend. Such as loading levels and
+ * sending and receiving information from the view.
  */
 
 #include "src/model/circuit_game_model.h"

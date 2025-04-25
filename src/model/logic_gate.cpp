@@ -1,9 +1,9 @@
-// * Checked by ?
+// * Checked by Matt Bennett
 
 /*
  * Authors:     Adam Wightman, Alex Johnson, Andrew Kellmer, Matt Bennett
- * Date:        24 April, 2025
- * Description: ?
+ * Date:        10 April, 2025
+ * Description: Logic gate object.
  */
 
 #include "logic_gate.h"

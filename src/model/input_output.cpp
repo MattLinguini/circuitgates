@@ -1,9 +1,9 @@
-// * Checked by ?
+// * Checked by Adam Wightman
 
 /*
  * Authors:     Adam Wightman, Alex Johnson, Andrew Kellmer, Matt Bennett
- * Date:        24 April, 2025
- * Description: ?
+ * Date:        10 April, 2025
+ * Description: Input/Output game object that sends or receives a signal.
  */
 
 #include "input_output.h"
