@@ -1,9 +1,9 @@
-// * Checked by ?
+// * Checked by Andrew Kellmer
 
 /*
  * Authors:     Adam Wightman, Alex Johnson, Andrew Kellmer, Matt Bennett
  * Date:        24 April, 2025
- * Description: ?
+ * Description: A GameItem which generates and recieves signals through the circuit.
  */
 
 #ifndef IOITEM_H
@@ -74,6 +74,7 @@ class IOItem : public GameItem {
         float padding;
         float cellSize;
 
+        // Characteristics
         int id;
         bool state;
         bool expectedState;

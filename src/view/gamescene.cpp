@@ -1,9 +1,9 @@
-// * Checked by ?
+// * Checked by Andrew Kellmer
 
 /*
  * Authors:     Adam Wightman, Alex Johnson, Andrew Kellmer, Matt Bennett
  * Date:        24 April, 2025
- * Description: ?
+ * Description: Implements the GameScene which integrates Box2D with QGraphicScene.
  */
 
 #include "gamescene.h"

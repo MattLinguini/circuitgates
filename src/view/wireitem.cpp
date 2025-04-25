@@ -1,9 +1,9 @@
-// * Checked by ?
+// * Checked by Andrew Kellmer
 
 /*
  * Authors:     Adam Wightman, Alex Johnson, Andrew Kellmer, Matt Bennett
  * Date:        24 April, 2025
- * Description: ?
+ * Description: Implements a WireItem which connects GameItems.
  */
 
 #include "wireitem.h"

@@ -1,9 +1,9 @@
-// * Checked by ?
+// * Checked by Andrew Kellmer
 
 /*
  * Authors:     Adam Wightman, Alex Johnson, Andrew Kellmer, Matt Bennett
  * Date:        24 April, 2025
- * Description: ?
+ * Description: A GameItem which represents the gate which can be dragged and slotted in as an AND, OR, NOT, or XOR gate.
  */
 
 #ifndef LOGICGATEITEM_H

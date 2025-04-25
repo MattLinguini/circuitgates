@@ -1,9 +1,9 @@
-// * Checked by ?
+// * Checked by Andrew Kellmer
 
 /*
  * Authors:     Adam Wightman, Alex Johnson, Andrew Kellmer, Matt Bennett
  * Date:        24 April, 2025
- * Description: ?
+ * Description: A GameItem which manages holding gates and completing a circuit.
  */
 
 #ifndef GAMEOBJECTS_H
@@ -31,6 +31,7 @@ class GateSlotItem : public GameItem {
         /// @brief Returns the specific body for the gate slot.
         b2Body* getBody() const override;
 
+        /// @brief Returns the integer ID for this slot.
         int getID() const override;
 
         /// @brief Checks if the slot is occupied by a gate.
